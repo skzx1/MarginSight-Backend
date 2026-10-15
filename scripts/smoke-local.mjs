@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+const base='http://localhost:4051';
+const login=async user=>(await(await fetch(base+'/dev/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({user})})).json()).accessToken;
+const a=await login('demo-a'),b=await login('demo-b');
+const api=async(path,token=a,body)=>{const response=await fetch(base+path,{method:body===undefined?'GET':'POST',headers:{authorization:'Bearer '+token,'content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});return {status:response.status,value:await response.json()}};
+assert.equal((await api('/health')).status,200);assert.equal((await api('/stores/DEMO-001/products',b)).status,403);
+const d=await api('/stores/DEMO-001/dashboard?month=2026-10');assert.equal(d.value.profitSatang,900);
+const sim=await api('/stores/DEMO-001/simulations?month=2026-10',a,{sku:'SKU-DEMO-01',discountPct:15});assert.equal(sim.value.scenario.profitSatang,-1410);
+const ai=await api('/stores/DEMO-001/assistant',a,{sku:'SKU-DEMO-01',message:'ตัวนี้ลดสิบห้าเปอร์ยังไหวปะ',month:'2026-10'});assert.equal(ai.value.result.profitSatang,-1410);
+const exp=await api('/stores/DEMO-001/reports/export?month=2026-10&format=xlsx');const file=await fetch(exp.value.downloadUrl,{headers:{authorization:'Bearer '+a}});assert.equal(file.status,200);assert.equal((await file.arrayBuffer()).byteLength>1000,true);const denied=await fetch(exp.value.downloadUrl,{headers:{authorization:'Bearer '+b}});assert.equal(denied.status,403);
+console.log('PASS local HTTP: health, auth isolation, dashboard, simulation, Thai fallback, XLSX export, private files');

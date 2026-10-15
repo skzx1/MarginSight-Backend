@@ -1,0 +1,9 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {LocalStorage} from '../src/storage.js';
+import {Repository} from '../src/repository.js';
+import {seed} from '../src/seed.js';
+import {calculate,eligibleRules} from '../src/domain/calculate.js';
+async function input(){const repo=new Repository(new LocalStorage());await seed(repo);return repo.input('DEMO-001','mock-market','O-DEMO-001')}
+test('illustrative TikTok bases with seller/platform discount and buyer shipping',async()=>{const a=await input();a.simulation=true;a.enrollments=[];a.items=[{...a.items[0],revenueSatang:90000,buyerPaymentSatang:80000,platformDiscountSatang:10000,sellerDiscountSatang:10000,buyerShippingSatang:0}];a.rules=[{...a.rules[0],id:'comm',type:'COMMISSION',programId:undefined,scope:'PER_ORDER',rateBps:1070,base:'BUYER_PLUS_PLATFORM'},{...a.rules[0],id:'growth',programId:undefined,scope:'PER_ORDER',rateBps:803,base:'BUYER_PLUS_PLATFORM'},{...a.rules[0],id:'trans',programId:undefined,scope:'PER_ORDER',rateBps:321,base:'BUYER_PLUS_PLATFORM_PLUS_SHIPPING'},{...a.rules[0],id:'infra',programId:undefined,scope:'PER_ORDER',rateBps:0,fixedSatang:107,base:'REVENUE'}];assert.equal(calculate(a).feeSatang,19853);a.items[0].buyerShippingSatang=5000;assert.equal(calculate(a).feeSatang,20014);assert.equal(calculate(a).revenueSatang,90000)});
+test('rule versions use one active latest version; replacement prevents double transaction fees',async()=>{const a=await input(),old=a.rules.find(r=>r.id==='transaction')!;a.simulation=true;a.rules=[old,{...old,version:'new',rateBps:1000,effectiveFrom:'2026-10-01T00:00:00.000Z'}];assert.equal(calculate(a).feeSatang,2000);a.rules.push({...old,id:'installment',type:'INSTALLMENT',rateBps:1500,replacesType:'TRANSACTION'});assert.equal(eligibleRules(a).length,1);assert.equal(calculate(a).feeSatang,3000)});

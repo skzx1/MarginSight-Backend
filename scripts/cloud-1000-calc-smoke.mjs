@@ -1,0 +1,21 @@
+// Operator service benchmark, not an authenticated browser/API test.
+import {readFile,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const o=JSON.parse(await readFile('foundation-outputs.json','utf8'));
+Object.assign(process.env,{AWS_REGION:'ap-southeast-1',MEMBERSHIPS_TABLE:o.MembershipsTable,CATALOG_TABLE:o.CatalogTable,LEDGER_TABLE:o.LedgerTable,JOBS_TABLE:o.JobsTable});
+await writeFile('scripts/operator-runtime.mjs',(await readFile('backend/dist/api.mjs','utf8'))+'\nexport {Repository,AwsStorage,calculate,boundedMap};\n');
+const {Repository,AwsStorage,calculate,boundedMap}=await import('./operator-runtime.mjs');
+const repo=new Repository(new AwsStorage()),fixture=JSON.parse(await readFile('assistant-mock-input.json','utf8')),store=JSON.parse(await readFile('import-smoke-result.json','utf8')).store;
+assert.match(store,/^AWS-VERIFY-IMPORT-/);
+for(const c of fixture.costs)await repo.mergeCatalog(store,'COST#'+c.sku+'#'+c.version,c);
+for(const r of fixture.rules)await repo.mergeCatalog(store,'RULE#'+r.id+'#'+r.version,r);
+for(const e of fixture.enrollments)await repo.mergeCatalog(store,'ENROLL#'+e.id,e);
+let catalogQueries=0;const query=repo.db.query.bind(repo.db);repo.db.query=async(...args)=>{if(args[0]==='catalog')catalogQueries++;return query(...args)};
+const started=performance.now(),orders=[];let cursor;
+do{const page=await repo.orders(store,'2026-10',100,cursor);orders.push(...page.items);cursor=page.next}while(cursor);
+assert.equal(orders.length,1000);const cache={jobs:new Map()};
+const results=await boundedMap(orders,async order=>{const input=await repo.input(store,order.platform,order.orderId,cache),result=calculate(input);await repo.db.put('jobs',{PK:'STORE#'+store,SK:'BENCHCALC#'+order.orderId,version:1,value:{input,result,origin:'MOCK',scope:'operator synthetic benchmark'}},0);return result},8);
+const profit=results.reduce((n,v)=>n+(v.profitSatang??0),0),revenue=results.reduce((n,v)=>n+v.revenueSatang,0),elapsedMs=Math.round(performance.now()-started);
+assert.equal(results.filter(v=>v.profitSatang!==null).length,1000);assert.equal(profit,-100000);assert.equal(revenue,20000000);assert.equal(catalogQueries,3);
+const report={scope:'operator service code on real DynamoDB: 1000 order inputs, deterministic calculations and synthetic snapshots, bounded 8; not Cognito/API Gateway E2E',origin:'MOCK',store,orders:orders.length,profitSatang:profit,revenueSatang:revenue,catalogQueries,elapsedMs,formulaVersion:results[0].formulaVersion,expectedPerOrder:'200 - 46 fees - 130 cost - 5 packaging - 10 ads - 10 shipping = -1 THB'};
+await writeFile('backend-1000-smoke.json',JSON.stringify(report,null,2));console.log('BENCH_REPORT_B64_BEGIN'+Buffer.from(JSON.stringify(report)).toString('base64')+'BENCH_REPORT_B64_END');assert.ok(elapsedMs<18000,'Needs further optimization before the 20-second API budget');console.log('PASS 1000 real DynamoDB reads + calculations + snapshots under 18 seconds');

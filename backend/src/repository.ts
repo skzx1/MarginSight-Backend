@@ -1,0 +1,62 @@
+import {createHash,randomUUID} from 'node:crypto';
+import type {Storage,Table,Row} from './storage.js';
+import type {CalculationInput,Cost,Enrollment,Fee,Item,Order,Product,Rule,Adjustment} from './domain/model.js';
+import {AppError,demand} from './errors.js';
+import {businessMonth} from './domain/date.js';
+import {selectCost,eligibleRules} from './domain/calculate.js';
+export const id=(value:string)=>{demand(/^[A-Za-z0-9_.-]{1,100}$/.test(value),'INVALID_ID');return value};
+export const pk=(store:string)=>'STORE#'+id(store);
+export const orderPk=(store:string,platform:string,orderId:string)=>pk(store)+'#ORDER#'+id(platform)+'#'+id(orderId);
+export const orderKey=(platform:string,orderId:string)=>Buffer.from(JSON.stringify([platform,orderId])).toString('base64url');
+export function parseOrderKey(key:string):[string,string]{try{const a=JSON.parse(Buffer.from(key,'base64url').toString());demand(Array.isArray(a)&&a.length===2,'INVALID_ORDER_KEY');return [id(a[0]),id(a[1])]}catch{throw new AppError('INVALID_ORDER_KEY')}}
+function canonical(value:any):any{if(Array.isArray(value))return value.map(canonical);if(value&&typeof value==='object')return Object.fromEntries(Object.keys(value).sort().filter(k=>value[k]!==undefined).map(k=>[k,canonical(value[k])]));return value}
+export const hash=(value:unknown)=>createHash('sha256').update(Buffer.isBuffer(value)?value:JSON.stringify(canonical(value))).digest('hex');
+export interface InputCache {catalog?:Promise<{costs:Cost[];rules:Rule[];enrollments:Enrollment[]}>;jobs:Map<string,Promise<Row>>}
+const reopened=(row:Row):Row=>({...row,version:row.version+1,value:{...row.value,feesConfirmed:false,settlementStatus:'UNSETTLED',feeReviewRequired:true}});
+export class Repository {
+ constructor(public db:Storage){}
+ async member(user:string,store:string,write=false){const r=await this.db.get('memberships','USER#'+user,pk(store));demand(r&&['OWNER','EDITOR','VIEWER'].includes(r.value.role),'FORBIDDEN',403);if(write)demand(r.value.role!=='VIEWER','FORBIDDEN',403);return r.value}
+ async stores(user:string){return (await this.db.query('memberships','USER#'+user,'STORE#',50)).items.map(r=>({id:r.SK.slice(6),...r.value}))}
+ async all(t:Table,key:string,prefix:string,max=2000){let next:string|undefined,rows:Row[]=[];do{const p=await this.db.query(t,key,prefix,Math.min(100,max-rows.length),next);rows.push(...p.items);next=p.next;if(rows.length>=max&&next)throw new AppError('QUERY_RANGE_TOO_LARGE',413)}while(next);return rows}
+ async catalog<T>(store:string,prefix:string){const rows=await this.all('catalog',pk(store),prefix),values:T[]=[],jobs=new Map<string,Promise<Row>>();for(const row of rows){if(row.value.importId){let promise=jobs.get(row.value.importId);if(!promise){promise=this.job(store,row.value.importId);jobs.set(row.value.importId,promise)}if((await promise).value.status!=='COMPLETED')continue;}values.push(row.value as T)}return values}
+ async writeCatalog(store:string,key:string,value:unknown,unique=false){const old=await this.db.get('catalog',pk(store),key);demand(!unique||!old,'VERSION_ALREADY_EXISTS',409);const row={PK:pk(store),SK:key,version:(old?.version??0)+1,value,hash:hash(value)};demand(await this.db.put('catalog',row,old?.version??0),'CONCURRENT_UPDATE',409);return row.value}
+ async mergeCatalog(store:string,key:string,value:any):Promise<'accepted'|'duplicate'|'conflict'>{const old=await this.db.get('catalog',pk(store),key),semantic=(v:any)=>hash(Object.fromEntries(Object.entries(v).filter(([k])=>!['sourceRef','importId','observedAt','resolutionId'].includes(k))));if(old){if(semantic(old.value)===semantic(value))return 'duplicate';const conflictKey='CONFLICT#'+hash(['catalog',key,semantic(value)]),prior=await this.db.get('jobs',pk(store),conflictKey);if(prior?.value.resolution?.targetKey){const target=await this.db.get('catalog',pk(store),prior.value.resolution.targetKey);if(target?.value.resolutionId===conflictKey.slice(9))return 'duplicate';}await this.db.put('jobs',{PK:pk(store),SK:conflictKey,version:1,value:{table:'catalog',key,existingVersion:old.version,existing:old.value,incoming:value,detectedAt:new Date().toISOString()}},0);return 'conflict'}if(!await this.db.put('catalog',{PK:pk(store),SK:key,version:1,value,hash:semantic(value)},0))return this.mergeCatalog(store,key,value);return 'accepted'}
+ async input(store:string,platform:string,orderId:string,cache?:InputCache):Promise<CalculationInput>{
+  const rows=await this.all('ledger',orderPk(store,platform,orderId),'');const header=rows.find(r=>r.SK==='HEADER');demand(header,'ORDER_NOT_FOUND',404);const order={...header.value,ledgerVersion:header.version} as Order;
+  for(const row of rows){if(row.value.importId){const key=store+'#'+row.value.importId;let promise=cache?.jobs.get(key);if(!promise){promise=this.job(store,row.value.importId);cache?.jobs.set(key,promise)}const job=await promise;demand(job.value.status==='COMPLETED','ORDER_IMPORT_REQUIRES_REVIEW',409)}}
+  const load=async()=>{const [costs,rules,enrollments]=await Promise.all([this.catalog<Cost>(store,'COST#'),this.catalog<Rule>(store,'RULE#'),this.catalog<Enrollment>(store,'ENROLL#')]);return {costs,rules,enrollments}};
+  const catalogs=cache?await(cache.catalog??=load()):await load();
+  const input:CalculationInput={order,items:rows.filter(r=>r.SK.startsWith('ITEM#')).map(r=>r.value as Item),fees:rows.filter(r=>r.SK.startsWith('FEE#')).map(r=>r.value as Fee),adjustments:rows.filter(r=>r.SK.startsWith('ADJ#')).map(r=>r.value as Adjustment),...catalogs};
+  const skus=[...new Set(input.items.map(i=>i.sku))];input.costs=skus.flatMap(sku=>{const cost=selectCost(input.costs,sku,order.orderAt);return cost?[cost]:[]});input.rules=eligibleRules(input).filter(r=>!r.sku||skus.includes(r.sku));input.enrollments=input.enrollments.filter(e=>e.effectiveFrom<=order.orderAt&&(!e.effectiveTo||order.orderAt<e.effectiveTo));demand(Buffer.byteLength(JSON.stringify(input))<300000,'ORDER_INPUT_TOO_LARGE',413);return input;
+ }
+ async orders(store:string,month:string,limit=50,cursor?:string,descending=false){demand(/^\d{4}-(0[1-9]|1[0-2])$/.test(month),'INVALID_MONTH');const p=await this.db.query('ledger',pk(store)+'#MONTH#'+month,'',limit,cursor,true,descending);return {items:p.items.map(r=>({...r.value,key:orderKey(r.value.platform,r.value.orderId)})),next:p.next}}
+ async job(store:string,jobId:string){const r=await this.db.get('jobs',pk(store),'JOB#'+id(jobId));demand(r,'JOB_NOT_FOUND',404);return r}
+ async updateJob(store:string,jobId:string,change:any){const r=await this.job(store,jobId);const next={...r,version:r.version+1,value:{...r.value,...change}};demand(await this.db.put('jobs',next,r.version),'CONCURRENT_JOB_UPDATE',409);return next.value}
+ async createJob(store:string,value:any){const jobId=randomUUID();const row={PK:pk(store),SK:'JOB#'+jobId,version:1,value:{id:jobId,createdAt:new Date().toISOString(),...value}};demand(await this.db.put('jobs',row,0),'JOB_CONFLICT',409);return row.value}
+ async mergeLedger(store:string,platform:string,orderId:string,key:string,value:any,attempt=0):Promise<'accepted'|'duplicate'|'conflict'>{
+  demand(attempt<8,'CONCURRENT_LEDGER_UPDATE',409);
+  const PK=orderPk(store,platform,orderId),old=await this.db.get('ledger',PK,key);const h=hash(value);
+  // Provenance changes across overlapping reports do not change transaction identity/content.
+  const semantic=(v:any)=>Object.fromEntries(Object.entries(v).filter(([k])=>!['sourceRef','importId','observedAt','resolutionId',...(key==='HEADER'?['settlementStatus','feesConfirmed','payoutSatang','ledgerVersion','feeReviewRequired']:[])].includes(k)));const payloadHash=hash(semantic(value));
+  const legacyPayloadHash=createHash('sha256').update(JSON.stringify(Object.fromEntries(Object.entries(value).filter(([k])=>!['sourceRef','importId','observedAt','resolutionId'].includes(k))))).digest('hex');
+  if(old&&(old.hash===payloadHash||old.hash===legacyPayloadHash||hash(semantic(old.value))===payloadHash))return 'duplicate';
+  if(old){const c={PK:pk(store),SK:'CONFLICT#'+hash([PK,key,payloadHash]),version:1,value:{platform,orderId,key,existingVersion:old.version,existing:old.value,incoming:value,detectedAt:new Date().toISOString()}};await this.db.put('jobs',c,0);return 'conflict'}
+  const row:Row={PK,SK:key,version:1,value,hash:payloadHash};
+  if(key==='HEADER'){row.GSI1PK=pk(store)+'#MONTH#'+businessMonth(value.orderAt);row.GSI1SK=value.orderAt+'#'+platform+'#'+orderId}
+  if(key!=='HEADER'){const header=await this.db.get('ledger',PK,'HEADER');if(header){if(!await this.db.transact('ledger',[{row,expectedVersion:0},{row:reopened(header),expectedVersion:header.version}]))return this.mergeLedger(store,platform,orderId,key,value,attempt+1);return 'accepted'}}
+  if(!await this.db.put('ledger',row,0))return this.mergeLedger(store,platform,orderId,key,value,attempt+1);return 'accepted';
+ }
+ async confirmFees(store:string,platform:string,orderId:string,expectedVersion?:number,payoutSatang?:number){for(let attempt=0;attempt<4;attempt++){const r=await this.db.get('ledger',orderPk(store,platform,orderId),'HEADER');demand(r,'ORDER_NOT_FOUND',404);demand(expectedVersion===undefined||expectedVersion===r.version,'LEDGER_CHANGED_REVIEW_AGAIN',409);const next={...r,version:r.version+1,value:{...r.value,feesConfirmed:true,feeReviewRequired:false,settlementStatus:'SETTLED',...(payoutSatang===undefined?{}:{payoutSatang})}};if(await this.db.put('ledger',next,r.version))return;if(expectedVersion!==undefined)throw new AppError('LEDGER_CHANGED_REVIEW_AGAIN',409)}throw new AppError('CONCURRENT_UPDATE',409)}
+ async conflicts(store:string){return (await this.all('jobs',pk(store),'CONFLICT#')).map(r=>({id:r.SK.slice(9),...r.value}))}
+ async resolveConflict(store:string,conflictId:string,user:string,choice:'KEEP_EXISTING'|'USE_INCOMING',reason:string){
+  demand(/^[a-f0-9]{64}$/.test(conflictId),'INVALID_CONFLICT_ID');const conflict=await this.db.get('jobs',pk(store),'CONFLICT#'+conflictId);demand(conflict,'CONFLICT_NOT_FOUND',404);if(conflict.value.resolution)return conflict.value;
+  const c=conflict.value,table=c.table==='catalog'?'catalog':'ledger',PK=table==='catalog'?pk(store):orderPk(store,c.platform,c.orderId),old=await this.db.get(table,PK,c.key);demand(old,'SOURCE_NOT_FOUND',404);
+  if(choice==='USE_INCOMING'&&table==='catalog'&&c.key.startsWith('COST#')){
+   const targetKey=c.key+'#correction-'+conflictId,existing=await this.db.get('catalog',PK,targetKey),reviewedAt=new Date().toISOString();
+   if(!existing){demand(old.version===(c.existingVersion??1),'SOURCE_CHANGED_REVIEW_AGAIN',409);const audit={PK,SK:'REVISION#'+c.key+'#'+old.version+'#'+conflictId,version:1,value:{original:old.value,conflictId,reviewedBy:user,reason,reviewedAt}};const cost={PK,SK:targetKey,version:1,value:{...c.incoming,version:'correction-'+conflictId,createdAt:reviewedAt,verifiedBy:user,resolutionId:conflictId}};demand(await this.db.transact('catalog',[{row:audit,expectedVersion:0},{row:cost,expectedVersion:0}]),'CONCURRENT_UPDATE',409)}
+   const value={...c,resolution:{choice,reason,reviewedBy:user,reviewedAt,targetKey}};demand(await this.db.put('jobs',{...conflict,version:conflict.version+1,value},conflict.version),'CONCURRENT_UPDATE',409);return value;
+  }
+  if(choice==='USE_INCOMING'&&old.value.resolutionId!==conflictId){demand(c.key!=='HEADER','HEADER_REVISION_REQUIRES_NEW_REPORT');demand(old.version===(c.existingVersion??1),'SOURCE_CHANGED_REVIEW_AGAIN',409);const incoming=c.incoming,payloadHash=hash(Object.fromEntries(Object.entries(incoming).filter(([k])=>!['sourceRef','importId','observedAt','resolutionId'].includes(k))));const audit={PK,SK:'REVISION#'+c.key+'#'+old.version,version:1,value:{original:old.value,conflictId,reviewedBy:user,reason,reviewedAt:new Date().toISOString()}};const writes=[{row:audit,expectedVersion:0},{row:{...old,version:old.version+1,value:{...incoming,resolutionId:conflictId},hash:payloadHash},expectedVersion:old.version}];if(table==='ledger'){const header=await this.db.get('ledger',PK,'HEADER');if(header)writes.push({row:reopened(header),expectedVersion:header.version});}demand(await this.db.transact(table,writes),'CONCURRENT_UPDATE',409)}
+  const value={...c,resolution:{choice,reason,reviewedBy:user,reviewedAt:new Date().toISOString()}};demand(await this.db.put('jobs',{...conflict,version:conflict.version+1,value},conflict.version),'CONCURRENT_UPDATE',409);return value;
+ }
+}

@@ -1,0 +1,5 @@
+import type {APIGatewayProxyEventV2} from 'aws-lambda';
+import {cloudContext} from '../context.js';
+import {route,safeError} from '../api.js';
+import {AppError} from '../errors.js';
+export async function handler(event:APIGatewayProxyEventV2){try{if(event.requestContext.http.method==='OPTIONS')return {statusCode:204,headers:{'cache-control':'no-store'},body:''};if(Buffer.byteLength(event.body??'')>300000)throw new AppError('BODY_TOO_LARGE',413);const response=await route(cloudContext(),{method:event.requestContext.http.method,path:event.rawPath,authorization:event.headers.authorization,origin:event.headers.origin,query:(event.queryStringParameters??{}) as Record<string,string>,body:event.body?JSON.parse(event.isBase64Encoded?Buffer.from(event.body,'base64').toString():event.body):undefined});return {statusCode:200,headers:{'content-type':'application/json','cache-control':'no-store'},body:JSON.stringify(response)}}catch(e){const error=safeError(e);return {statusCode:error.status,headers:{'content-type':'application/json'},body:JSON.stringify(error.body)}}}

@@ -1,0 +1,24 @@
+// Operator-only test copy; never deploy these additional exports to Lambda/API.
+import {readFile,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const o=JSON.parse(await readFile('foundation-outputs.json','utf8'));
+Object.assign(process.env,{AWS_REGION:'ap-southeast-1',MEMBERSHIPS_TABLE:o.MembershipsTable,CATALOG_TABLE:o.CatalogTable,LEDGER_TABLE:o.LedgerTable,JOBS_TABLE:o.JobsTable,BEDROCK_REGION:'us-east-1',BEDROCK_MODEL_ID:'amazon.nova-lite-v1:0',AI_ENABLED:'true',AI_OUTPUT_TOKENS:'500',AI_DAILY_CALL_LIMIT:'30'});
+await writeFile('scripts/operator-runtime.mjs',(await readFile('backend/dist/api.mjs','utf8'))+'\nexport {Repository,AwsStorage,AI};\n');
+const {Repository,AwsStorage,AI}=await import('./operator-runtime.mjs');
+const repo=new Repository(new AwsStorage()),input=JSON.parse(await readFile('assistant-mock-input.json','utf8')),store='AWS-VERIFY-AI-'+Date.now();
+for(const c of input.costs)await repo.writeCatalog(store,'COST#'+c.sku+'#'+c.version,c,true);
+for(const r of input.rules)await repo.writeCatalog(store,'RULE#'+r.id+'#'+r.version,r,true);
+for(const e of input.enrollments)await repo.writeCatalog(store,'ENROLL#'+e.id,e,true);
+await repo.mergeLedger(store,input.order.platform,input.order.orderId,'HEADER',input.order);
+for(const i of input.items)await repo.mergeLedger(store,input.order.platform,input.order.orderId,'ITEM#'+i.lineId,i);
+for(const f of input.fees)await repo.mergeLedger(store,input.order.platform,input.order.orderId,'FEE#'+f.feeId,f);
+for(let n=0;n<6&&(await repo.orders(store,'2026-10')).items.length===0;n++)await new Promise(resolve=>setTimeout(resolve,1000));
+const ai=new AI(repo);let modelCalls=0;const toolNames=[],send=ai.client.send.bind(ai.client);
+ai.client.send=async(...args)=>{modelCalls++;const response=await send(...args);for(const c of response.output?.message?.content??[])if(c.toolUse)toolNames.push(c.toolUse.name);return response};
+const result=await ai.assistant(store,{message:'ลดราคา 15% ยังมีกำไรไหม คำนวณด้วย simulateDiscount',sku:input.items[0].sku,month:'2026-10'});
+const report={scope:'operator IAM in CloudShell using the exact bundled application AI/service code and real DynamoDB/Bedrock; browser/Cognito Lambda assistant endpoint not tested',origin:'MOCK',store,modelCalls,toolNames,provider:result.provider,reason:result.reason,answer:result.answer,profitSatang:result.result?.profitSatang,marginPct:result.result?.marginPct};
+await writeFile('assistant-smoke-result.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+assert.equal(report.profitSatang,-1410);assert.equal(report.marginPct,-8.29);assert.ok(modelCalls>=1&&modelCalls<=3);
+assert.ok(['bedrock-tools','deterministic-fallback'].includes(report.provider));
+assert.ok(toolNames.includes('simulateDiscount'));
+console.log('PASS real Bedrock tool orchestration with deterministic -14.10 THB result; auth/browser gate remains');

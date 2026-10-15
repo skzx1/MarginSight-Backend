@@ -1,0 +1,14 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {LocalStorage} from '../src/storage.js';
+import {Repository} from '../src/repository.js';
+import {LocalFiles} from '../src/files.js';
+import {createContext} from '../src/context.js';
+import {seed} from '../src/seed.js';
+import {imageDimensions} from '../src/ai.js';
+import {compareProgram} from '../src/domain/program.js';
+process.env.AI_ENABLED='false';
+test('link code consumption is atomic, single-use, expiring and membership rechecked',async()=>{const db=new LocalStorage(),repo=new Repository(db);await seed(repo);const ctx=createContext(repo,new LocalFiles('.local/unused'),{send:async()=>{}});const code=await ctx.line.linkingCode('demo-a','DEMO-001');const results=await Promise.allSettled([ctx.line.consumeCode('line-a',code.code),ctx.line.consumeCode('line-b',code.code)]);assert.equal(results.filter(x=>x.status==='fulfilled').length,1);await assert.rejects(ctx.line.consumeCode('line-c',code.code));const exp=await ctx.line.linkingCode('demo-a','DEMO-001'),key='LINK#'+createHash('sha256').update(exp.code).digest('hex'),row=await db.get('memberships',key,'PENDING');await db.put('memberships',{...row!,version:row!.version+1,value:{...row!.value,expiresAt:Date.now()-1}},row!.version);await assert.rejects(ctx.line.consumeCode('line-d',exp.code),/LINK_CODE_EXPIRED/)});
+test('unknown images rejected before model; JPEG dimensions inspected without decoding image',()=>{assert.throws(()=>imageDimensions(Buffer.from([255,216,255,217]),'image/jpeg'));const jpeg=Buffer.from([255,216,255,192,0,11,8,0,100,0,200,1,1,0,0,255,217]);assert.deepEqual(imageDimensions(jpeg,'image/jpeg'),{width:200,height:100})});
+test('program comparison uses the engine and does not persist hypothetical enrollment',async()=>{const repo=new Repository(new LocalStorage());await seed(repo);const input=await repo.input('DEMO-001','mock-market','O-DEMO-001'),before=JSON.stringify(input);const result=compareProgram(input);assert.equal(result.withoutProgram.profitSatang,1500);assert.equal(result.withProgram.profitSatang,900);assert.equal(result.incrementalTtrPercentagePoints,3);assert.equal(JSON.stringify(input),before)});

@@ -1,0 +1,12 @@
+import {spawnSync} from 'node:child_process';
+import {readdirSync} from 'node:fs';
+import {resolve} from 'node:path';
+const run=(args,cwd=process.cwd())=>{const r=spawnSync(process.execPath,args,{cwd,stdio:'inherit'});if(r.status!==0)process.exit(r.status??1)};
+run(['node_modules/typescript/bin/tsc','--noEmit','-p','backend']);
+run(['node_modules/tsx/dist/cli.mjs','--test',...readdirSync('backend/tests').filter(n=>n.endsWith('.test.ts')).map(n=>'backend/tests/'+n)]);
+run([resolve('backend/build.mjs')],resolve('backend'));
+run(['scripts/test-built.mjs']);
+run(['scripts/export-browser-preview.mjs']);
+run(['scripts/check-infrastructure.mjs']);
+run(['scripts/package-deploy.mjs']);
+console.log('PASS standalone backend verification; no web source required');

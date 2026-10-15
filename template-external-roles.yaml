@@ -1,0 +1,1450 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "MarginSight economical serverless prototype - MOCK merchant data, private storage",
+  "Parameters": {
+    "DemoEnabled": {
+      "Type": "String",
+      "AllowedValues": [
+        "true",
+        "false"
+      ],
+      "Default": "false"
+    },
+    "AIRegion": {
+      "Type": "String",
+      "AllowedValues": [
+        "us-east-1",
+        "ap-southeast-1",
+        "ap-southeast-7"
+      ],
+      "Default": "us-east-1"
+    },
+    "AIEnabled": {
+      "Type": "String",
+      "AllowedValues": [
+        "true",
+        "false"
+      ],
+      "Default": "false"
+    },
+    "LineSecretArn": {
+      "Type": "String",
+      "Default": ""
+    }
+  },
+  "Conditions": {
+    "HasLineSecret": {
+      "Fn::Not": [
+        {
+          "Fn::Equals": [
+            {
+              "Ref": "LineSecretArn"
+            },
+            ""
+          ]
+        }
+      ]
+    }
+  },
+  "Resources": {
+    "Memberships": {
+      "Type": "AWS::DynamoDB::Table",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "BillingMode": "PAY_PER_REQUEST",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "PK",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "SK",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "PK",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "SK",
+            "KeyType": "RANGE"
+          }
+        ],
+        "SSESpecification": {
+          "SSEEnabled": true
+        },
+        "TimeToLiveSpecification": {
+          "AttributeName": "expiresAt",
+          "Enabled": true
+        }
+      }
+    },
+    "Catalog": {
+      "Type": "AWS::DynamoDB::Table",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "BillingMode": "PAY_PER_REQUEST",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "PK",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "SK",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "PK",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "SK",
+            "KeyType": "RANGE"
+          }
+        ],
+        "SSESpecification": {
+          "SSEEnabled": true
+        },
+        "TimeToLiveSpecification": {
+          "AttributeName": "expiresAt",
+          "Enabled": true
+        }
+      }
+    },
+    "Ledger": {
+      "Type": "AWS::DynamoDB::Table",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "BillingMode": "PAY_PER_REQUEST",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "PK",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "SK",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "GSI1PK",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "GSI1SK",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "PK",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "SK",
+            "KeyType": "RANGE"
+          }
+        ],
+        "SSESpecification": {
+          "SSEEnabled": true
+        },
+        "GlobalSecondaryIndexes": [
+          {
+            "IndexName": "ByStoreMonth",
+            "KeySchema": [
+              {
+                "AttributeName": "GSI1PK",
+                "KeyType": "HASH"
+              },
+              {
+                "AttributeName": "GSI1SK",
+                "KeyType": "RANGE"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "ALL"
+            }
+          }
+        ],
+        "TimeToLiveSpecification": {
+          "AttributeName": "expiresAt",
+          "Enabled": true
+        }
+      }
+    },
+    "Jobs": {
+      "Type": "AWS::DynamoDB::Table",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "BillingMode": "PAY_PER_REQUEST",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "PK",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "SK",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "PK",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "SK",
+            "KeyType": "RANGE"
+          }
+        ],
+        "SSESpecification": {
+          "SSEEnabled": true
+        },
+        "TimeToLiveSpecification": {
+          "AttributeName": "expiresAt",
+          "Enabled": true
+        }
+      }
+    },
+    "WebBucket": {
+      "Type": "AWS::S3::Bucket",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "IgnorePublicAcls": true,
+          "BlockPublicPolicy": true,
+          "RestrictPublicBuckets": true
+        },
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        },
+        "OwnershipControls": {
+          "Rules": [
+            {
+              "ObjectOwnership": "BucketOwnerEnforced"
+            }
+          ]
+        }
+      }
+    },
+    "UploadsBucket": {
+      "Type": "AWS::S3::Bucket",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "IgnorePublicAcls": true,
+          "BlockPublicPolicy": true,
+          "RestrictPublicBuckets": true
+        },
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        },
+        "OwnershipControls": {
+          "Rules": [
+            {
+              "ObjectOwnership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "CorsConfiguration": {
+          "CorsRules": [
+            {
+              "AllowedOrigins": [
+                {
+                  "Fn::Sub": "https://${Distribution.DomainName}"
+                }
+              ],
+              "AllowedMethods": [
+                "PUT",
+                "GET",
+                "HEAD"
+              ],
+              "AllowedHeaders": [
+                "content-type"
+              ],
+              "MaxAge": 300
+            }
+          ]
+        },
+        "LifecycleConfiguration": {
+          "Rules": [
+            {
+              "Id": "ExpirePrototypeUploads",
+              "Status": "Enabled",
+              "ExpirationInDays": 30
+            },
+            {
+              "Id": "ExpireGuestDemoUploads",
+              "Status": "Enabled",
+              "Prefix": "DEMO-GUEST-",
+              "ExpirationInDays": 1
+            }
+          ]
+        }
+      }
+    },
+    "OAC": {
+      "Type": "AWS::CloudFront::OriginAccessControl",
+      "Properties": {
+        "OriginAccessControlConfig": {
+          "Name": {
+            "Fn::Sub": "${AWS::StackName}-oac"
+          },
+          "OriginAccessControlOriginType": "s3",
+          "SigningBehavior": "always",
+          "SigningProtocol": "sigv4"
+        }
+      }
+    },
+    "Rewrite": {
+      "Type": "AWS::CloudFront::Function",
+      "Properties": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-rewrite"
+        },
+        "AutoPublish": true,
+        "FunctionConfig": {
+          "Comment": "Next static export index rewrite",
+          "Runtime": "cloudfront-js-2.0"
+        },
+        "FunctionCode": "function handler(event){var r=event.request;if(r.uri.endsWith('/'))r.uri+='index.html';else if(r.uri.indexOf('.')<0)r.uri+='/index.html';return r;}"
+      }
+    },
+    "Distribution": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Enabled": true,
+          "DefaultRootObject": "index.html",
+          "HttpVersion": "http2",
+          "PriceClass": "PriceClass_100",
+          "Origins": [
+            {
+              "Id": "web",
+              "DomainName": {
+                "Fn::GetAtt": [
+                  "WebBucket",
+                  "RegionalDomainName"
+                ]
+              },
+              "OriginAccessControlId": {
+                "Ref": "OAC"
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": ""
+              }
+            }
+          ],
+          "DefaultCacheBehavior": {
+            "TargetOriginId": "web",
+            "ViewerProtocolPolicy": "redirect-to-https",
+            "AllowedMethods": [
+              "GET",
+              "HEAD",
+              "OPTIONS"
+            ],
+            "CachedMethods": [
+              "GET",
+              "HEAD"
+            ],
+            "Compress": true,
+            "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+            "FunctionAssociations": [
+              {
+                "EventType": "viewer-request",
+                "FunctionARN": {
+                  "Fn::GetAtt": [
+                    "Rewrite",
+                    "FunctionARN"
+                  ]
+                }
+              }
+            ]
+          },
+          "ViewerCertificate": {
+            "CloudFrontDefaultCertificate": true
+          }
+        }
+      }
+    },
+    "WebPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "WebBucket"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudfront.amazonaws.com"
+              },
+              "Action": "s3:GetObject",
+              "Resource": {
+                "Fn::Sub": "${WebBucket.Arn}/*"
+              },
+              "Condition": {
+                "StringEquals": {
+                  "AWS:SourceArn": {
+                    "Fn::Sub": "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${Distribution}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "UserPool": {
+      "Type": "AWS::Cognito::UserPool",
+      "Properties": {
+        "UserPoolName": {
+          "Fn::Sub": "${AWS::StackName}-users"
+        },
+        "UsernameAttributes": [
+          "email"
+        ],
+        "AutoVerifiedAttributes": [
+          "email"
+        ],
+        "AdminCreateUserConfig": {
+          "AllowAdminCreateUserOnly": false
+        },
+        "Policies": {
+          "PasswordPolicy": {
+            "MinimumLength": 12,
+            "RequireLowercase": true,
+            "RequireUppercase": true,
+            "RequireNumbers": true,
+            "RequireSymbols": true
+          }
+        },
+        "UserPoolTier": "LITE"
+      }
+    },
+    "AuthDomain": {
+      "Type": "AWS::Cognito::UserPoolDomain",
+      "Properties": {
+        "Domain": {
+          "Fn::Sub": "marginsight-${AWS::AccountId}"
+        },
+        "UserPoolId": {
+          "Ref": "UserPool"
+        }
+      }
+    },
+    "ResourceServer": {
+      "Type": "AWS::Cognito::UserPoolResourceServer",
+      "Properties": {
+        "UserPoolId": {
+          "Ref": "UserPool"
+        },
+        "Identifier": "marginsight",
+        "Name": "MarginSight API",
+        "Scopes": [
+          {
+            "ScopeName": "api",
+            "ScopeDescription": "Access stores with verified membership"
+          }
+        ]
+      }
+    },
+    "AppClient": {
+      "Type": "AWS::Cognito::UserPoolClient",
+      "DependsOn": "ResourceServer",
+      "Properties": {
+        "UserPoolId": {
+          "Ref": "UserPool"
+        },
+        "ClientName": "MarginSight web",
+        "GenerateSecret": false,
+        "SupportedIdentityProviders": [
+          "COGNITO"
+        ],
+        "AllowedOAuthFlowsUserPoolClient": true,
+        "AllowedOAuthFlows": [
+          "code"
+        ],
+        "AllowedOAuthScopes": [
+          "openid",
+          "email",
+          "marginsight/api"
+        ],
+        "CallbackURLs": [
+          {
+            "Fn::Sub": "https://${Distribution.DomainName}/"
+          }
+        ],
+        "LogoutURLs": [
+          {
+            "Fn::Sub": "https://${Distribution.DomainName}/"
+          }
+        ],
+        "AccessTokenValidity": 1,
+        "TokenValidityUnits": {
+          "AccessToken": "hours"
+        },
+        "PreventUserExistenceErrors": "ENABLED",
+        "EnableTokenRevocation": true
+      }
+    },
+    "HttpApi": {
+      "Type": "AWS::Serverless::HttpApi",
+      "Properties": {
+        "StageName": "$default",
+        "CorsConfiguration": {
+          "AllowOrigins": [
+            {
+              "Fn::Sub": "https://${Distribution.DomainName}"
+            }
+          ],
+          "AllowHeaders": [
+            "authorization",
+            "content-type"
+          ],
+          "AllowMethods": [
+            "GET",
+            "POST",
+            "OPTIONS"
+          ]
+        },
+        "DefaultRouteSettings": {
+          "ThrottlingBurstLimit": 10,
+          "ThrottlingRateLimit": 5
+        },
+        "Auth": {
+          "DefaultAuthorizer": "Cognito",
+          "Authorizers": {
+            "Cognito": {
+              "JwtConfiguration": {
+                "issuer": {
+                  "Fn::Sub": "https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}"
+                },
+                "audience": [
+                  {
+                    "Ref": "AppClient"
+                  }
+                ]
+              },
+              "IdentitySource": "$request.header.Authorization",
+              "AuthorizationScopes": [
+                "marginsight/api"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ImportDLQ": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "MessageRetentionPeriod": 1209600,
+        "SqsManagedSseEnabled": true
+      }
+    },
+    "ImportQueue": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "VisibilityTimeout": 360,
+        "MessageRetentionPeriod": 86400,
+        "SqsManagedSseEnabled": true,
+        "RedrivePolicy": {
+          "deadLetterTargetArn": {
+            "Fn::GetAtt": [
+              "ImportDLQ",
+              "Arn"
+            ]
+          },
+          "maxReceiveCount": 5
+        }
+      }
+    },
+    "OCRDLQ": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "MessageRetentionPeriod": 1209600,
+        "SqsManagedSseEnabled": true
+      }
+    },
+    "OCRQueue": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "VisibilityTimeout": 360,
+        "MessageRetentionPeriod": 86400,
+        "SqsManagedSseEnabled": true,
+        "RedrivePolicy": {
+          "deadLetterTargetArn": {
+            "Fn::GetAtt": [
+              "OCRDLQ",
+              "Arn"
+            ]
+          },
+          "maxReceiveCount": 5
+        }
+      }
+    },
+    "LineDLQ": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "MessageRetentionPeriod": 1209600,
+        "SqsManagedSseEnabled": true
+      }
+    },
+    "LineQueue": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "VisibilityTimeout": 360,
+        "MessageRetentionPeriod": 86400,
+        "SqsManagedSseEnabled": true,
+        "RedrivePolicy": {
+          "deadLetterTargetArn": {
+            "Fn::GetAtt": [
+              "LineDLQ",
+              "Arn"
+            ]
+          },
+          "maxReceiveCount": 5
+        }
+      }
+    },
+    "Api": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "backend/dist/",
+        "Handler": "api.handler",
+        "Runtime": "nodejs24.x",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 512,
+        "Timeout": 20,
+        "Environment": {
+          "Variables": {
+            "DEMO_ENABLED": {
+              "Ref": "DemoEnabled"
+            },
+            "DEMO_WEB_ORIGIN": {
+              "Fn::Sub": "https://${Distribution.DomainName}"
+            },
+            "BEDROCK_REGION": {
+              "Ref": "AIRegion"
+            },
+            "MEMBERSHIPS_TABLE": {
+              "Ref": "Memberships"
+            },
+            "CATALOG_TABLE": {
+              "Ref": "Catalog"
+            },
+            "LEDGER_TABLE": {
+              "Ref": "Ledger"
+            },
+            "JOBS_TABLE": {
+              "Ref": "Jobs"
+            },
+            "UPLOADS_BUCKET": {
+              "Ref": "UploadsBucket"
+            },
+            "IMPORT_QUEUE_URL": {
+              "Ref": "ImportQueue"
+            },
+            "OCR_QUEUE_URL": {
+              "Ref": "OCRQueue"
+            },
+            "LINE_QUEUE_URL": {
+              "Ref": "LineQueue"
+            },
+            "USER_POOL_ID": {
+              "Ref": "UserPool"
+            },
+            "USER_POOL_CLIENT_ID": {
+              "Ref": "AppClient"
+            },
+            "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0",
+            "AI_ENABLED": {
+              "Ref": "AIEnabled"
+            },
+            "AI_DAILY_CALL_LIMIT": "30",
+            "AI_OUTPUT_TOKENS": "500",
+            "LINE_SECRET_ARN": {
+              "Ref": "LineSecretArn"
+            }
+          }
+        },
+        "Events": {
+          "DemoSession": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "Path": "/demo/session",
+              "Method": "POST",
+              "Auth": {
+                "Authorizer": "NONE"
+              }
+            }
+          },
+          "DemoApi": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "Path": "/demo/api/{proxy+}",
+              "Method": "ANY",
+              "Auth": {
+                "Authorizer": "NONE"
+              }
+            }
+          },
+          "Health": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "Path": "/health",
+              "Method": "GET",
+              "Auth": {
+                "Authorizer": "NONE"
+              }
+            }
+          },
+          "Root": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "Path": "/{proxy+}",
+              "Method": "ANY"
+            }
+          },
+          "Preflight": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "Path": "/{proxy+}",
+              "Method": "OPTIONS",
+              "Auth": {
+                "Authorizer": "NONE"
+              }
+            }
+          }
+        },
+        "FunctionName": {
+          "Fn::Sub": "${AWS::StackName}-api"
+        },
+        "Role": {
+          "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${AWS::StackName}-api"
+        }
+      }
+    },
+    "ApiLog": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/${Api}"
+        },
+        "RetentionInDays": 7
+      }
+    },
+    "Assistant": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "backend/dist/",
+        "Handler": "api.handler",
+        "Runtime": "nodejs24.x",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 512,
+        "Timeout": 28,
+        "Environment": {
+          "Variables": {
+            "DEMO_ENABLED": {
+              "Ref": "DemoEnabled"
+            },
+            "DEMO_WEB_ORIGIN": {
+              "Fn::Sub": "https://${Distribution.DomainName}"
+            },
+            "BEDROCK_REGION": {
+              "Ref": "AIRegion"
+            },
+            "MEMBERSHIPS_TABLE": {
+              "Ref": "Memberships"
+            },
+            "CATALOG_TABLE": {
+              "Ref": "Catalog"
+            },
+            "LEDGER_TABLE": {
+              "Ref": "Ledger"
+            },
+            "JOBS_TABLE": {
+              "Ref": "Jobs"
+            },
+            "UPLOADS_BUCKET": {
+              "Ref": "UploadsBucket"
+            },
+            "IMPORT_QUEUE_URL": {
+              "Ref": "ImportQueue"
+            },
+            "OCR_QUEUE_URL": {
+              "Ref": "OCRQueue"
+            },
+            "LINE_QUEUE_URL": {
+              "Ref": "LineQueue"
+            },
+            "USER_POOL_ID": {
+              "Ref": "UserPool"
+            },
+            "USER_POOL_CLIENT_ID": {
+              "Ref": "AppClient"
+            },
+            "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0",
+            "AI_ENABLED": {
+              "Ref": "AIEnabled"
+            },
+            "AI_DAILY_CALL_LIMIT": "30",
+            "AI_OUTPUT_TOKENS": "500",
+            "LINE_SECRET_ARN": {
+              "Ref": "LineSecretArn"
+            }
+          }
+        },
+        "Events": {
+          "DemoAssistant": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "Path": "/demo/api/stores/{storeId}/assistant",
+              "Method": "POST",
+              "Auth": {
+                "Authorizer": "NONE"
+              }
+            }
+          },
+          "Assistant": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "Path": "/stores/{storeId}/assistant",
+              "Method": "POST"
+            }
+          }
+        },
+        "FunctionName": {
+          "Fn::Sub": "${AWS::StackName}-assistant"
+        },
+        "Role": {
+          "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${AWS::StackName}-assistant"
+        }
+      }
+    },
+    "AssistantLog": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/${Assistant}"
+        },
+        "RetentionInDays": 7
+      }
+    },
+    "ImportWorker": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "backend/dist/",
+        "Handler": "worker.handler",
+        "Runtime": "nodejs24.x",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 512,
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "DEMO_ENABLED": {
+              "Ref": "DemoEnabled"
+            },
+            "DEMO_WEB_ORIGIN": {
+              "Fn::Sub": "https://${Distribution.DomainName}"
+            },
+            "BEDROCK_REGION": {
+              "Ref": "AIRegion"
+            },
+            "MEMBERSHIPS_TABLE": {
+              "Ref": "Memberships"
+            },
+            "CATALOG_TABLE": {
+              "Ref": "Catalog"
+            },
+            "LEDGER_TABLE": {
+              "Ref": "Ledger"
+            },
+            "JOBS_TABLE": {
+              "Ref": "Jobs"
+            },
+            "UPLOADS_BUCKET": {
+              "Ref": "UploadsBucket"
+            },
+            "IMPORT_QUEUE_URL": {
+              "Ref": "ImportQueue"
+            },
+            "OCR_QUEUE_URL": {
+              "Ref": "OCRQueue"
+            },
+            "LINE_QUEUE_URL": {
+              "Ref": "LineQueue"
+            },
+            "USER_POOL_ID": {
+              "Ref": "UserPool"
+            },
+            "USER_POOL_CLIENT_ID": {
+              "Ref": "AppClient"
+            },
+            "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0",
+            "AI_ENABLED": {
+              "Ref": "AIEnabled"
+            },
+            "AI_DAILY_CALL_LIMIT": "30",
+            "AI_OUTPUT_TOKENS": "500",
+            "LINE_SECRET_ARN": {
+              "Ref": "LineSecretArn"
+            }
+          }
+        },
+        "Events": {
+          "Queue": {
+            "Type": "SQS",
+            "Properties": {
+              "Queue": {
+                "Fn::GetAtt": [
+                  "ImportQueue",
+                  "Arn"
+                ]
+              },
+              "BatchSize": 1,
+              "FunctionResponseTypes": [
+                "ReportBatchItemFailures"
+              ],
+              "ScalingConfig": {
+                "MaximumConcurrency": 2
+              }
+            }
+          }
+        },
+        "FunctionName": {
+          "Fn::Sub": "${AWS::StackName}-importworker"
+        },
+        "Role": {
+          "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${AWS::StackName}-importworker"
+        }
+      }
+    },
+    "ImportWorkerLog": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/${ImportWorker}"
+        },
+        "RetentionInDays": 7
+      }
+    },
+    "OCRWorker": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "backend/dist/",
+        "Handler": "worker.handler",
+        "Runtime": "nodejs24.x",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 512,
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "DEMO_ENABLED": {
+              "Ref": "DemoEnabled"
+            },
+            "DEMO_WEB_ORIGIN": {
+              "Fn::Sub": "https://${Distribution.DomainName}"
+            },
+            "BEDROCK_REGION": {
+              "Ref": "AIRegion"
+            },
+            "MEMBERSHIPS_TABLE": {
+              "Ref": "Memberships"
+            },
+            "CATALOG_TABLE": {
+              "Ref": "Catalog"
+            },
+            "LEDGER_TABLE": {
+              "Ref": "Ledger"
+            },
+            "JOBS_TABLE": {
+              "Ref": "Jobs"
+            },
+            "UPLOADS_BUCKET": {
+              "Ref": "UploadsBucket"
+            },
+            "IMPORT_QUEUE_URL": {
+              "Ref": "ImportQueue"
+            },
+            "OCR_QUEUE_URL": {
+              "Ref": "OCRQueue"
+            },
+            "LINE_QUEUE_URL": {
+              "Ref": "LineQueue"
+            },
+            "USER_POOL_ID": {
+              "Ref": "UserPool"
+            },
+            "USER_POOL_CLIENT_ID": {
+              "Ref": "AppClient"
+            },
+            "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0",
+            "AI_ENABLED": {
+              "Ref": "AIEnabled"
+            },
+            "AI_DAILY_CALL_LIMIT": "30",
+            "AI_OUTPUT_TOKENS": "500",
+            "LINE_SECRET_ARN": {
+              "Ref": "LineSecretArn"
+            }
+          }
+        },
+        "Events": {
+          "Queue": {
+            "Type": "SQS",
+            "Properties": {
+              "Queue": {
+                "Fn::GetAtt": [
+                  "OCRQueue",
+                  "Arn"
+                ]
+              },
+              "BatchSize": 1,
+              "FunctionResponseTypes": [
+                "ReportBatchItemFailures"
+              ],
+              "ScalingConfig": {
+                "MaximumConcurrency": 2
+              }
+            }
+          }
+        },
+        "FunctionName": {
+          "Fn::Sub": "${AWS::StackName}-ocrworker"
+        },
+        "Role": {
+          "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${AWS::StackName}-ocrworker"
+        }
+      }
+    },
+    "OCRWorkerLog": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/${OCRWorker}"
+        },
+        "RetentionInDays": 7
+      }
+    },
+    "LineWebhook": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "backend/dist/",
+        "Handler": "line.handler",
+        "Runtime": "nodejs24.x",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 512,
+        "Timeout": 15,
+        "Environment": {
+          "Variables": {
+            "DEMO_ENABLED": {
+              "Ref": "DemoEnabled"
+            },
+            "DEMO_WEB_ORIGIN": {
+              "Fn::Sub": "https://${Distribution.DomainName}"
+            },
+            "BEDROCK_REGION": {
+              "Ref": "AIRegion"
+            },
+            "MEMBERSHIPS_TABLE": {
+              "Ref": "Memberships"
+            },
+            "CATALOG_TABLE": {
+              "Ref": "Catalog"
+            },
+            "LEDGER_TABLE": {
+              "Ref": "Ledger"
+            },
+            "JOBS_TABLE": {
+              "Ref": "Jobs"
+            },
+            "UPLOADS_BUCKET": {
+              "Ref": "UploadsBucket"
+            },
+            "IMPORT_QUEUE_URL": {
+              "Ref": "ImportQueue"
+            },
+            "OCR_QUEUE_URL": {
+              "Ref": "OCRQueue"
+            },
+            "LINE_QUEUE_URL": {
+              "Ref": "LineQueue"
+            },
+            "USER_POOL_ID": {
+              "Ref": "UserPool"
+            },
+            "USER_POOL_CLIENT_ID": {
+              "Ref": "AppClient"
+            },
+            "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0",
+            "AI_ENABLED": {
+              "Ref": "AIEnabled"
+            },
+            "AI_DAILY_CALL_LIMIT": "30",
+            "AI_OUTPUT_TOKENS": "500",
+            "LINE_SECRET_ARN": {
+              "Ref": "LineSecretArn"
+            }
+          }
+        },
+        "Events": {
+          "Webhook": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "Path": "/line/webhook",
+              "Method": "POST",
+              "Auth": {
+                "Authorizer": "NONE"
+              }
+            }
+          }
+        },
+        "FunctionName": {
+          "Fn::Sub": "${AWS::StackName}-linewebhook"
+        },
+        "Role": {
+          "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${AWS::StackName}-linewebhook"
+        }
+      }
+    },
+    "LineWebhookLog": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/${LineWebhook}"
+        },
+        "RetentionInDays": 7
+      }
+    },
+    "LineWorker": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "backend/dist/",
+        "Handler": "worker.handler",
+        "Runtime": "nodejs24.x",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 512,
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "DEMO_ENABLED": {
+              "Ref": "DemoEnabled"
+            },
+            "DEMO_WEB_ORIGIN": {
+              "Fn::Sub": "https://${Distribution.DomainName}"
+            },
+            "BEDROCK_REGION": {
+              "Ref": "AIRegion"
+            },
+            "MEMBERSHIPS_TABLE": {
+              "Ref": "Memberships"
+            },
+            "CATALOG_TABLE": {
+              "Ref": "Catalog"
+            },
+            "LEDGER_TABLE": {
+              "Ref": "Ledger"
+            },
+            "JOBS_TABLE": {
+              "Ref": "Jobs"
+            },
+            "UPLOADS_BUCKET": {
+              "Ref": "UploadsBucket"
+            },
+            "IMPORT_QUEUE_URL": {
+              "Ref": "ImportQueue"
+            },
+            "OCR_QUEUE_URL": {
+              "Ref": "OCRQueue"
+            },
+            "LINE_QUEUE_URL": {
+              "Ref": "LineQueue"
+            },
+            "USER_POOL_ID": {
+              "Ref": "UserPool"
+            },
+            "USER_POOL_CLIENT_ID": {
+              "Ref": "AppClient"
+            },
+            "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0",
+            "AI_ENABLED": {
+              "Ref": "AIEnabled"
+            },
+            "AI_DAILY_CALL_LIMIT": "30",
+            "AI_OUTPUT_TOKENS": "500",
+            "LINE_SECRET_ARN": {
+              "Ref": "LineSecretArn"
+            }
+          }
+        },
+        "Events": {
+          "Queue": {
+            "Type": "SQS",
+            "Properties": {
+              "Queue": {
+                "Fn::GetAtt": [
+                  "LineQueue",
+                  "Arn"
+                ]
+              },
+              "BatchSize": 1,
+              "FunctionResponseTypes": [
+                "ReportBatchItemFailures"
+              ],
+              "ScalingConfig": {
+                "MaximumConcurrency": 2
+              },
+              "Enabled": {
+                "Fn::If": [
+                  "HasLineSecret",
+                  true,
+                  false
+                ]
+              }
+            }
+          }
+        },
+        "FunctionName": {
+          "Fn::Sub": "${AWS::StackName}-lineworker"
+        },
+        "Role": {
+          "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${AWS::StackName}-lineworker"
+        }
+      }
+    },
+    "LineWorkerLog": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/${LineWorker}"
+        },
+        "RetentionInDays": 7
+      }
+    },
+    "Seed": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "backend/dist/",
+        "Handler": "seed.handler",
+        "Runtime": "nodejs24.x",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 512,
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "DEMO_ENABLED": {
+              "Ref": "DemoEnabled"
+            },
+            "DEMO_WEB_ORIGIN": {
+              "Fn::Sub": "https://${Distribution.DomainName}"
+            },
+            "BEDROCK_REGION": {
+              "Ref": "AIRegion"
+            },
+            "MEMBERSHIPS_TABLE": {
+              "Ref": "Memberships"
+            },
+            "CATALOG_TABLE": {
+              "Ref": "Catalog"
+            },
+            "LEDGER_TABLE": {
+              "Ref": "Ledger"
+            },
+            "JOBS_TABLE": {
+              "Ref": "Jobs"
+            },
+            "UPLOADS_BUCKET": {
+              "Ref": "UploadsBucket"
+            },
+            "IMPORT_QUEUE_URL": {
+              "Ref": "ImportQueue"
+            },
+            "OCR_QUEUE_URL": {
+              "Ref": "OCRQueue"
+            },
+            "LINE_QUEUE_URL": {
+              "Ref": "LineQueue"
+            },
+            "USER_POOL_ID": {
+              "Ref": "UserPool"
+            },
+            "USER_POOL_CLIENT_ID": {
+              "Ref": "AppClient"
+            },
+            "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0",
+            "AI_ENABLED": {
+              "Ref": "AIEnabled"
+            },
+            "AI_DAILY_CALL_LIMIT": "30",
+            "AI_OUTPUT_TOKENS": "500",
+            "LINE_SECRET_ARN": {
+              "Ref": "LineSecretArn"
+            }
+          }
+        },
+        "FunctionName": {
+          "Fn::Sub": "${AWS::StackName}-seed"
+        },
+        "Role": {
+          "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${AWS::StackName}-seed"
+        }
+      }
+    },
+    "SeedLog": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/${Seed}"
+        },
+        "RetentionInDays": 7
+      }
+    }
+  },
+  "Outputs": {
+    "ApiUrl": {
+      "Value": {
+        "Fn::Sub": "https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+      }
+    },
+    "WebUrl": {
+      "Value": {
+        "Fn::Sub": "https://${Distribution.DomainName}"
+      }
+    },
+    "WebBucket": {
+      "Value": {
+        "Ref": "WebBucket"
+      }
+    },
+    "UploadsBucket": {
+      "Value": {
+        "Ref": "UploadsBucket"
+      }
+    },
+    "DistributionId": {
+      "Value": {
+        "Ref": "Distribution"
+      }
+    },
+    "UserPoolId": {
+      "Value": {
+        "Ref": "UserPool"
+      }
+    },
+    "ClientId": {
+      "Value": {
+        "Ref": "AppClient"
+      }
+    },
+    "SeedFunction": {
+      "Value": {
+        "Ref": "Seed"
+      }
+    },
+    "AuthDomain": {
+      "Value": {
+        "Fn::Sub": "https://marginsight-${AWS::AccountId}.auth.${AWS::Region}.amazoncognito.com"
+      }
+    },
+    "MembershipsTable": {
+      "Value": {
+        "Ref": "Memberships"
+      }
+    },
+    "CatalogTable": {
+      "Value": {
+        "Ref": "Catalog"
+      }
+    },
+    "LedgerTable": {
+      "Value": {
+        "Ref": "Ledger"
+      }
+    },
+    "JobsTable": {
+      "Value": {
+        "Ref": "Jobs"
+      }
+    },
+    "ImportQueueUrl": {
+      "Value": {
+        "Ref": "ImportQueue"
+      }
+    },
+    "OCRQueueUrl": {
+      "Value": {
+        "Ref": "OCRQueue"
+      }
+    },
+    "LineQueueUrl": {
+      "Value": {
+        "Ref": "LineQueue"
+      }
+    }
+  }
+}

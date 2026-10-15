@@ -1,0 +1,35 @@
+{
+  "name": "@marginsight/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/local.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "build": "node build.mjs",
+    "seed": "tsx src/seed-cli.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "3.1151.0",
+    "@aws-sdk/client-dynamodb": "3.1151.0",
+    "@aws-sdk/client-s3": "3.1151.0",
+    "@aws-sdk/client-secrets-manager": "3.1151.0",
+    "@aws-sdk/client-sqs": "3.1151.0",
+    "@aws-sdk/lib-dynamodb": "3.1151.0",
+    "@aws-sdk/s3-request-presigner": "3.1151.0",
+    "aws-jwt-verify": "5.2.1",
+    "csv-parse": "7.0.3",
+    "decimal.js": "10.6.0",
+    "exceljs": "4.4.0",
+    "uuid": "^11.1.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.164",
+    "@types/node": "^24.19.2",
+    "esbuild": "0.28.2",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  }
+}

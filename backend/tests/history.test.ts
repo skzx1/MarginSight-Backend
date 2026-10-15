@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {normalizeDate,businessMonth} from '../src/domain/date.js';
+import {selectCost,eligibleRules} from '../src/domain/calculate.js';
+import {demoFixture} from '../src/domain/demo-fixture.js';
+import {Repository} from '../src/repository.js';
+import {LocalStorage} from '../src/storage.js';
+test('date-only is Thai midnight; month grouping preserves Thai month boundary',async()=>{const at=normalizeDate('2026-10-01');assert.equal(at,'2026-09-30T17:00:00.000Z');assert.equal(businessMonth(at),'2026-10');assert.throws(()=>normalizeDate('2026-02-30'));const repo=new Repository(new LocalStorage());await repo.mergeLedger('TEST','mock','month-start','HEADER',{...demoFixture().order,orderAt:at,orderId:'month-start'});assert.equal((await repo.orders('TEST','2026-10')).items.length,1);assert.equal((await repo.orders('TEST','2026-09')).items.length,0)});
+test('same effective date uses the newest confirmed cost/rule, not a random UUID sort',()=>{const input=demoFixture(),old={...input.costs[0],version:'zzz',createdAt:'2026-10-01T00:00:00.000Z'},next={...old,version:'aaa',unitCostSatang:14000,createdAt:'2026-10-02T00:00:00.000Z'};assert.equal(selectCost([old,next],old.sku,input.order.orderAt)?.unitCostSatang,14000);input.rules=[{...input.rules[0],version:'zzz',createdAt:old.createdAt},{...input.rules[0],version:'aaa',rateBps:1000,createdAt:next.createdAt}];assert.equal(eligibleRules(input)[0].rateBps,1000)});
+test('descending store-month query and pagination return latest records without skipping',async()=>{const repo=new Repository(new LocalStorage());for(let i=0;i<150;i++)await repo.mergeLedger('TEST','mock','O-'+i,'HEADER',{...demoFixture().order,orderId:'O-'+i,orderAt:new Date(Date.parse('2026-10-01T00:00:00Z')+i*60000).toISOString()});const first=await repo.orders('TEST','2026-10',100,undefined,true);assert.equal(first.items[0].orderId,'O-149');assert.equal(first.items.at(-1).orderId,'O-50');const last=await repo.orders('TEST','2026-10',100,first.next,true);assert.equal(last.items[0].orderId,'O-49');assert.equal(last.items.length,50)});

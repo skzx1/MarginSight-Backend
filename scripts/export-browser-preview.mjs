@@ -1,0 +1,23 @@
+import {build} from 'esbuild';
+import {mkdir,readFile,writeFile,readdir,cp} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {spawnSync} from 'node:child_process';
+import {resolve} from 'node:path';
+const root=resolve(import.meta.dirname,'..');process.chdir(root);
+const out='contracts/browser-preview';await mkdir(out,{recursive:true});
+await build({entryPoints:['backend/src/browser-preview.ts'],outfile:out+'/domain.generated.js',bundle:true,format:'esm',platform:'browser',target:'es2022',minify:true,banner:{js:'// GENERATED from MarginSight-Backend canonical engine. Do not edit.'}});
+const r=spawnSync(process.execPath,['node_modules/typescript/bin/tsc','--declaration','--emitDeclarationOnly','--noEmit','false','--target','ES2023','--module','NodeNext','--moduleResolution','NodeNext','--strict','--skipLibCheck','--outDir','contracts/.staging','backend/src/browser-preview.ts'],{stdio:'inherit'});
+if(r.status!==0)process.exit(r.status??1);
+await mkdir(out+'/domain-types',{recursive:true});
+for(const file of ['calculate.d.ts','model.d.ts','demo-fixture.d.ts'])await cp('contracts/.staging/domain/'+file,out+'/domain-types/'+file);
+const declaration=(await readFile('contracts/.staging/browser-preview.d.ts','utf8')).replaceAll('./domain/','./domain-types/');
+await writeFile(out+'/domain.generated.d.ts',declaration);
+const hash=data=>createHash('sha256').update(data).digest('hex');
+async function list(dir){let files=[];for(const e of await readdir(dir,{withFileTypes:true})){const p=dir+'/'+e.name;files.push(...(e.isDirectory()?await list(p):[p]));}return files.sort();}
+const files={};for(const file of await list(out))if(!file.endsWith('/manifest.json'))files[file.slice(out.length+1)]=hash(await readFile(file));
+const sourceHashes={};for(const file of ['backend/src/browser-preview.ts',...(await list('backend/src/domain'))])sourceHashes[file]=hash(await readFile(file));
+const formulaSource=await readFile('backend/src/domain/calculate.ts','utf8');
+const formulaVersion=formulaSource.match(/FORMULA_VERSION=['"]([^'"]+)/)[1];
+const manifest={schemaVersion:1,formulaVersion,sourceRepository:'https://github.com/skzx1/MarginSight-Backend',sourceHashes,files};
+await writeFile(out+'/manifest.json',JSON.stringify(manifest,null,2)+'\n');
+console.log('Exported versioned browser contract: '+formulaVersion);

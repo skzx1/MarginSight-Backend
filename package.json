@@ -1,0 +1,29 @@
+{
+  "name": "marginsight-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend"
+  ],
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "npm run dev -w backend",
+    "typecheck": "npm run typecheck -w backend",
+    "test": "npm test -w backend",
+    "build": "npm run build -w backend",
+    "verify": "node scripts/verify.mjs",
+    "seed:mock": "npm run seed -w backend",
+    "smoke:local": "node scripts/smoke-local.mjs",
+    "smoke:aws": "node scripts/smoke-aws.mjs",
+    "export:preview": "node scripts/export-browser-preview.mjs",
+    "package:deploy": "node scripts/package-deploy.mjs"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "11.1.1"
+    }
+  }
+}
