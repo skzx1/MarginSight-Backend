@@ -81,3 +81,7 @@ VERIFIED_AWS_BROWSER: เผยแพร่staticจากad7bb9fบนS3/CloudF
 ## Repository split — 15 October 2026
 
 VERIFIED_LOCAL: standalone install/build/test completed for both repositories. Backend43 tests and bundled handlers pass; Frontend5 golden/artifact checks, TypeScript and Next static export pass. No new AWS deployment or resources in this split. Project remains PARTIAL_WITH_EXTERNAL_BLOCKERS. See AWS-HANDOFF.md for current runbook.
+
+## Assistant platform/campaign selection — 18 October 2026
+
+VERIFIED_LOCAL / VERIFIED_AWS for this feature slice: Frontend f7dcc060b6a5d885f864da9ae42659eb5874d4ef and Backend 5fb6ed2d1a5f139678e48d89db9df36461088278 are deployed. Assistant supports Shopee PRIME/LiveXtra, Lazada Premium and TikTok BCD/Flash Sales with merchant-confirmed base fees, VAT, category and exemptions. Deterministic engine margin-v1.1.0 calculates hypothetical selected-SKU scenarios, discount, break-even and comparison without changing actual orders or joining campaigns. Unknown rates remain incomplete. Local/CloudShell verification: Backend50 and Frontend21 tests pass, builds and packaging pass. Actual AWS browser tested all three platform calculations and TikTok exclusivity at1440/390px; no horizontal overflow. See assistant-marketplace.md and verification.md for boundaries/evidence. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains; existing LINE/native-platform/real-OCR/two-Cognito-user full workflow evidence is unchanged.

@@ -51,3 +51,9 @@ Self-service15ตุลาคม: deployโค้ดLambda/เว็บบนบ
 ## Repository split — 15 October 2026
 
 15 October 2026 repository split: local installs/builds/tests and GitHub source publication only; no AWS API/model/deploy/resource actions performed in this slice. No new spend/credit reading claimed. Team total cap350USD and trial target25USD remain; re-read billing before the next cloud operation.
+
+## Assistant platform/campaign release — 18 October 2026 (Bangkok)
+
+Before preparation: STS109991964227, marginsight Singapore UPDATE_COMPLETE; BudgetHackathon-Team10 limit350USD/ActualSpend0.02USD, lastUpdated2026-10-17T02:23:35.531Z (lagged, not current remaining credit). Trial target25USD and total350USD unchanged. Built both repos in CloudShell/tmp; SAM prepared then executed reviewed code-only existing-resource update, published static frontend once and one7-path CloudFront invalidation. No new resources, IAM roles, regional service, model capacity or training. All scenario calculations use the existing API deterministic engine; no inference/OCR/LINE call. Verification created two isolated MOCK sessions (API/browser) with bounded scenario posts and reads, no real merchant writes. Standard CloudShell/S3/Lambda/DynamoDB/CDN usage may accrue; no estimate is represented as actual spend. Existing retained services still count toward budget.
+
+Frontend rollback snapshots: /tmp/marginsight-campaign-kybr58m0/pre-release in the current ephemeral CloudShell. Durable prior frontend release5c769793245d1ce3adb5d59f6435642c31d41fd4 and backend parent22872bf remain in Git; rebuild/review/redeploy preserved parameters to roll back, never delete store data. Current runtime Frontendf7dcc06/Backend5fb6ed2; later docs-only commits do not change published release markers.
