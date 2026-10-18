@@ -1,3 +1,7 @@
+## จัด repository — 18 ตุลาคม 2026
+
+นำภาพและบันทึก Frontend อ้างอิง3ไฟล์ออกจาก tracked tree ตาม [reference policy](reference-policy.md); ต้นฉบับและสำเนาสำรอง SHA-256 ยังอยู่ในเครื่อง. Clean snapshot ที่ไม่มีไฟล์เหล่านี้ผ่าน `npm ci` / `npm run verify` (50tests, typecheck, bundled Lambda checks, browser contract, infrastructure policy, packaging). Runtime/สูตร/fixtures/contracts/IaC/CIไม่เปลี่ยน และไม่มี AWS deployment รอบนี้. สถานะโครงการยัง PARTIAL_WITH_EXTERNAL_BLOCKERS.
+
 > บันทึกด้านล่างก่อนหัวข้อ Repository split เป็นประวัติจาก monorepo; ignored evidence อยู่เครื่องต้นทางและไม่ได้เผยแพร่ตามไฟล์ลิงก์เหล่านั้น ดู AWS-HANDOFF.md สำหรับคำสั่งปัจจุบัน.
 
 # สถานะ MarginSight — 15 ตุลาคม 2026 (งานเริ่ม14ตุลาคม)
@@ -75,7 +79,7 @@ VERIFIED_LOCAL: ดีไซน์ใหม่หน้าเริ่มต้�
 
 VERIFIED_AWS_BROWSER: เผยแพร่staticจากad7bb9fบนS3/CloudFrontเดิมและhealthผ่าน; เข้าguestMOCK, เปิด10เมนู, dashboard9บาท, simulation15%=-14.10บาท. นำเข้าorders.xlsxผ่านbrowserจริงสำเร็จรับ1/ซ้ำ0/ผิด0/conflict0. Cognitoclassicbrandingจาก26ad3e6อ่านกลับCSSตรง/มีlogo, ตรวจหน้าsignup/signinจริงโดยไม่submitcredentialsหรือสร้างบัญชีใหม่. ไม่อ้างว่าได้ทดสอบทุกmutation, liveOCR, LINEหรือสองบัญชีCognitoครบflowในรอบนี้.
 
-ดู[การออกแบบและขอบเขตผลตรวจ](ui-design.md), [ภาพAWS MOCK](design/marginsight-desktop.jpg). การเปลี่ยนรอบนี้เป็นwebstaticและCognitoappearance ไม่มีIAMroles/บริการใหม่/การเปลี่ยนสูตร. คงPARTIAL_WITH_EXTERNAL_BLOCKERSตามรายการข้อมูลและintegrationเดิม.
+ดูการออกแบบและขอบเขตผลตรวจ (ไฟล์อ้างอิงเฉพาะเครื่อง: `docs/ui-design.md`), ภาพAWS MOCK (ไฟล์อ้างอิงเฉพาะเครื่อง: `docs/design/marginsight-desktop.jpg`). การเปลี่ยนรอบนี้เป็นwebstaticและCognitoappearance ไม่มีIAMroles/บริการใหม่/การเปลี่ยนสูตร. คงPARTIAL_WITH_EXTERNAL_BLOCKERSตามรายการข้อมูลและintegrationเดิม.
 
 
 ## Repository split — 15 October 2026

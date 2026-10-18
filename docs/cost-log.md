@@ -1,3 +1,7 @@
+## Repository cleanup — 18 October 2026
+
+จัดไฟล์อ้างอิงใน Git เท่านั้น ทดสอบ clean snapshot ในเครื่อง ไม่มี AWS API/deploy/invalidation/model call หรือทรัพยากรใหม่. ค่า billing ด้านล่างเป็นผลตรวจรอบก่อน ไม่ใช่การอ่านงบใหม่ของงานจัดไฟล์นี้.
+
 > บันทึกด้านล่างก่อนหัวข้อ Repository split เป็นประวัติจาก monorepo; ignored evidence อยู่เครื่องต้นทางและไม่ได้เผยแพร่ตามไฟล์ลิงก์เหล่านั้น ดู AWS-HANDOFF.md สำหรับคำสั่งปัจจุบัน.
 
 # Cost log — 14–15 October 2026

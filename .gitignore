@@ -48,3 +48,7 @@ Thumbs.db
 /deploy-outputs.json
 /scripts/operator-runtime.mjs
 /contracts/.staging/
+
+# Frontend reference notes/screenshots are local-only in the Backend repo
+/docs/design/
+/docs/ui-design.md
