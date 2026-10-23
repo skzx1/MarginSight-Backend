@@ -7,7 +7,7 @@ export function mockRules(){return [
 export async function seed(repo:Repository,users=[{sub:'demo-a',store:'DEMO-001'},{sub:'demo-b',store:'DEMO-002'}]){
  const ensure=async(store:string,key:string,value:any)=>{if(await repo.db.get('catalog',pk(store),key))return;try{await repo.writeCatalog(store,key,value,true)}catch(e){if(!await repo.db.get('catalog',pk(store),key))throw e}};
  const ensureLedger=async(store:string,platform:string,orderId:string,key:string,value:any)=>{if(!await repo.db.get('ledger',pk(store)+'#ORDER#'+platform+'#'+orderId,key))await repo.mergeLedger(store,platform,orderId,key,value)};
- for(const u of users){await repo.db.put('memberships',{PK:'USER#'+u.sub,SK:pk(u.store),version:1,value:{role:'OWNER',name:u.store==='DEMO-001'?'ร้านสาธิต MarginSight':'ร้านทดสอบสิทธิ์ B',dataOrigin:'MOCK'}},0);
+ for(const u of users){await repo.db.put('memberships',{PK:'USER#'+u.sub,SK:pk(u.store),version:1,value:{role:'OWNER',name:u.store==='DEMO-001'?'ร้านสาธิต MarginShot':'ร้านทดสอบสิทธิ์ B',dataOrigin:'MOCK'}},0);
   await ensure(u.store,'PRODUCT#SKU-DEMO-01',{...mockEvidence,sku:'SKU-DEMO-01',name:'กระเป๋าผ้า รุ่นสาธิต',unit:'ชิ้น'});
   await ensure(u.store,'PRODUCT#SKU-MISSING-COST',{...mockEvidence,sku:'SKU-MISSING-COST',name:'สินค้าที่ยังไม่มีต้นทุน',unit:'ชิ้น'});
   await ensure(u.store,'COST#SKU-DEMO-01#2026-01-01T00:00:00.000Z#v1',{...mockEvidence,sourceRef:'mock supplier bill: 6 units / 780 THB',sku:'SKU-DEMO-01',version:'2026-01-01-v1',unitCostSatang:13000,effectiveFrom:'2026-01-01T00:00:00.000Z',verifiedBy:u.sub,method:'MERCHANT_CONFIRMED_UNIT_COST'});
