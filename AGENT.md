@@ -9,7 +9,7 @@
 - สูตร authoritative อยู่ `backend/src/domain/` เงินเป็น integer satang ใช้ Decimal ค่าบริการจริงแทน estimated ห้ามหักซ้ำ ค่าที่ขาดยัง unknown ต้นทุน/fee rule มี effective dates และ reconciliation ต้องตรงสตางค์.
 - Export browser preview ด้วย `npm run export:preview` หลังแก้สูตรหรือ type แล้วให้ Frontend sync generated artifact; ห้ามสร้างสูตรมือชุดที่สอง.
 - ตรวจ JWT + membership/tenant ทุกเส้นทาง รวม uploads/jobs/OCR/LINE. Guest capability ใช้เฉพาะ MOCK tenant และ guest routes มี expiry/quota/origin checks.
-- Bedrock ใช้ pre-trained Nova Lite ไม่ได้ train ด้วยข้อมูลร้าน AI เรียก bounded tools; OCR draft ต้องตรวจยืนยัน. Missing LINE/marketplace inputs บล็อกเฉพาะ live integration นั้น.
+- Bedrock liveยังใช้ pre-trained Nova Lite; ผู้ใช้เลือก Haiku4.5เมื่อ24ต.ค.2026 และโค้ดรองรับผ่าน Mantle us-east-1 แต่ยัง account access403 จึงห้ามอ้างว่าเปลี่ยน liveแล้ว. อ่าน docs/haiku-migration.mdก่อนเปิด AssistantModelId. OCRยังNovaแยกจากassistant; ไม่มี trainingด้วยข้อมูลร้าน. AIเรียก bounded tools; OCRdraftต้องตรวจยืนยัน. Missing LINE/marketplace inputsบล็อกเฉพาะ live integrationนั้น.
 - อัปเดต stack เดิมด้วย template-external-roles.yaml; ห้าม deploy foundation ทับ full stack ห้ามสร้าง roles/stack ใหม่เพียงเพราะแยก repo.
 
 ## การส่งมอบและความปลอดภัย

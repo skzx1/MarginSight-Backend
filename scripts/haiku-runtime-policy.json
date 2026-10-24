@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "HaikuInApprovedRegionOnly",
+      "Effect": "Allow",
+      "Action": "bedrock-mantle:CreateInference",
+      "Resource": "arn:aws:bedrock-mantle:us-east-1:109991964227:project/*",
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "us-east-1",
+          "bedrock-mantle:Model": "anthropic.claude-haiku-4-5",
+          "bedrock-mantle:ServiceTier": "default"
+        }
+      }
+    }
+  ]
+}

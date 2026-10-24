@@ -41,5 +41,5 @@ Backend เป็นเจ้าของ AWS stack ทั้งชุด Fronte
 - [แผนทั้งระบบ](plan.md), [ข้อกำหนด agent](AGENT.md)
 - [นโยบายภาพ/บันทึกอ้างอิงที่เก็บเฉพาะเครื่อง](docs/reference-policy.md)
 
-สถานะทั้งโครงการยัง **PARTIAL_WITH_EXTERNAL_BLOCKERS** ตามข้อจำกัด LINE/native platform/real OCR ground truth และการตรวจครบ flow ด้วยสองบัญชี Cognito. โมเดลสำเร็จรูป Nova Lite ยังไม่ได้ fine-tune; สูตรการเงินมาจาก deterministic engine.
+สถานะทั้งโครงการยัง **PARTIAL_WITH_EXTERNAL_BLOCKERS** ตามข้อจำกัด LINE/native platform/real OCR ground truth และการตรวจครบ flow ด้วยสองบัญชี Cognito. เว็บจริงยังใช้โมเดลสำเร็จรูป Nova Lite และไม่ได้ fine-tune; สูตรการเงินมาจาก deterministic engine. ผู้ใช้เลือก Claude Haiku4.5 แล้วและโค้ดรองรับ แต่การสลับ AWSยังถูกบล็อกด้วย account availability403 ดู [สถานะ/วิธีเปิด Haiku](docs/haiku-migration.md). OCRยังใช้ Novaแยกจากแชต.
 เอกสารประวัติที่คัดมามีผลตรวจ monorepo ก่อนแยก และอาจอ้างหลักฐานที่เก็บเฉพาะเครื่องต้นทาง ไม่ได้ส่งข้อมูลส่วนตัว/ignored evidence เข้า repo นี้. ผลตรวจ repo ที่แยกอยู่ท้าย docs/verification.md.

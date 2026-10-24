@@ -21,7 +21,7 @@ export async function route(ctx:Context,r:Request):Promise<any>{
  if(path==='/health'&&r.method==='GET')return {service:'MarginSight',status:'ok',formulaVersion:FORMULA_VERSION};
  if(path==='/dev/login'&&post)return {accessToken:localSession(r.body?.user??'demo-a'),expiresIn:3600};
  if(path==='/demo/session')return createDemoSession(repo,r);
- if(path.startsWith('/demo/api/')){const request={...r,path:path.slice('/demo/api'.length)},session=await authorizeDemo(repo,request);if(request.path==='/stores/'+session.store+'/integrations'&&r.method==='GET')return {line:{configured:false},ai:{enabled:process.env.AI_ENABLED==='true'},dataOrigin:'MOCK'};return dispatch(ctx,request,session.subject)}
+ if(path.startsWith('/demo/api/')){const request={...r,path:path.slice('/demo/api'.length)},session=await authorizeDemo(repo,request);if(request.path==='/stores/'+session.store+'/integrations'&&r.method==='GET')return {line:{configured:false},ai:{enabled:ctx.ai.enabled(),...ctx.ai.settings()},dataOrigin:'MOCK'};return dispatch(ctx,request,session.subject)}
  return dispatch(ctx,r,await subject(r.authorization));
 }
 async function dispatch(ctx:Context,r:Request,user:string):Promise<any>{
@@ -49,7 +49,7 @@ async function dispatch(ctx:Context,r:Request,user:string):Promise<any>{
  if(rest==='/assistant-scenarios'&&post)return ctx.ai.platformScenario(store,r.body);
  if(rest==='/assistant'&&post)return ctx.ai.assistant(store,r.body);
  if(rest==='/line/link'&&post)return ctx.line.linkingCode(user,store);
- if(rest==='/integrations'&&!post)return {platform:{status:'NOT_CONNECTED',adapter:'mock-v1'},ai:{enabled:ctx.ai.enabled(),model:process.env.BEDROCK_MODEL_ID??'amazon.nova-lite-v1:0'},line:{configured:!!process.env.LINE_SECRET_ARN}};
+ if(rest==='/integrations'&&!post)return {platform:{status:'NOT_CONNECTED',adapter:'mock-v1'},ai:{enabled:ctx.ai.enabled(),...ctx.ai.settings()},line:{configured:!!process.env.LINE_SECRET_ARN}};
  if(rest==='/conflicts'&&!post)return {items:await repo.conflicts(store)};
  const conflict=rest.match(/^\/conflicts\/([a-f0-9]{64})\/resolve$/);if(conflict&&post){const b=z.object({choice:z.enum(['KEEP_EXISTING','USE_INCOMING']),reason:z.string().trim().min(10).max(500)}).parse(r.body);return repo.resolveConflict(store,conflict[1],user,b.choice,b.reason)}
  if(rest==='/reconciliation'&&!post){const items=await boundedMap(await range(),async o=>{const input=await repo.input(store,o.platform,o.orderId,inputCache),actual=calculate(input),estimate=calculate({...input,simulation:true});return {key:o.key,orderId:o.orderId,actualFeeSatang:actual.feeStatus==='ACTUAL'&&!actual.unmappedCharges.length?actual.feeSatang:null,estimatedFeeSatang:estimate.status==='INCOMPLETE'?null:estimate.feeSatang,varianceSatang:actual.feeStatus==='ACTUAL'&&!actual.unmappedCharges.length&&estimate.status!=='INCOMPLETE'?actual.feeSatang-estimate.feeSatang:null,payoutReconciled:actual.payoutReconciled,scope:actual.revenueBasis,excludedCharges:actual.excludedCharges,missing:[...actual.missingFields,...estimate.missingFields],unmappedCharges:actual.unmappedCharges,rawCashDeductionSatang:actual.rawCashDeductionSatang,payoutBasis:actual.payoutBasis}});return {store,month,items,toleranceSatang:0,scope:'item settlement only'}}

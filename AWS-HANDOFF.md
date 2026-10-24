@@ -83,7 +83,7 @@ npm run verify
 python3 scripts/prepare-update.py
 ```
 
-`prepare-update.py` ตรวจ account/สถานะ stack, validate template, อ่าน parameter ปัจจุบันแล้วส่งต่อครบทุกตัว และเตรียม SAM change set แบบ **ไม่ execute** เพื่อรักษา `DemoEnabled`, `AIEnabled`, `AIRegion`, `LineSecretArn` ของระบบเดิม การเตรียมนี้มีการอัปโหลด artifact ไป AWS แล้ว ไม่ใช่ local dry run.
+`prepare-update.py` ตรวจ account/สถานะ stack, validate template, อ่าน parameter ปัจจุบันแล้วส่งต่อครบทุกตัว และเตรียม SAM change set แบบ **ไม่ execute** เพื่อรักษา `DemoEnabled`, `AIEnabled`, `AIRegion`, `LineSecretArn` ของระบบเดิม การเตรียมนี้มีการอัปโหลด artifact ไป AWS แล้ว ไม่ใช่ local dry run. ตั้งแต่24ต.ค.2026เพิ่ม `AssistantModelId`; stackเก่าจะรักษาNovaโดย default ไม่สลับไปHaikuเอง. การเลือก `--assistant-model anthropic.claude-haiku-4-5` ต้องผ่าน read-only access gateและ scoped runtime IAMตาม [Haiku migration](docs/haiku-migration.md). รอบนี้ยัง blocked403และยังไม่deploy.
 
 ใช้ `template-external-roles.yaml` เท่านั้นสำหรับบัญชีทีมนี้ และรักษา 7 roles เดิม (`marginsight-api`, `assistant`, `importworker`, `ocrworker`, `linewebhook`, `lineworker`, `seed` โดยมี prefix `marginsight-` ทุกตัว). ห้ามใช้ `template-foundation.yaml` ทับ stack เต็ม ห้ามใช้ script เก่าที่ชี้ `marginsight-demo` เพื่ออัปเดตระบบหลัก.
 

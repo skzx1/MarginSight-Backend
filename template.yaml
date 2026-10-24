@@ -31,6 +31,15 @@
     "LineSecretArn": {
       "Type": "String",
       "Default": ""
+    },
+    "AssistantModelId": {
+      "Type": "String",
+      "AllowedValues": [
+        "amazon.nova-lite-v1:0",
+        "anthropic.claude-haiku-4-5"
+      ],
+      "Default": "amazon.nova-lite-v1:0",
+      "Description": "Haiku requires verified in-Region account access and Mantle runtime permission; preserve Nova until that gate passes."
     }
   },
   "Conditions": {
@@ -43,6 +52,39 @@
             },
             ""
           ]
+        }
+      ]
+    },
+    "UseHaiku": {
+      "Fn::Equals": [
+        {
+          "Ref": "AssistantModelId"
+        },
+        "anthropic.claude-haiku-4-5"
+      ]
+    }
+  },
+  "Rules": {
+    "HaikuRegion": {
+      "RuleCondition": {
+        "Fn::Equals": [
+          {
+            "Ref": "AssistantModelId"
+          },
+          "anthropic.claude-haiku-4-5"
+        ]
+      },
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Equals": [
+              {
+                "Ref": "AIRegion"
+              },
+              "us-east-1"
+            ]
+          },
+          "AssertDescription": "Haiku must use the in-Region us-east-1 Mantle endpoint."
         }
       ]
     }
@@ -693,6 +735,9 @@
             "AI_OUTPUT_TOKENS": "500",
             "LINE_SECRET_ARN": {
               "Ref": "LineSecretArn"
+            },
+            "ASSISTANT_MODEL_ID": {
+              "Ref": "AssistantModelId"
             }
           }
         },
@@ -910,6 +955,9 @@
             "AI_OUTPUT_TOKENS": "500",
             "LINE_SECRET_ARN": {
               "Ref": "LineSecretArn"
+            },
+            "ASSISTANT_MODEL_ID": {
+              "Ref": "AssistantModelId"
             }
           }
         },
@@ -961,6 +1009,28 @@
                 "Resource": {
                   "Fn::Sub": "arn:${AWS::Partition}:bedrock:${AIRegion}::foundation-model/amazon.nova-lite-v1:0"
                 }
+              },
+              {
+                "Fn::If": [
+                  "UseHaiku",
+                  {
+                    "Effect": "Allow",
+                    "Action": "bedrock-mantle:CreateInference",
+                    "Resource": {
+                      "Fn::Sub": "arn:${AWS::Partition}:bedrock-mantle:us-east-1:${AWS::AccountId}:project/*"
+                    },
+                    "Condition": {
+                      "StringEquals": {
+                        "bedrock-mantle:Model": "anthropic.claude-haiku-4-5",
+                        "aws:RequestedRegion": "us-east-1",
+                        "bedrock-mantle:ServiceTier": "default"
+                      }
+                    }
+                  },
+                  {
+                    "Ref": "AWS::NoValue"
+                  }
+                ]
               }
             ]
           }
@@ -1061,6 +1131,9 @@
             "AI_OUTPUT_TOKENS": "500",
             "LINE_SECRET_ARN": {
               "Ref": "LineSecretArn"
+            },
+            "ASSISTANT_MODEL_ID": {
+              "Ref": "AssistantModelId"
             }
           }
         },
@@ -1234,6 +1307,9 @@
             "AI_OUTPUT_TOKENS": "500",
             "LINE_SECRET_ARN": {
               "Ref": "LineSecretArn"
+            },
+            "ASSISTANT_MODEL_ID": {
+              "Ref": "AssistantModelId"
             }
           }
         },
@@ -1390,6 +1466,9 @@
             "AI_OUTPUT_TOKENS": "500",
             "LINE_SECRET_ARN": {
               "Ref": "LineSecretArn"
+            },
+            "ASSISTANT_MODEL_ID": {
+              "Ref": "AssistantModelId"
             }
           }
         },
@@ -1563,6 +1642,9 @@
             "AI_OUTPUT_TOKENS": "500",
             "LINE_SECRET_ARN": {
               "Ref": "LineSecretArn"
+            },
+            "ASSISTANT_MODEL_ID": {
+              "Ref": "AssistantModelId"
             }
           }
         },
@@ -1623,6 +1705,28 @@
                     "Action": "secretsmanager:GetSecretValue",
                     "Resource": {
                       "Ref": "LineSecretArn"
+                    }
+                  },
+                  {
+                    "Ref": "AWS::NoValue"
+                  }
+                ]
+              },
+              {
+                "Fn::If": [
+                  "UseHaiku",
+                  {
+                    "Effect": "Allow",
+                    "Action": "bedrock-mantle:CreateInference",
+                    "Resource": {
+                      "Fn::Sub": "arn:${AWS::Partition}:bedrock-mantle:us-east-1:${AWS::AccountId}:project/*"
+                    },
+                    "Condition": {
+                      "StringEquals": {
+                        "bedrock-mantle:Model": "anthropic.claude-haiku-4-5",
+                        "aws:RequestedRegion": "us-east-1",
+                        "bedrock-mantle:ServiceTier": "default"
+                      }
                     }
                   },
                   {
@@ -1731,6 +1835,9 @@
             "AI_OUTPUT_TOKENS": "500",
             "LINE_SECRET_ARN": {
               "Ref": "LineSecretArn"
+            },
+            "ASSISTANT_MODEL_ID": {
+              "Ref": "AssistantModelId"
             }
           }
         },
