@@ -17,20 +17,19 @@ async function fixture(responses:any[]){
  }});return {ai,requests};
 }
 const tool={toolUse:{toolUseId:'qwen-discount',name:'simulateDiscount',input:{sku:'SKU-DEMO-01',discountPct:15}}};
-test('Qwen Converse round trip disables thinking, keeps bounded tools and uses exact domain results',async()=>{
- const {ai,requests}=await fixture([[tool],[{text:'ลดราคา 15% ขาดทุน 14.10 บาท'}]]);
+test('Qwen selects a bounded tool once; only the engine renders money and model narration is ignored',async()=>{
+ const {ai,requests}=await fixture([[{text:'กำไร 9999 บาท'},tool],new Error('A second generation must not be called')]);
  const result=await ai.assistant('DEMO-001',question);
  assert.equal(result.provider,'bedrock-tools');assert.equal(result.model,QWEN_32B);
  assert.equal(result.result?.profitSatang,-1410);assert.equal(result.result?.marginPct,-8.29);
- assert.equal(requests.length,2);for(const r of requests){assert.equal(r.modelId,QWEN_32B);assert.equal(r.inferenceConfig.maxTokens,500);assert.deepEqual(r.additionalModelRequestFields,{enable_thinking:false});}
- const round=requests[1].messages[2].content[0].toolResult;
- assert.equal(round.toolUseId,'qwen-discount');assert.equal(round.content[0].json.profitSatang,-1410);
+ assert.equal(requests.length,1);for(const r of requests){assert.equal(r.modelId,QWEN_32B);assert.equal(r.inferenceConfig.maxTokens,500);assert.deepEqual(r.additionalModelRequestFields,{enable_thinking:false});}
+ assert.ok(result.answer.includes('14.10'));assert.ok(!result.answer.includes('9999'));
 });
-test('Qwen wrong SKU, wrong discount, invented numbers and provider failure use checked fallback',async()=>{
+test('Qwen wrong SKU, wrong discount, narration without a tool and provider failure use checked fallback',async()=>{
  for(const [responses,reason] of [
   [[[{toolUse:{...tool.toolUse,input:{sku:'OTHER',discountPct:15}}}]],'SKU_CONTEXT_MISMATCH'],
   [[[{toolUse:{...tool.toolUse,input:{discountPct:5}}}]],'DISCOUNT_CONTEXT_MISMATCH'],
-  [[[tool],[{text:'กำไร 9999 บาท'}]],'MODEL_NUMBERS_REJECTED'],
+  [[[{text:'กำไร 9999 บาท'}]],'MODEL_NO_TOOL_RESULT'],
   [[new Error('provider error')],'MODEL_UNAVAILABLE']
  ] as [any[],string][]){
   const f=await fixture(responses);const result=await f.ai.assistant('DEMO-001',question);
