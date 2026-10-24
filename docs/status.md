@@ -1,3 +1,7 @@
+## เปลี่ยนผู้ช่วยเป็น Claude Haiku4.5 — 24 ตุลาคม 2026
+
+**VERIFIED_LOCAL / BLOCKED_EXTERNAL; ยังไม่เปลี่ยนโมเดลเว็บจริง.** โค้ดรองรับ Haikuผ่าน Mantle us-east-1 พร้อม bounded tools/quotas/SigV4/fallback และแยก OCRที่ยังใช้Nova. ทดสอบ Backend57ข้อ+Pythonparameter migration5ข้อผ่าน; typecheck/bundled handlers/contracts/IaCstructure/packagingผ่าน. CloudShellSAMlintผ่าน2templates; ทดสอบpreparegateจริงหยุดก่อนอัปโหลดเมื่อCountTokens403. AWSแจ้งว่าโมเดลไม่เปิดให้บัญชี109991964227; foundation model metadataมี agreementAvailabilityNOT_AVAILABLE. ไม่สร้าง agreement/subscribe/แก้IAM/preparechangeset/deploy/inference. อ่านLambdaenvกลับยืนยันRuntimeเดิมยังNovaLite. ดู [วิธีเปิดและร่างข้อความให้ผู้จัด](haiku-migration.md). สถานะรวมยัง PARTIAL_WITH_EXTERNAL_BLOCKERS; liveHaiku/tool/browserยังไม่ผ่านและไม่ใช้ localstubsแทนหลักฐานจริง.
+
 ## จัด repository — 18 ตุลาคม 2026
 
 นำภาพและบันทึก Frontend อ้างอิง3ไฟล์ออกจาก tracked tree ตาม [reference policy](reference-policy.md); ต้นฉบับและสำเนาสำรอง SHA-256 ยังอยู่ในเครื่อง. Clean snapshot ที่ไม่มีไฟล์เหล่านี้ผ่าน `npm ci` / `npm run verify` (50tests, typecheck, bundled Lambda checks, browser contract, infrastructure policy, packaging). Runtime/สูตร/fixtures/contracts/IaC/CIไม่เปลี่ยน และไม่มี AWS deployment รอบนี้. สถานะโครงการยัง PARTIAL_WITH_EXTERNAL_BLOCKERS.

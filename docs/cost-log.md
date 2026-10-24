@@ -1,3 +1,7 @@
+## Haiku4.5 preparation — 24 October 2026
+
+ตรวจ STSบัญชี109991964227/stackเดิม และ BudgetHackathon-Team10ก่อนprobe: limit350USD; ActualSpend0.028USD, LastUpdated2026-10-24T11:22:14.710Z. เป็นยอดbillingที่ล่าช้า ไม่ใช่เครดิตคงเหลือทันที. งบทดลอง25USD/เครดิต350USDรวมทีมยังเดิม. ทำ read-onlymetadataและ CountTokens2ครั้งด้วยข้อความสังเคราะห์ Hello ผ่าน Mantle us-east-1 (probeแรกและทดสอบpreparegate); ทั้งคู่ได้403accountavailability. ตรวจSAMlint2templatesและอ่านLambdaenvเฉพาะmodel/region/AIflagกลับ. ไม่มี inference/modeltraining/Marketplaceagreementหรือsubscription/IAMchange/SAMupload/changeset/deployment/CDNinvalidation/paidcapacity/merchantwrite. Localnpmติดตั้งSDKและtests/buildไม่ใช่การใช้AWSinference. เตรียมadapter/config/policyproposal/runbookไว้ในGit; ยังไม่เปิด HaikuแทนNovaบนเว็บจริง. ต้องตรวจราคาของHaikuและงบใหม่ก่อน realinferenceเมื่อผู้จัดเปิด access.
+
 ## Repository cleanup — 18 October 2026
 
 จัดไฟล์อ้างอิงใน Git เท่านั้น ทดสอบ clean snapshot ในเครื่อง ไม่มี AWS API/deploy/invalidation/model call หรือทรัพยากรใหม่. ค่า billing ด้านล่างเป็นผลตรวจรอบก่อน ไม่ใช่การอ่านงบใหม่ของงานจัดไฟล์นี้.
