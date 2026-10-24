@@ -24,7 +24,8 @@ const ai=new AI(repo,{send:async(command,options)=>{
 }});
 const cases=[
  {name:'profit',message:'สินค้านี้เหลือกำไรเท่าไร',sku:'SKU-DEMO-01',profit:900},
- {name:'discount',message:'ลดราคา 15% ยังไหวไหม',sku:'SKU-DEMO-01',profit:-1410}
+ {name:'discount',message:'ลดราคา 15% ยังไหวไหม',sku:'SKU-DEMO-01',profit:-1410},
+ {name:'break-even',message:'ราคาขายขั้นต่ำที่ไม่ขาดทุนเท่าไร ใช้ getBreakEven',sku:'SKU-DEMO-01',profit:0}
 ];
 const results=[];
 for(const c of cases){
@@ -32,6 +33,7 @@ for(const c of cases){
  const row={name:c.name,provider:result.provider,model:result.model,reason:(result as any).reason??null,
   profitSatang:result.result?.profitSatang,marginPct:result.result?.marginPct,calls:calls-before,elapsedMs:Date.now()-start};
  results.push(row);console.log('QWEN_EVAL_CASE',JSON.stringify(row));assert.equal(row.profitSatang,c.profit);
+ if(c.name==='break-even')assert.ok(result.answer.includes('188.32'),'Independently checked break-even price');
  assert.equal(row.provider,'bedrock-tools','A deterministic fallback does not prove the model round trip');assert.equal(row.model,QWEN_32B);
 }
 console.log('QWEN_EVAL_PASS',JSON.stringify({scope:'operator IAM; real Bedrock + in-memory MOCK repository; not Lambda/browser/LINE proof',region:'us-east-1',model:QWEN_32B,calls,tools,usage,results}));
