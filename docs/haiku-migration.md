@@ -1,5 +1,7 @@
 # Claude Haiku 4.5 — สถานะและวิธีเปิดใช้งาน
 
+> บันทึกทางเลือกเดิมก่อนQwenrollout: ผู้ใช้เลือกและdeploy Qwen3 32Bแทนแล้วเมื่อ24ต.ค.2026. ดู [สถานะปัจจุบัน](status.md) และ [ผลตรวจ](verification.md). เอกสารนี้ไม่ใช่คำสั่งให้เปลี่ยนโมเดลกลับเป็นHaiku.
+
 อัปเดต 24 ตุลาคม 2026 (ไทย)
 
 **สถานะ: VERIFIED_LOCAL / BLOCKED_EXTERNAL สำหรับการเปิดบน AWS.** ผู้ใช้เลือกเปลี่ยนแชตบอตเป็น Claude Haiku 4.5 แล้ว แต่ AWS CountTokens ตอบ HTTP403 ว่า `anthropic.claude-haiku-4-5 is not available for this account` ในบัญชี109991964227 ผ่าน Mantle us-east-1. เว็บจริงจึงยังใช้ Nova Lite รุ่นเดิม; ยังไม่ได้ deploy โค้ด/ตั้งค่าใหม่หรือแก้ IAM. ห้ามเรียกการทดสอบ stub ว่าเรียก Claude จริงสำเร็จ.

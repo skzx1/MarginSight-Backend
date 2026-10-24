@@ -1,3 +1,15 @@
+## Qwen3 32B บนเว็บจริง — 24 ตุลาคม 2026
+
+**VERIFIED_LOCAL / VERIFIED_AWS สำหรับการเปลี่ยน assistant; สถานะรวม PARTIAL_WITH_EXTERNAL_BLOCKERS.** ผู้ใช้เลือก Qwen3 32B แทน Haikuที่บัญชียังเปิดไม่ได้. Runtime source `db42a835acb05624c460ba967d9e10948f5b07bd` deployแล้วใน stack `marginsight` / บัญชี109991964227 / ap-southeast-1. อ่านกลับ24ต.ค.16:31UTC: UPDATE_COMPLETE, assistant `qwen.qwen3-32b-v1:0` direct Converse us-east-1; OCRยัง `amazon.nova-lite-v1:0`.
+
+Qwenเลือกเครื่องมือที่จำกัดสิทธิ์/ตรวจ SKUและส่วนลด แล้วแอปตอบจาก deterministic engineทันที ไม่มีรอบสรุปตัวเลขจากโมเดล. ไม่มี training/fine-tuningหรือการเปลี่ยนสูตร margin-v1.1.0. คำถามยอดรวมที่ Frontendสรุปจาก APIยังใช้ flowเดิม ไม่จำเป็นต้องเรียกโมเดลทุกคำถาม.
+
+ทดสอบ60ข้อและPythonparameter6ข้อผ่าน; CloudShellNode24ผ่านverify/SAMlint. Deployed API Gateway/Lambda/DynamoDB/Bedrock บนร้านMOCKแยกผ่าน3กรณี โดย responseเป็น `bedrock-tools`/modelQwenจริง: กำไร9.00บาท/margin4.5%, ลด15%ขาดทุน14.10บาท/-8.29%, ราคาคุ้มทุนต่ำสุด188.31บาท. หน้าเว็บMOCKถามส่วนลดแล้วแสดงผลเดียวกันและไม่มีbrowserconsoleerror. Protected APIไม่มีtokenยัง401; ข้ามguesttenantและoriginผิด403. ดูรายละเอียดใน verification.md และคำสั่ง/rollbackใน AWS-HANDOFF.md.
+
+LINEมีconfig/IAMรองรับแต่ยังไม่มีchannelจริง; nativeplatform/บิลจริงพร้อมเฉลย/ครบflowสองบัญชีCognitoยังเป็นblockerเดิม จึงไม่อ้าง FULL_SCOPE_VERIFIED. Frontendไม่มี source/build/deploy ใหม่รอบนี้ เพราะใช้ API contractเดิม.
+
+> ส่วน Haikuด้านล่างเป็นประวัติก่อนเลือกและdeploy Qwen ไม่ใช่สถานะโมเดลปัจจุบัน.
+
 ## เปลี่ยนผู้ช่วยเป็น Claude Haiku4.5 — 24 ตุลาคม 2026
 
 **VERIFIED_LOCAL / BLOCKED_EXTERNAL; ยังไม่เปลี่ยนโมเดลเว็บจริง.** โค้ดรองรับ Haikuผ่าน Mantle us-east-1 พร้อม bounded tools/quotas/SigV4/fallback และแยก OCRที่ยังใช้Nova. ทดสอบ Backend57ข้อ+Pythonparameter migration5ข้อผ่าน; typecheck/bundled handlers/contracts/IaCstructure/packagingผ่าน. CloudShellSAMlintผ่าน2templates; ทดสอบpreparegateจริงหยุดก่อนอัปโหลดเมื่อCountTokens403. AWSแจ้งว่าโมเดลไม่เปิดให้บัญชี109991964227; foundation model metadataมี agreementAvailabilityNOT_AVAILABLE. ไม่สร้าง agreement/subscribe/แก้IAM/preparechangeset/deploy/inference. อ่านLambdaenvกลับยืนยันRuntimeเดิมยังNovaLite. ดู [วิธีเปิดและร่างข้อความให้ผู้จัด](haiku-migration.md). สถานะรวมยัง PARTIAL_WITH_EXTERNAL_BLOCKERS; liveHaiku/tool/browserยังไม่ผ่านและไม่ใช้ localstubsแทนหลักฐานจริง.

@@ -1,3 +1,15 @@
+## Qwen3 32B rollout — 24 October 2026
+
+อ่านBudgetHackathon-Team10ก่อนinference/prepareและก่อนexecute: limit350USD; snapshotหลังตรวจยังActualSpend0.028USD/LastUpdated2026-10-24T11:22:14.710Z. เป็นbillingล่าช้า ไม่ใช่ยอดคงเหลือปัจจุบัน. งบทดลอง25USD/เครดิต350USDรวมทีมยังเดิม.
+
+ตรวจ [AWS regional Bedrock Price List us-east-1](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/us-east-1/index.json): Qwen3 32B standardon-demand input0.00015USD/1Ktokens และoutput0.0006USD/1Ktokens (0.15/0.60USDต่อ1M). ไม่ใช้ราคาSydney/priority/flex/MantleแทนdirectConverseus-east-1. Finaloperator3callsใช้2367input+94outputtokens คิดเฉพาะinferenceประมาณ0.00041145USD; ไม่ใช่ค่าใช้จ่ายรวมการทดสอบหรือยอดbillจริง. มีprobe/รอบแก้/การทดสอบLambdaและbrowserเพิ่มเติม; กันประมาณการAIสำหรับverificationต่ำกว่า0.25USD ไม่ใช่hardbillingcap.
+
+ใช้existingLambda7/on-demandDynamoDB/S3/API/Bedrock ไม่มีtrainingjob/GPU/provisionedcapacity/NAT/EC2/stackใหม่. เตรียม/execute2change sets มีSAMartifactZIPประมาณ15.3MBต่อรุ่นในbucketเดิมและtemplate; ค่าstorage/logs/requestsคิดตามจริง. สำรองรุ่นก่อนหน้าในCloudShellเพื่อrollback; ไม่ลบข้อมูลเดิม. เพิ่มexactmodelInvokepolicyให้2rolesเดิมเท่านั้น. ไม่สมัครMarketplace/สร้างagreement/ออกองค์กร. Frontendไม่publish/CDNไม่invalidateรอบนี้.
+
+Qwenปิดthinking/outputไม่เกิน500tokensและปิดSDKretry; ตอบจากengineหลังvalidtoolแรก ทำให้goldenหนึ่งคำถามเหลือ1inferenceแทน2. Attemptedcallquota/guestexpiry/tenantguardsเดิมยังบังคับ และไม่ใช่เพดานค่าใช้จ่ายจริง. OCRยังNovaและไม่ได้เรียกในงานนี้. Kill switchยังAIEnabled=falseผ่านreviewedstackupdate; storage/logsยังคิดเงิน.
+
+> ส่วน Haikuด้านล่างเป็นประวัติก่อนQwenrollout.
+
 ## Haiku4.5 preparation — 24 October 2026
 
 ตรวจ STSบัญชี109991964227/stackเดิม และ BudgetHackathon-Team10ก่อนprobe: limit350USD; ActualSpend0.028USD, LastUpdated2026-10-24T11:22:14.710Z. เป็นยอดbillingที่ล่าช้า ไม่ใช่เครดิตคงเหลือทันที. งบทดลอง25USD/เครดิต350USDรวมทีมยังเดิม. ทำ read-onlymetadataและ CountTokens2ครั้งด้วยข้อความสังเคราะห์ Hello ผ่าน Mantle us-east-1 (probeแรกและทดสอบpreparegate); ทั้งคู่ได้403accountavailability. ตรวจSAMlint2templatesและอ่านLambdaenvเฉพาะmodel/region/AIflagกลับ. ไม่มี inference/modeltraining/Marketplaceagreementหรือsubscription/IAMchange/SAMupload/changeset/deployment/CDNinvalidation/paidcapacity/merchantwrite. Localnpmติดตั้งSDKและtests/buildไม่ใช่การใช้AWSinference. เตรียมadapter/config/policyproposal/runbookไว้ในGit; ยังไม่เปิด HaikuแทนNovaบนเว็บจริง. ต้องตรวจราคาของHaikuและงบใหม่ก่อน realinferenceเมื่อผู้จัดเปิด access.

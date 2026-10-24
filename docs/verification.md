@@ -1,3 +1,23 @@
+## Qwen3 32B rollout — 24 October 2026
+
+VERIFIED_LOCAL: `npm run verify` ผ่าน60tests/typecheck/build/bundledhandlers/contracts/IaC/package ทั้งWindowsNode24และCloudShellNode24.19.0. Pythonparameter tests6ข้อและSAMexternal-roles lintผ่าน. Qwentestsตรวจ directConverse/thinkingoff/tokenbounds, ใช้toolครั้งเดียวแล้วตอบด้วยengine, ไม่แสดงเลขแต่งในmodelnarration, wrongSKU/discount/no-tool/providerfailurefallback และmodel/Region/profileallowlist. GuardของNova/Haikuยังทดสอบแยก. สูตร/contract margin-v1.1.0ไม่เปลี่ยน. Secret heuristic auditก่อนrolloutพบ0candidates; ไม่รับรองsecretทุกชนิด.
+
+AWS_OPERATOR_OBSERVED: STS109991964227; QwenmetadataAUTHORIZED/entitlementAVAILABLE/regionAVAILABLE/agreementAVAILABLE, directON_DEMAND. NativeConverseรับ `enable_thinking:false` และเรียกsimulateDiscountถูกSKU/15%. ผลoperatorรอบสุดท้ายใช้in-memoryMOCK repoและBedrockจริง: getProfit/simulateDiscount/getBreakEven ผ่าน3คำถาม/3inferences, 2367input/94outputtokens, ~1.0–1.2วินาทีต่อคำถาม. นี่ไม่ใช้แทนLambda/browserproofด้านล่าง.
+
+พบและแก้ระหว่างทดสอบ: รุ่นที่ให้โมเดลสรุปรอบสองใช้numericfallbackบางครั้งทั้งoperatorและLambda แม้engineคำนวณถูก. รุ่นสุดท้ายให้Qwenเลือกtool แล้วแสดงเฉพาะengineanswerทันที ไม่ส่งmodelnarrationและไม่ใช้รอบสอง; ไม่ผ่อนSKU/discount/tenantguards. ค่าexpectedbreak-evenในoperator scriptแก้จาก188.32เป็นขั้นต่ำ188.31: feesปัดทีละรายการ22.60+15.06+5.65=43.31; 188.31−43.31−130−5−10=0; ราคา188.30ขาดทุน0.01. ค่า188.32ก็ได้profit0แต่ไม่ใช่ราคาต่ำสุด. Domain engineไม่ได้แก้.
+
+VERIFIED_AWS: runtime source `db42a835acb05624c460ba967d9e10948f5b07bd`; stackmarginsight/account109991964227/ap-southeast-1 UPDATE_COMPLETE. Firstchange set `samcli-deploy1792859033` เพิ่มAssistantModelIdQwenและcode; correctivechange set `samcli-deploy1792859407` execute2026-10-24T16:30:51.913504Z, stackLastUpdated16:30:51.847Z. ทั้งคู่มี7existingLambdaModify/noAdd/Remove/replacement; HttpApiBodyเทียบprocessedtemplateเท่ากันทุกค่า. Parameterอื่นคงเดิม; รอบแก้parametersทุกค่าคงเดิม. ไม่เปลี่ยนCognito/CORS/data schema/CloudFront.
+
+IAMเพิ่มinlinepolicy `MarginShotQwen32B20261024` แบบadditiveให้เฉพาะexistingroles marginsight-assistant/marginsight-lineworker: bedrock:InvokeModel exactQwenfoundation-modelARNในus-east-1พร้อมRequestedRegioncondition ตาม scripts/qwen-runtime-policy.json. ไม่สร้างrole/แก้trust/SSO/สมัครMarketplaceหรือสร้างagreement. อ่านกลับ16:31:29Z: Lambdaทั้ง7Active/Successful, codeSHA256ตรงSAMuploadedartifact `U3qP0QQEAM2ckVm72YMt9OqrJqZ1lmZDhcbvqlQho+4=`; configassistantQwen/OCRNova/us-east-1ตรงกัน. ก่อนupdateเก็บtemplate/parameters/functionhashesและcodeZIPที่ตรวจhashไว้สำหรับrollbackในCloudShelltemporarydirectory.
+
+DEPLOYED_API_OBSERVED16:31:38Z: API Gateway→Lambda(runtimeIAM)→DynamoDB/Bedrock บนisolatedMOCKstoresจริงผ่าน3responses HTTP200/providerbedrock-tools/modelQwen: profit900satang/margin4.5%, discount15%−1410satang/−8.29%, break-evenrevenue18831satang/profit0. Latency3270/1229/1360msตามลำดับ. /integrationsแสดงQwen/converse/us-east-1; health200, protected/me/storesไม่มีtoken401, guestข้ามtenant403และoriginผิด403. ไม่ใช่Cognitoสองร้านE2E.
+
+AGENT_OBSERVED_AWS_BROWSER: freshisolatedMOCKsessionที่เว็บ https://d2y04qc334m0rd.cloudfront.net/login/#assistant เลือกSKU-DEMO-01 ถาม “ลดราคา 15% ยังไหวไหม”; แสดงคำตอบจากผู้ช่วย ขาดทุน14.10บาท/margin−8.29%/รายรับ170.00/fees39.10 และcontextตุลาคม2026. Cardปัดmarginเพื่อแสดงหนึ่งตำแหน่งเป็น−8.3%; JSONและข้อความยัง−8.29%. Browsererrorlogว่าง. ไม่ใช้รหัสผ่านเดโม/ข้อมูลร้านจริง และไม่ทดสอบLINEหรือOCRรอบนี้. ผลรวมยัง PARTIAL_WITH_EXTERNAL_BLOCKERS.
+
+หลักฐานlocal-only: `.local/qwen-20261024/aws-verification.json` (ไม่มีtokens), `browser-qwen.png`; CloudShell `/tmp/marginshot-qwen-20261024-lokebxao` เป็นephemeral. ไม่เผยแพร่private/rawlogsหรืออ้างว่าไฟล์เหล่านี้ต้องมีในcloneใหม่. Frontendใช้รุ่นเดิม; ไม่ได้publishหรือinvalidateCDNในงานนี้. [GitHub Actions Verifyของruntimecommit](https://github.com/skzx1/MarginSight-Backend/actions/runs/40111729432) completed/success; อ่านผลจากGitHubAPIจริง. Finalheuristicsecret auditยัง0candidates.
+
+> Haikuด้านล่างเป็นประวัติก่อนQwenrollout.
+
 ## Haiku4.5 migration preparation — 24 October 2026
 
 VERIFIED_LOCAL: `npm ci --ignore-scripts --no-audit --no-fund` และ `npm run verify` ผ่าน57tests/TypeScript/build/bundledhandlers/browsercontract/infrastructurestructure/package. เพิ่ม7testsสำหรับ native Haiku tool roundtrip, fixedfinancialanswer(-1410satang/-8.29%), wrongSKU/discount/unknown tool/inventedprofit, 403safe fallback/quota, model/Region/profile allowlist, context/token/content bounds, OCRยังNova และ SDKจริงที่ใช้ intercepted fetchพิสูจน์ signed endpoint/no retry/no redirect/ไม่รับ envendpointหรือbearerkey. Providerresponsesเป็น stubsทั้งชุดนี้ ไม่ใช่ realClaude inference. สูตร/contractmargin-v1.1.0ไม่เปลี่ยน.

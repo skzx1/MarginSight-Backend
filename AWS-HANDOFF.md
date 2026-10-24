@@ -83,7 +83,22 @@ npm run verify
 python3 scripts/prepare-update.py
 ```
 
-`prepare-update.py` ตรวจ account/สถานะ stack, validate template, อ่าน parameter ปัจจุบันแล้วส่งต่อครบทุกตัว และเตรียม SAM change set แบบ **ไม่ execute** เพื่อรักษา `DemoEnabled`, `AIEnabled`, `AIRegion`, `LineSecretArn` ของระบบเดิม การเตรียมนี้มีการอัปโหลด artifact ไป AWS แล้ว ไม่ใช่ local dry run. ตั้งแต่24ต.ค.2026เพิ่ม `AssistantModelId`; stackเก่าจะรักษาNovaโดย default ไม่สลับไปHaikuเอง. การเลือก `--assistant-model anthropic.claude-haiku-4-5` ต้องผ่าน read-only access gateและ scoped runtime IAMตาม [Haiku migration](docs/haiku-migration.md). รอบนี้ยัง blocked403และยังไม่deploy.
+`prepare-update.py` ตรวจ account/สถานะ stack, validate template, อ่าน parameter ปัจจุบันแล้วส่งต่อครบทุกตัว และเตรียม SAM change set แบบ **ไม่ execute** เพื่อรักษา `DemoEnabled`, `AIEnabled`, `AIRegion`, `LineSecretArn` ของระบบเดิม การเตรียมนี้มีการอัปโหลด artifact ไป AWS แล้ว ไม่ใช่ local dry run. ตั้งแต่24ต.ค.2026เพิ่ม `AssistantModelId`; stackเก่าที่ไม่มี parameter นี้จะรักษาNovaโดย default ส่วน stackที่มีแล้วจะรักษาค่าปัจจุบัน ไม่สลับโมเดลเอง. Haikuยัง account availability403ตามบันทึกประวัติ; ผู้ใช้เลือก Qwen3 32B แทน ดูผลล่าสุดใน docs/status.md และ docs/verification.md.
+
+### Qwen3 32B สำหรับ assistant
+
+ใช้ direct Bedrock Converse `qwen.qwen3-32b-v1:0` เฉพาะ `us-east-1`; ไม่ใช้ inference profile, Marketplace หรือ provisioned capacity. OCRยังเป็น `amazon.nova-lite-v1:0` แยกจาก assistant. Qwenเลือก bounded tool; แอปใช้ผล deterministic engine ตอบโดยตรงและไม่ส่งข้อความตัวเลขที่โมเดลแต่งเองออกไป จึงไม่ต้องเรียกโมเดลรอบสองเพื่อสรุปเงิน. ไม่ได้ fine-tune หรือเทรนด้วยข้อมูลร้าน.
+
+```bash
+python3 scripts/qwen-preflight.py
+# real inference: operator IAM + in-memory MOCK เท่านั้น ไม่ใช่ Lambda/browser proof
+QWEN_EVALUATE_REAL=true npx tsx scripts/evaluate-qwen.ts
+python3 scripts/prepare-update.py --assistant-model qwen.qwen3-32b-v1:0
+```
+
+อ่านงบและราคาใหม่ก่อน real inference; preflightอ่าน metadata/budgetเท่านั้น ไม่สมัครหรือเปิดโมเดลให้บัญชีเอง. สิทธิ์ runtimeอยู่ `scripts/qwen-runtime-policy.json`: InvokeModelเฉพาะ ARNโมเดลในus-east-1 ให้เฉพาะ roles `marginsight-assistant`/`marginsight-lineworker`. External-roles templateไม่ได้จัดการ policyนี้ให้ ต้องตรวจสิทธิ์และผล deployed APIแยก. นโยบายที่เพิ่ม24ต.ค.ชื่อ `MarginShotQwen32B20261024`; ไม่ใช้ scriptเก่าที่เขียนทับ policyของทุก role.
+
+ตรวจ code artifact SHA-256 กับ Lambda, config assistant/OCR, provider `bedrock-tools` และ model IDจาก protected MOCK assistant endpoint; fallbackไม่ถือว่าโมเดลทำงานสำเร็จ. ค่า goldenคือกำไร9.00บาท, ส่วนลด15%ขาดทุน14.10บาท/margin-8.29%, ราคาคุ้มทุนต่ำสุด188.31บาทตามการปัดทีละfee line. ย้อนโมเดลด้วย explicit `--assistant-model amazon.nova-lite-v1:0` ใน full templateและตรวจ change set; ไม่ลบข้อมูลหรือย้อน auth/IAM policyทั้งหมด.
 
 ใช้ `template-external-roles.yaml` เท่านั้นสำหรับบัญชีทีมนี้ และรักษา 7 roles เดิม (`marginsight-api`, `assistant`, `importworker`, `ocrworker`, `linewebhook`, `lineworker`, `seed` โดยมี prefix `marginsight-` ทุกตัว). ห้ามใช้ `template-foundation.yaml` ทับ stack เต็ม ห้ามใช้ script เก่าที่ชี้ `marginsight-demo` เพื่ออัปเดตระบบหลัก.
 
