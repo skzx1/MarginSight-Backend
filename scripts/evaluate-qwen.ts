@@ -33,7 +33,12 @@ for(const c of cases){
  const row={name:c.name,provider:result.provider,model:result.model,reason:(result as any).reason??null,
   profitSatang:result.result?.profitSatang,marginPct:result.result?.marginPct,calls:calls-before,elapsedMs:Date.now()-start};
  results.push(row);console.log('QWEN_EVAL_CASE',JSON.stringify(row));assert.equal(row.profitSatang,c.profit);
- if(c.name==='break-even')assert.ok(result.answer.includes('188.32'),'Independently checked break-even price');
+ // Per-line rounding: at 188.31 fees are 22.60 + 15.06 + 5.65 = 43.31;
+ // 188.31 - 43.31 - 130 - 5 - 10 = 0. At 188.30 the result is -0.01.
+ if(c.name==='break-even'){
+  assert.equal(result.result?.revenueSatang,18831,'Minimum break-even with per-line rounding');
+  assert.ok(result.answer.includes('188.31'),'Independently checked minimum break-even price');
+ }
  assert.equal(row.provider,'bedrock-tools','A deterministic fallback does not prove the model round trip');assert.equal(row.model,QWEN_32B);
 }
 console.log('QWEN_EVAL_PASS',JSON.stringify({scope:'operator IAM; real Bedrock + in-memory MOCK repository; not Lambda/browser/LINE proof',region:'us-east-1',model:QWEN_32B,calls,tools,usage,results}));
