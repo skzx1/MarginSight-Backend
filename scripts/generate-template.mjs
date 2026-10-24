@@ -26,13 +26,17 @@ for(const name of ['Assistant','LineWorker'])resources[name].Properties.Policies
  Effect:'Allow',Action:'bedrock-mantle:CreateInference',Resource:sub('arn:${AWS::Partition}:bedrock-mantle:us-east-1:${AWS::AccountId}:project/*'),
  Condition:{StringEquals:{'bedrock-mantle:Model':'anthropic.claude-haiku-4-5','aws:RequestedRegion':'us-east-1','bedrock-mantle:ServiceTier':'default'}}
 },ref('AWS::NoValue')]});
+for(const name of ['Assistant','LineWorker'])resources[name].Properties.Policies[0].Statement.push({'Fn::If':['UseQwen',{
+ Effect:'Allow',Action:'bedrock:InvokeModel',Resource:sub('arn:${AWS::Partition}:bedrock:us-east-1::foundation-model/qwen.qwen3-32b-v1:0'),
+ Condition:{StringEquals:{'aws:RequestedRegion':'us-east-1'}}
+},ref('AWS::NoValue')]});
 writeFileSync('template.yaml',JSON.stringify({
  AWSTemplateFormatVersion:'2010-09-09',Transform:'AWS::Serverless-2016-10-31',Description:'MarginSight economical serverless prototype - MOCK merchant data, private storage',
  Parameters:{DemoEnabled:{Type:'String',AllowedValues:['true','false'],Default:'false'},
   AIRegion:{Type:'String',AllowedValues:['us-east-1','ap-southeast-1','ap-southeast-7'],Default:'us-east-1'},
   AIEnabled:{Type:'String',AllowedValues:['true','false'],Default:'false'},LineSecretArn:{Type:'String',Default:''},
-  AssistantModelId:{Type:'String',AllowedValues:['amazon.nova-lite-v1:0','anthropic.claude-haiku-4-5'],Default:'amazon.nova-lite-v1:0',Description:'Haiku requires verified in-Region account access and Mantle runtime permission; preserve Nova until that gate passes.'}},
- Conditions:{HasLineSecret:{'Fn::Not':[{'Fn::Equals':[ref('LineSecretArn'),'']}]},UseHaiku:{'Fn::Equals':[ref('AssistantModelId'),'anthropic.claude-haiku-4-5']}},
- Rules:{HaikuRegion:{RuleCondition:{'Fn::Equals':[ref('AssistantModelId'),'anthropic.claude-haiku-4-5']},Assertions:[{Assert:{'Fn::Equals':[ref('AIRegion'),'us-east-1']},AssertDescription:'Haiku must use the in-Region us-east-1 Mantle endpoint.'}]}},
+  AssistantModelId:{Type:'String',AllowedValues:['amazon.nova-lite-v1:0','anthropic.claude-haiku-4-5','qwen.qwen3-32b-v1:0'],Default:'amazon.nova-lite-v1:0',Description:'Assistant model; verify access/runtime IAM before an explicit switch. OCR remains Nova Lite.'}},
+ Conditions:{HasLineSecret:{'Fn::Not':[{'Fn::Equals':[ref('LineSecretArn'),'']}]},UseHaiku:{'Fn::Equals':[ref('AssistantModelId'),'anthropic.claude-haiku-4-5']},UseQwen:{'Fn::Equals':[ref('AssistantModelId'),'qwen.qwen3-32b-v1:0']}},
+ Rules:{HaikuRegion:{RuleCondition:{'Fn::Equals':[ref('AssistantModelId'),'anthropic.claude-haiku-4-5']},Assertions:[{Assert:{'Fn::Equals':[ref('AIRegion'),'us-east-1']},AssertDescription:'Haiku must use the in-Region us-east-1 Mantle endpoint.'}]},QwenRegion:{RuleCondition:{'Fn::Equals':[ref('AssistantModelId'),'qwen.qwen3-32b-v1:0']},Assertions:[{Assert:{'Fn::Equals':[ref('AIRegion'),'us-east-1']},AssertDescription:'Qwen must use direct in-Region us-east-1 inference.'}]}},
  Resources:resources,Outputs:outputs
 },null,2)+'\n');

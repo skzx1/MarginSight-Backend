@@ -1,0 +1,12 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Qwen32BInApprovedRegionOnly",
+      "Effect": "Allow",
+      "Action": "bedrock:InvokeModel",
+      "Resource": "arn:aws:bedrock:us-east-1::foundation-model/qwen.qwen3-32b-v1:0",
+      "Condition": {"StringEquals": {"aws:RequestedRegion": "us-east-1"}}
+    }
+  ]
+}

@@ -36,10 +36,11 @@
       "Type": "String",
       "AllowedValues": [
         "amazon.nova-lite-v1:0",
-        "anthropic.claude-haiku-4-5"
+        "anthropic.claude-haiku-4-5",
+        "qwen.qwen3-32b-v1:0"
       ],
       "Default": "amazon.nova-lite-v1:0",
-      "Description": "Haiku requires verified in-Region account access and Mantle runtime permission; preserve Nova until that gate passes."
+      "Description": "Assistant model; verify access/runtime IAM before an explicit switch. OCR remains Nova Lite."
     }
   },
   "Conditions": {
@@ -77,6 +78,29 @@
             ]
           },
           "AssertDescription": "Haiku must use the in-Region us-east-1 Mantle endpoint."
+        }
+      ]
+    },
+    "QwenRegion": {
+      "RuleCondition": {
+        "Fn::Equals": [
+          {
+            "Ref": "AssistantModelId"
+          },
+          "qwen.qwen3-32b-v1:0"
+        ]
+      },
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Equals": [
+              {
+                "Ref": "AIRegion"
+              },
+              "us-east-1"
+            ]
+          },
+          "AssertDescription": "Qwen must use direct in-Region us-east-1 inference."
         }
       ]
     }

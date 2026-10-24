@@ -4,6 +4,7 @@ import {AppError,demand} from './errors.js';
 
 export const NOVA_LITE='amazon.nova-lite-v1:0';
 export const CLAUDE_HAIKU='anthropic.claude-haiku-4-5';
+export const QWEN_32B='qwen.qwen3-32b-v1:0';
 export interface ModelConfig {model:string;region:string;transport:'converse'|'mantle-messages'}
 export interface ModelRuntime {send(command:ConverseCommand,options?:{abortSignal?:AbortSignal}):Promise<any>}
 
@@ -14,6 +15,10 @@ export function modelConfig(purpose:'assistant'|'receipt'='assistant'):ModelConf
  if(model===CLAUDE_HAIKU&&purpose==='assistant') {
   demand(region==='us-east-1','MODEL_REGION_NOT_APPROVED',503);
   return {model,region,transport:'mantle-messages'};
+ }
+ if(model===QWEN_32B&&purpose==='assistant') {
+  demand(region==='us-east-1','MODEL_REGION_NOT_APPROVED',503);
+  return {model,region,transport:'converse'};
  }
  demand(model===NOVA_LITE,'MODEL_NOT_APPROVED',503);
  return {model,region,transport:'converse'};

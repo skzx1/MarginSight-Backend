@@ -1,5 +1,5 @@
 import {ConverseCommand} from '@aws-sdk/client-bedrock-runtime';
-import {modelConfig,createModelRuntime,type ModelRuntime} from './model-runtime.js';
+import {modelConfig,createModelRuntime,QWEN_32B,type ModelRuntime} from './model-runtime.js';
 import {z} from 'zod';
 import {Repository,pk,type InputCache} from './repository.js';
 import {calculate,simulate,breakEven} from './domain/calculate.js';
@@ -25,7 +25,23 @@ export class AI {
  constructor(private repo:Repository,private client?:ModelRuntime){}
  enabled(){return process.env.AI_ENABLED==='true'}
  settings(){return modelConfig()}
- private async converse(store:string,args:any,deadline=Date.now()+16000,purpose:'assistant'|'receipt'='assistant'){demand(this.enabled(),'AI_NOT_CONFIGURED',503);const config=modelConfig(purpose),outputTokens=Number(process.env.AI_OUTPUT_TOKENS??500);demand(Number.isInteger(outputTokens)&&outputTokens>=1&&outputTokens<=500,'INVALID_AI_TOKEN_LIMIT',503);const limit=Number(process.env.AI_DAILY_CALL_LIMIT??30);demand(Number.isInteger(limit)&&limit>=0&&limit<=500,'INVALID_AI_LIMIT',503);demand(deadline>Date.now(),'MODEL_DEADLINE_EXCEEDED',503);demand(await this.repo.db.reserve(pk(store),new Date().toISOString().slice(0,10),limit),'AI_LIMIT_REACHED',429);await this.repo.db.flush();const key=JSON.stringify(config);if(!this.client&&!this.runtimes.has(key))this.runtimes.set(key,createModelRuntime(config));const client=this.client??this.runtimes.get(key)!;return client.send(new ConverseCommand({modelId:config.model,...args,inferenceConfig:{maxTokens:outputTokens,temperature:0}}),{abortSignal:AbortSignal.timeout(Math.max(1,Math.min(16000,deadline-Date.now())))})}
+ private async converse(store:string,args:any,deadline=Date.now()+16000,purpose:'assistant'|'receipt'='assistant'){
+  demand(this.enabled(),'AI_NOT_CONFIGURED',503);
+  const config=modelConfig(purpose),outputTokens=Number(process.env.AI_OUTPUT_TOKENS??500);
+  demand(Number.isInteger(outputTokens)&&outputTokens>=1&&outputTokens<=500,'INVALID_AI_TOKEN_LIMIT',503);
+  if(purpose==='assistant')demand(Buffer.byteLength(JSON.stringify(args))<=65536,'MODEL_CONTEXT_TOO_LARGE',413);
+  const limit=Number(process.env.AI_DAILY_CALL_LIMIT??30);
+  demand(Number.isInteger(limit)&&limit>=0&&limit<=500,'INVALID_AI_LIMIT',503);
+  demand(deadline>Date.now(),'MODEL_DEADLINE_EXCEEDED',503);
+  demand(await this.repo.db.reserve(pk(store),new Date().toISOString().slice(0,10),limit),'AI_LIMIT_REACHED',429);
+  await this.repo.db.flush();const key=JSON.stringify(config);
+  if(!this.client&&!this.runtimes.has(key))this.runtimes.set(key,createModelRuntime(config));
+  const client=this.client??this.runtimes.get(key)!;
+  return client.send(new ConverseCommand({modelId:config.model,...args,
+   ...(config.model===QWEN_32B?{additionalModelRequestFields:{enable_thinking:false}}:{}),
+   inferenceConfig:{maxTokens:outputTokens,temperature:0}}),
+   {abortSignal:AbortSignal.timeout(Math.max(1,Math.min(16000,deadline-Date.now())))});
+ }
  private async latestInput(store:string,sku:string,month:string){const cache:InputCache={jobs:new Map()};let cursor:string|undefined,seen=0;do{const orders=await this.repo.orders(store,month,100,cursor,true);for(const o of orders.items){seen++;demand(seen<=1000,'QUERY_RANGE_TOO_LARGE',413);const input=await this.repo.input(store,o.platform,o.orderId,cache);if(input.items.some(i=>i.sku===sku)){demand(input.items.every(i=>i.sku===sku)&&input.items.length===1,'SIMULATION_REQUIRES_SINGLE_SKU_ORDER');return input}}cursor=orders.next;}while(cursor);throw new AppError('SKU_HAS_NO_ORDER',404)}
  async assistant(store:string,body:any){const result=await this.assistantCore(store,body);return {...result,model:result.provider==='bedrock-tools'?this.settings().model:null,store,...(result.result?{result:{...result.result,store}}:{})}}
  async platformScenario(store:string,body:any){

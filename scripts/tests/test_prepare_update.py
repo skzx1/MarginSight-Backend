@@ -38,6 +38,11 @@ class UpdateParametersTest(unittest.TestCase):
         with self.assertRaises(AssertionError):
             module.parameters_for_update(self.declared, {**self.live, 'AIRegion': 'us-west-2'}, module.HAIKU)
 
+    def test_explicit_qwen_switch_and_preservation(self):
+        result = module.parameters_for_update(self.declared, self.live, module.QWEN)
+        self.assertEqual(result, {**self.live, 'AssistantModelId': module.QWEN})
+        self.assertEqual(module.parameters_for_update(self.declared, result), result)
+
 
 if __name__ == '__main__':
     unittest.main()

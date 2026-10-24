@@ -14,6 +14,7 @@ ACCOUNT = '109991964227'
 STACK = 'marginsight'
 NOVA = 'amazon.nova-lite-v1:0'
 HAIKU = 'anthropic.claude-haiku-4-5'
+QWEN = 'qwen.qwen3-32b-v1:0'
 
 
 def parameters_for_update(declared, live, assistant_model=None):
@@ -24,7 +25,7 @@ def parameters_for_update(declared, live, assistant_model=None):
     if missing:
         values['AssistantModelId'] = NOVA
     if assistant_model is not None:
-        assert assistant_model in (NOVA, HAIKU), 'Unapproved model'
+        assert assistant_model in (NOVA, HAIKU, QWEN), 'Unapproved model'
         values['AssistantModelId'] = assistant_model
     assert set(values) == set(declared), 'Unexpected parameter schema change'
     assert values['AIRegion'] == 'us-east-1', 'Unexpected inference Region'
@@ -38,7 +39,7 @@ def aws(*args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--assistant-model', choices=[NOVA, HAIKU])
+    parser.add_argument('--assistant-model', choices=[NOVA, HAIKU, QWEN])
     args = parser.parse_args()
     assert aws('sts', 'get-caller-identity')['Account'] == ACCOUNT, 'Wrong account'
     stack = aws('cloudformation', 'describe-stacks', '--stack-name', STACK)['Stacks'][0]
@@ -50,6 +51,12 @@ def main():
         # Non-inference probe. Never create agreements or subscribe to Marketplace.
         from importlib.util import spec_from_file_location, module_from_spec
         spec = spec_from_file_location('haiku_preflight', ROOT / 'scripts' / 'haiku-preflight.py')
+        module = module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.check_access()
+    if values['AssistantModelId'] == QWEN and values['AIEnabled'] == 'true':
+        from importlib.util import spec_from_file_location, module_from_spec
+        spec = spec_from_file_location('qwen_preflight', ROOT / 'scripts' / 'qwen-preflight.py')
         module = module_from_spec(spec)
         spec.loader.exec_module(module)
         module.check_access()

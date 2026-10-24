@@ -2,6 +2,7 @@ import {readFileSync,writeFileSync} from 'node:fs';
 const t=JSON.parse(readFileSync('template.yaml','utf8'));
 for(const [name,r] of Object.entries(t.Resources)){if(r.Type==='AWS::Serverless::Function'){r.Properties.FunctionName={'Fn::Sub':'${AWS::StackName}-'+name.toLowerCase()};r.Properties.Role={'Fn::Sub':'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${AWS::StackName}-'+name.toLowerCase()};delete r.Properties.Policies;}}
 delete t.Conditions.UseHaiku; // External runtime roles are managed separately.
+delete t.Conditions.UseQwen;
 const foundation=structuredClone(t);for(const [name,r] of Object.entries(foundation.Resources)){if(r.Type==='AWS::Serverless::Function'||r.Type==='AWS::Logs::LogGroup')delete foundation.Resources[name]}
 delete foundation.Outputs.SeedFunction;
 delete foundation.Conditions;delete foundation.Parameters;delete foundation.Rules;
