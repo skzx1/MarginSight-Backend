@@ -229,3 +229,7 @@ LOCAL_MERGED / VERIFIED_LOCAL / NOT_DEPLOYED for the combined router release: Ba
 ## Routed assistant release prepared — 25 October 2026
 
 READY_FOR_DEPLOY after explicit user commit/push/deploy request. Upstream4a4dca4 integrated; source5f3c19f plus corpusa0a273b pushed in separate batches.108Backend tests/full build, clean install and9Python parameter tests pass; Frontend83tests/source95ca8fb. General-chat compatibility, ordinal ranking and100-question UI preserved. Current measured router-v3 classifier benchmark remains61/68development cases, not final-answer accuracy. Final AWS/API/browser evidence must be checked separately below.
+
+## Website router release verified — 25 October 2026
+
+VERIFIED_AWS_API + VERIFIED_BROWSER_MOCK after user-approved commit/push/deploy. Source5f3c19f + corpusa0a273b/deploymentdocsa60f393, Frontend4c6880d published. Existing stack UPDATE_COMPLETE, reviewed7function hashes match, config/private research index/IAM preserved. API8/8plus401/403pass; browser rank2/3follow-up correct.108Backend/83Frontend/9Python tests and clean installs pass. Classifier development benchmark61/68 remains a separate known limitation; research134chunks are not approved tariff rules. See latest verification.md and deployment report. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS unchanged.

@@ -150,3 +150,9 @@ User requested pull/merge and later chose local-only completion. Read-only STS/b
 ## Commit/push/deploy preflight — 25 October 2026
 
 User explicitly authorized publishing this release. Fresh STS109991964227 and Qwen metadata gate12:09:24UTC: budget350USD, laggedActualSpend0.034USD, last updated18:46:19.853+07. Trial25USD unchanged; not final/current remaining credit. Read-only live ZIP/config/template backup matches upstream4a4dca4 source; current codeqG6y/7frojYIlM5zBJV1FGHXG+d0oplqCZ4GOUbc4QE=. SAM code-only preparation on existing stack; no new IAM/capacity/index rebuild/model switch/training or merchant write. Clean local installs audited0vulnerabilities. Final deployment/API usage recorded after execution; existing artifact traffic may accrue.
+
+## Committed router live release and acceptance — 25 October 2026
+
+Fresh account/budget/code/config gates before prepare/review/execute/publish. One executed code-only existing-stack update12:18UTC, one76file static publication and7path invalidation. No new IAM/role/resource/paid capacity/model switch/index rebuild/training/Marketplace operation. Reused pinned private134chunk index. API acceptance created2isolatedMOCK stores and made8assistant requests; one further browserMOCK store and2ranking/follow-up requests. No REALmerchant write/live OCR/LINE message. Standard Bedrock/API/Lambda/DynamoDB/S3/CDN/log charges may accrue; no total token or final bill estimate claimed.
+
+Final metadata12:24:40UTC: team350USD/trial25USD unchanged; laggedActualSpend0.034USD, updated18:46:19.853+07. This is not real-time remaining credit or measured final charges. Source/verification commits pushed in separate batches; auth caches/signed URLs/tokens/private evidence remain ignored. Browser denial was transient and access resumed after its stated retry time, through the original browser surface; no bypass used.

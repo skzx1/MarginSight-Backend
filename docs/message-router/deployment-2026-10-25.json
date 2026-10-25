@@ -1,0 +1,161 @@
+{
+  "date": "2026-10-25",
+  "scope": "Committed website router on existing AWS stack; synthetic isolated MOCK stores only. Not native marketplace, real merchant, live LINE or held-out classifier accuracy.",
+  "backendSourceCommit": "5f3c19f",
+  "backendReleaseCommit": "a60f393",
+  "frontendCommit": "4c6880ddc4840788f6c186fd759854c430b5a9c8",
+  "formulaVersion": "margin-v1.1.0",
+  "stackStatus": "UPDATE_COMPLETE",
+  "backendCodeSha256": "M2AnVYW1jTPZY/Lxg9L85eBUZ+dyxFDg673id7q/GOk=",
+  "allSevenFunctionHashesMatched": true,
+  "existingEnvironmentPreserved": true,
+  "indexChecksumMatched": true,
+  "privateUploadsBucketPublicAccessBlocked": true,
+  "frontendFiles": 76,
+  "frontendS3ReadbackMatched": true,
+  "cloudFrontInvalidationStatus": "Completed",
+  "localVerification": {
+    "backendTests": 108,
+    "frontendTests": 83,
+    "pythonParameterTests": 9,
+    "cleanNpmCiAndVerifyBothRepos": true
+  },
+  "api": {
+    "checkedAt": "2026-10-25T12:22:00.847Z",
+    "scope": "deployed web-chat API on two isolated MOCK stores; not browser/LINE/native-marketplace/real-merchant proof",
+    "observations": [
+      {
+        "id": "normal",
+        "expected": "NORMAL_CHAT",
+        "predicted": "NORMAL_CHAT",
+        "provider": "normal-chat",
+        "confidence": 1,
+        "durationMs": 3461,
+        "profitSatang": null,
+        "evidenceStatuses": [],
+        "passed": true
+      },
+      {
+        "id": "policy",
+        "expected": "FEE_PIPELINE",
+        "predicted": "FEE_PIPELINE",
+        "provider": "fee-reference",
+        "confidence": 0.95,
+        "durationMs": 4714,
+        "profitSatang": null,
+        "evidenceStatuses": [
+          "READY"
+        ],
+        "passed": true
+      },
+      {
+        "id": "follow-up",
+        "expected": "FEE_PIPELINE",
+        "predicted": "FEE_PIPELINE",
+        "provider": "fee-reference",
+        "confidence": 0.95,
+        "durationMs": 3359,
+        "profitSatang": null,
+        "evidenceStatuses": [
+          "READY"
+        ],
+        "passed": true
+      },
+      {
+        "id": "ambiguous",
+        "expected": "CLARIFY",
+        "predicted": "CLARIFY",
+        "provider": "clarify",
+        "confidence": 0.6,
+        "durationMs": 1362,
+        "profitSatang": null,
+        "evidenceStatuses": [],
+        "passed": true
+      },
+      {
+        "id": "discount",
+        "expected": "FEE_PIPELINE",
+        "predicted": "FEE_PIPELINE",
+        "provider": "catalog-calculator",
+        "confidence": 0.95,
+        "durationMs": 2565,
+        "profitSatang": null,
+        "evidenceStatuses": [],
+        "catalog": {
+          "discountedPriceSatang": 17000,
+          "differenceBeforeExpensesSatang": 4000,
+          "netProfitSatang": null
+        },
+        "passed": true
+      },
+      {
+        "id": "cost",
+        "expected": "FEE_PIPELINE",
+        "predicted": "FEE_PIPELINE",
+        "provider": "calculator",
+        "confidence": 0.95,
+        "durationMs": 2183,
+        "profitSatang": null,
+        "evidenceStatuses": [],
+        "passed": true
+      },
+      {
+        "id": "campaign",
+        "expected": "FEE_PIPELINE",
+        "predicted": "FEE_PIPELINE",
+        "provider": "catalog-calculator",
+        "confidence": 0.95,
+        "durationMs": 3294,
+        "profitSatang": null,
+        "evidenceStatuses": [
+          "READY"
+        ],
+        "catalog": {
+          "discountedPriceSatang": 16000,
+          "differenceBeforeExpensesSatang": 3000,
+          "netProfitSatang": null
+        },
+        "passed": true
+      },
+      {
+        "id": "recorded-profit",
+        "expected": "FEE_PIPELINE",
+        "predicted": "FEE_PIPELINE",
+        "provider": "calculator",
+        "confidence": 0.95,
+        "durationMs": 4138,
+        "profitSatang": 26800,
+        "evidenceStatuses": [
+          "READY"
+        ],
+        "passed": true
+      }
+    ],
+    "failures": [],
+    "unauthenticatedStatus": 401,
+    "crossTenantStatus": 403
+  },
+  "browser": {
+    "sampleData": true,
+    "newMockStoreOpened": true,
+    "viewportScreenshot": {
+      "width": 1280,
+      "height": 720
+    },
+    "rank2": {
+      "sku": "BAG-002",
+      "profitSatang": 5420,
+      "passed": true
+    },
+    "followupRank3": {
+      "sku": "CASE-004",
+      "profitSatang": 5020,
+      "passed": true
+    },
+    "screenshot": "Local-only Frontend .local/message-router/deployed-chat.png; not required by build"
+  },
+  "feeKnowledge": "Four user-supplied documents / 134 reference-only chunks. No research tariff promoted to a verified effective rate.",
+  "classifierBenchmark": "Previously measured unchanged router-v3 development set: 61/68. Eight API acceptance cases are a separate measure.",
+  "metadataCheckedAt": "2026-10-25T12:24:40.131208+00:00",
+  "exportedAt": "2026-10-25T12:31:13.638607+00:00"
+}
