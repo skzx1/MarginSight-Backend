@@ -16,6 +16,7 @@ import type {InputCache} from './repository.js';
 import type {Context} from './context.js';
 import {marketplaceOptions} from './marketplace-scenario.js';
 import {productSchema,updateProductListing} from './product-listing.js';
+import {completeStorefrontListings} from './storefront-listings.js';
 export interface Request {method:string;path:string;authorization?:string;origin?:string;query:Record<string,string>;body?:any}
 export async function route(ctx:Context,r:Request):Promise<any>{
  const {repo}=ctx,path=r.path.replace(/\/$/,''),post=r.method==='POST';
@@ -33,7 +34,7 @@ async function dispatch(ctx:Context,r:Request,user:string):Promise<any>{
  const range=async()=>{const orders:any[]=[];let cursor:string|undefined;do{const page=await repo.orders(store,month,100,cursor);orders.push(...page.items);cursor=page.next;demand(orders.length<=1000&&! (orders.length===1000&&cursor),'EXPORT_RANGE_TOO_LARGE',413)}while(cursor);return orders};
  if(rest==='/products'&&post){const input=productSchema.parse(r.body);return repo.writeCatalog(store,'PRODUCT#'+input.sku,{...input,listingVersion:1,dataOrigin:membership.dataOrigin??'REAL',sourceRef:'merchant-entry',createdBy:user,createdAt:new Date().toISOString()},true)}
  const listing=rest.match(/^\/products\/([^/]+)\/listing$/);if(listing&&post)return updateProductListing(repo,store,id(decodeURIComponent(listing[1])),user,r.body);
- if(rest==='/products'&&!post){const p=await repo.db.query('catalog',pk(store),'PRODUCT#',50,r.query.cursor);const costs=await repo.catalog<any>(store,'COST#');return {items:p.items.map(x=>({...x.value,cost:selectCost(costs,x.value.sku,new Date().toISOString())??null})),next:p.next}}
+ if(rest==='/products'&&!post){const p=await repo.db.query('catalog',pk(store),'PRODUCT#',50,r.query.cursor);const rows=await completeStorefrontListings(repo,store,membership,p.items);const costs=await repo.catalog<any>(store,'COST#');return {items:rows.map(x=>({...x.value,cost:selectCost(costs,x.value.sku,new Date().toISOString())??null})),next:p.next}}
  const cost=rest.match(/^\/products\/([^/]+)\/cost-versions$/);if(cost&&post){const sku=id(decodeURIComponent(cost[1]));demand(await repo.db.get('catalog',pk(store),'PRODUCT#'+sku),'PRODUCT_NOT_FOUND',404);const input=costSchema.parse({...r.body,sku});if(membership.personal)demand(input.dataOrigin==='REAL','PERSONAL_STORE_REQUIRES_REAL_DATA');demand(!input.effectiveTo||input.effectiveTo>input.effectiveFrom,'INVALID_DATE_RANGE');const version=randomUUID();return repo.writeCatalog(store,`COST#${sku}#${input.effectiveFrom}#${version}`,{...input,version,verifiedBy:user,createdAt:new Date().toISOString()},true)}
  if(rest==='/fee-rules'){if(!post)return {items:await repo.catalog(store,'RULE#')};const rule=ruleSchema.parse(r.body),version=randomUUID();return repo.writeCatalog(store,`RULE#${rule.id}#${rule.effectiveFrom}#${version}`,{...rule,version,createdAt:new Date().toISOString()},true)}
  if(rest==='/enrollments'){if(!post)return {items:await repo.catalog(store,'ENROLL#')};const value=enrollmentSchema.parse(r.body),enrollmentId=randomUUID();return repo.writeCatalog(store,'ENROLL#'+enrollmentId,{...value,id:enrollmentId,verifiedBy:user},true)}

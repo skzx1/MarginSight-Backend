@@ -55,7 +55,9 @@ test('storefront has seven products, five added costs, readable labels and repea
  assert.equal(before.items.length,7);
  assert.equal(before.items.every((p:any)=>p.dataOrigin==='MOCK'&&!/demo|เดโม|สาธิต/i.test(p.name+' '+p.sku)),true);
  const expected=[['BAG-002',9500],['CUP-003',14500],['CASE-004',4500],['CAP-005',7000],['BOOK-006',3800]] as const;
- for(const [sku,amount] of expected){const product=before.items.find((p:any)=>p.sku===sku);assert.equal(product.cost.unitCostSatang,amount);assert.equal(product.cost.dataOrigin,'MOCK');assert.equal(product.sellingPriceSatang,undefined);assert.equal(product.profitSatang,undefined)}
+ for(const [sku,amount] of expected){const product=before.items.find((p:any)=>p.sku===sku);assert.equal(product.cost.unitCostSatang,amount);assert.equal(product.cost.dataOrigin,'MOCK');assert.equal(product.profitSatang,undefined)}
+ const listings=[['BAG-001',20000,24],['BAG-002',19900,18],['CUP-003',29900,20],['CASE-004',12900,40],['CAP-005',15900,30],['BOOK-006',8900,50],['KEY-007',5900,60]] as const;
+ for(const [sku,price,quantity] of listings){const product=before.items.find((p:any)=>p.sku===sku);assert.equal(product.sellingPriceSatang,price);assert.equal(product.quantity,quantity);assert.equal(product.listingVersion,1);}
  assert.equal(before.items.find((p:any)=>p.sku==='KEY-007').cost,null);
  // Reseeding the same tenant must not duplicate products/costs or change the ledger.
  const session=await demoSession(repo,'Bearer '+s.accessToken);

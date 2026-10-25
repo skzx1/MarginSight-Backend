@@ -1,6 +1,7 @@
 import type {Repository} from './repository.js';
 import {pk} from './repository.js';
-export const mockEvidence={dataOrigin:'MOCK' as const,sourceRef:'mock-v1:independently-checked-fixture'};
+import {storefrontListing,STOREFRONT_FIXTURE_SOURCE} from './storefront-listings.js';
+export const mockEvidence={dataOrigin:'MOCK' as const,sourceRef:STOREFRONT_FIXTURE_SOURCE};
 export function mockRules(){return [
  {id:'commission',type:'COMMISSION',rateBps:1200}, {id:'transaction',type:'TRANSACTION',rateBps:800}, {id:'campaign',type:'PROGRAM',rateBps:300,programId:'DEMO-PROGRAM'}
 ].map(r=>({...mockEvidence,...r,version:'2026-01-01-v1',scope:'PER_ITEM' as const,base:'REVENUE' as const,fixedSatang:0,vat:'INCLUDED' as const,status:'MOCK' as const,effectiveFrom:'2026-01-01T00:00:00.000Z',sourceUrl:'mock://not-a-marketplace-rate'}))}
@@ -25,13 +26,13 @@ export async function seed(repo:Repository,users=[{sub:'demo-a',store:'DEMO-001'
  const ensure=async(store:string,key:string,value:any)=>{if(await repo.db.get('catalog',pk(store),key))return;try{await repo.writeCatalog(store,key,value,true)}catch(e){if(!await repo.db.get('catalog',pk(store),key))throw e}};
  const ensureLedger=async(store:string,platform:string,orderId:string,key:string,value:any)=>{if(!await repo.db.get('ledger',pk(store)+'#ORDER#'+platform+'#'+orderId,key))await repo.mergeLedger(store,platform,orderId,key,value)};
  for(const u of users){await repo.db.put('memberships',{PK:'USER#'+u.sub,SK:pk(u.store),version:1,value:{role:'OWNER',name:u.store==='DEMO-002'?'ร้านสาขา B':'ร้าน MarginShot',dataOrigin:'MOCK'}},0);
-  await ensure(u.store,'PRODUCT#'+sku,{...mockEvidence,sku,name:'กระเป๋าผ้าแคนวาส',unit:'ชิ้น'});
+  await ensure(u.store,'PRODUCT#'+sku,{...mockEvidence,sku,name:'กระเป๋าผ้าแคนวาส',unit:'ชิ้น',...(options.storefrontIds?storefrontListing(sku):{})});
   const pendingSku=options.storefrontIds?'KEY-007':'SKU-MISSING-COST';
-  await ensure(u.store,'PRODUCT#'+pendingSku,{...mockEvidence,sku:pendingSku,name:'พวงกุญแจผ้าทอ',unit:'ชิ้น'});
+  await ensure(u.store,'PRODUCT#'+pendingSku,{...mockEvidence,sku:pendingSku,name:'พวงกุญแจผ้าทอ',unit:'ชิ้น',...(options.storefrontIds?storefrontListing(pendingSku):{})});
   await ensure(u.store,'COST#'+sku+'#2026-01-01T00:00:00.000Z#v1',{...mockEvidence,sourceRef:'mock supplier bill: 6 units / 780 THB',sku,version:'2026-01-01-v1',unitCostSatang:13000,effectiveFrom:'2026-01-01T00:00:00.000Z',verifiedBy:u.sub,method:'MERCHANT_CONFIRMED_UNIT_COST'});
   for(const product of storefrontProducts){
    const {unitCostSatang,...details}=product;
-   await ensure(u.store,'PRODUCT#'+product.sku,{...mockEvidence,...details});
+   await ensure(u.store,'PRODUCT#'+product.sku,{...mockEvidence,...details,...(options.storefrontIds?storefrontListing(product.sku):{})});
    await ensure(u.store,'COST#'+product.sku+'#2026-01-01T00:00:00.000Z#v1',{...mockEvidence,sourceRef:'mock-catalog-cost:'+product.sku,sku:product.sku,version:'2026-01-01-v1',unitCostSatang,effectiveFrom:'2026-01-01T00:00:00.000Z',verifiedBy:u.sub,method:'MERCHANT_CONFIRMED_UNIT_COST'});
   }
   for(const rule of mockRules()){const r=rule.programId?{...rule,programId}:rule;await ensure(u.store,'RULE#'+r.id+'#'+r.version,r)}

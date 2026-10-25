@@ -140,3 +140,8 @@ Recovered already-deployed Fee Rules source/template omitted from Git before con
 ## Product prices live — 25 October 2026
 
 VERIFIED_AWS for product listing persistence and corrections. Frontendf9bc84e/Backend5b61c6a deployed and checked; local/CloudShell56+70tests/Python6. Price and merchant-entered quantity survive create/edit/refresh; cost/history unaffected; zero/missing and tenant/version guards pass. Existing Fee Rules runtime/parameters preserved. Old discarded inputs require one manual re-entry. See latest verification.md and product-listing.md. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
+
+
+## Seven MOCK product listings — 25 October 2026
+
+VERIFIED_LOCAL Backend73 tests/build/bundled handlers/unchanged contract. All seven guest fixtures have explicit MOCK price/quantity; existing guest catalogs fill only missing fixture fields using conditional writes. No REAL/personal/custom/edited values or historical finance changed. See storefront-listings.md. AWS deployment pending at this commit; PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
