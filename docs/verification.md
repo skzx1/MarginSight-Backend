@@ -232,3 +232,15 @@ Deployment preparation failed closed before SAM upload: the live stack had FeeRu
 
 Reverification passed Backend70 tests including platform/illustration exclusion, corrupt-index rejection before any embedding attempt, and model-failure fallback preserving profit900satang/historical inputs; Frontend56/Python6 unchanged. No inference was called for this verification. AWS update still pending at this commit; retain overall PARTIAL_WITH_EXTERNAL_BLOCKERS.
 
+
+## Product listing fix deployed and verified — 25 October 2026
+
+VERIFIED_AWS for this feature. Runtime Frontend f9bc84e4e30015bdde1077a3dfa892cafa709e56 / Backend 5b61c6ae15b12a520e244c85585f6a270d42097f. Backend includes recovered already-live Fee Rules source/template so this update preserves existing functionality. Local and clean CloudShell verification: Frontend56 / Backend70 / Python6; unchanged financial contract margin-v1.1.0.
+
+Reviewed samcli-deploy1792913610 (5dd6d3a0-ca45-4562-8116-8fd6daa29c78) executed2026-10-25T07:35:05.298265UTC; stack UPDATE_COMPLETE. Seven existing Lambda Code updates plus dynamic HttpApi reference refresh only; no add/remove/replacement, parameters all preserved including FeeRules trio, processed HttpApi properties and non-Code Lambda configuration equal. Additional gate compared current original template and seven Lambda hashes to the backup before prepare/execute. Deployed Lambda hashes match the reviewed artifact. Frontend published07:36:22UTC;18S3object readbacks match;8path invalidation IBU2J29N5JZGJS9TBRD107BM7G Completed. No Cognito appearance/auth change in this release.
+
+Deployed API check07:38:51UTC used two isolated MOCK tenants: create24999satang/42units, independent GET, separate cost12050satang, zero price/stock, edit29999satang while omitted quantity stays0, legacy version0 edit, cost preserved and no fabricated profit. Historical dashboard/result inputs unchanged at26800satang profit. Stale409, fractional money400, tenant/origin403, guest-normal/noauth401, privateS3403. Six public entry/config/release/brand files200 with matching build hashes. No REALmerchant write or model inference in these checks.
+
+Browser live MOCK manual form: create249.99THB/42units, refresh retains both; edit299.50THB/7units and refresh retains both; cost120.50THB unchanged. No horizontal overflow or console errors. Evidence in Frontend .local/product-listing-20261025/aws-final-report.json, browser-verification.json, evidence/products-live.png; CloudShell backup /tmp/marginshot-listing-20261025-15_tvv_j is ephemeral. Existing prices/quantities discarded by the old form were never stored: users must enter them once through product details → แก้ไขราคาขายและจำนวน. No inferred prices or REAL-store seeding.
+
+Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains for prior realOCR/LINE/nativeplatform/two-Cognito workflows. This feature's checks do not represent FULL_SCOPE_VERIFIED or live merchant adoption.

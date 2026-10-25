@@ -135,3 +135,8 @@ VERIFIED_LOCAL; AWS pending at this commit. Manual/CSV creation saves price and 
 ## Fee Rules preservation before listing release — 25 October 2026
 
 Recovered already-deployed Fee Rules source/template omitted from Git before continuing product-price deployment. Backend70 local tests now pass, Frontend56 unchanged; no removed live parameter/IAM/region/model/index change. See verification.md. Deployment pending; PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
+
+
+## Product prices live — 25 October 2026
+
+VERIFIED_AWS for product listing persistence and corrections. Frontendf9bc84e/Backend5b61c6a deployed and checked; local/CloudShell56+70tests/Python6. Price and merchant-entered quantity survive create/edit/refresh; cost/history unaffected; zero/missing and tenant/version guards pass. Existing Fee Rules runtime/parameters preserved. Old discarded inputs require one manual re-entry. See latest verification.md and product-listing.md. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
