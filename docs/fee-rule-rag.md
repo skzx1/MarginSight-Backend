@@ -83,3 +83,8 @@ The owner explicitly approved all four supplied documents for answering question
 Local verification: 111/111 tests plus standalone type/build/package/infrastructure checks passed. AWS publication and live results are recorded separately when complete.
 
 Explicit commission/payment questions now select matching fee-label rows before semantic similarity, preserving full rows with VAT, shop type and caveats. Commission never substitutes payment fees. A tied-vector test over the actual corpus covers Shopee Mall/Non-Mall commission, TikTok commission and Lazada payment. Initial live extractive answers exposed topic mismatches; these were not accepted as semantic correctness. Final live acceptance requires the expected row references, not only READY/MOCK labels.
+
+
+## Plain Thai reference replies — 25 October 2026
+
+Owner requested simple prose rather than raw Markdown. MOCK reference summaries use a strict sentence/sourceIds schema, at most three short Thai paragraphs, no Markdown/table syntax, and every numeric token must exist in its cited excerpts. The application renders a compact MOCK label and a separate source footer. No arithmetic or new financial rule promotion is permitted. Model failure/invalid output returns short Thai text, never the document. The summary receives at most500 output tokens within the existing per-call and overall request deadlines; router/planner remain350. Numeric-token/citation validation is a guard, not proof of complete semantic entailment.

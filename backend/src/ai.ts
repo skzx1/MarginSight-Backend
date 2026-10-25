@@ -65,7 +65,7 @@ export class AI {
  async routedChat(store:string,body:unknown,mockReferences=false){
   const deadline=Date.now()+23000;
   const model=async(system:string,payload:unknown)=>{
-   const response=await this.converse(store,{system:[{text:system}],messages:[{role:'user',content:[{text:JSON.stringify(payload)}]}],inferenceConfig:{maxTokens:350}},Math.min(deadline,Date.now()+7000));
+   const response=await this.converse(store,{system:[{text:system}],messages:[{role:'user',content:[{text:JSON.stringify(payload)}]}],inferenceConfig:{maxTokens:system.startsWith('MOCK_FEE_SUMMARY:')?500:350}},Math.min(deadline,Date.now()+7000));
    if(response.stopReason!=='end_turn'||!response.output?.message?.content?.every((b:any)=>typeof b.text==='string'))console.warn(JSON.stringify({event:'CHAT_MODEL_PROTOCOL',stopReason:response.stopReason??'missing',blockKinds:response.output?.message?.content?.map((b:any)=>Object.keys(b))??[]}));
    demand(response.stopReason==='end_turn'&&response.output?.message?.content?.every((b:any)=>typeof b.text==='string'),'CHAT_INVALID_MODEL_OUTPUT',503);
    const text=response.output.message.content.map((b:any)=>b.text).join('');demand(text.trim().length>0&&text.length<=5000,'CHAT_INVALID_MODEL_OUTPUT',503);return text;
