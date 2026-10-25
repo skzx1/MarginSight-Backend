@@ -17,7 +17,7 @@ function fixture(response:any={output:{message:{content:[{text:'สวัสด�
  return {repo,ai,calls};
 }
 test('general knowledge/creative questions and recorded financial requests use separate paths',()=>{
- for(const q of ['สวัสดี','กำไรคืออะไร','margin กับ markup ต่างกันยังไง','เขียนโปรแกรม Python ให้หน่อย','ช่วยเขียนโค้ดคำนวณกำไร','ช่วยคิดแคปชั่นขายสินค้า','แปล hello เป็นไทย','อธิบายส่วนลดคืออะไร'])assert.equal(needsRecordedData(q),false,q);
+ for(const q of ['สวัสดี','มีวิธีเพิ่มยอดขายยังไง','ช่วยคิดไอเดียเพิ่มยอดขาย','Write a sales pitch','กำไรคืออะไร','margin กับ markup ต่างกันยังไง','เขียนโปรแกรม Python ให้หน่อย','ช่วยเขียนโค้ดคำนวณกำไร','ช่วยคิดแคปชั่นขายสินค้า','แปล hello เป็นไทย','อธิบายส่วนลดคืออะไร'])assert.equal(needsRecordedData(q),false,q);
  for(const q of ['กำไรเดือนนี้เท่าไร','ลดราคา 20%','ลด 20%','ตัวนี้ลดสิบห้าเปอร์ยังไหวปะ','สินค้าไหนกำไรน้อยที่สุด','กำไรทุกสินค้าเดือนนี้เท่าไร','แคมเปญนี้เหลือเท่าไร','How much profit this month?','คุ้มทุนเท่าไร','สต็อกสินค้านี้กี่ชิ้น','อธิบายกำไรคืออะไร แล้วเดือนนี้กำไรเท่าไร'])assert.equal(needsRecordedData(q),true,q);
 });
 test('general Qwen request has no tools, retrieval or shop data; history stays untrusted conversation',async()=>{
