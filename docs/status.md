@@ -125,3 +125,8 @@ VERIFIED_LOCAL: five added SKUs now have linked single-SKU MOCK orders/posted fe
 ## Expanded storefront verified live — 25 October 2026
 
 VERIFIED_AWS: Backend031467b deployed through reviewed existing-stack update; freshMOCK sessions have7products/6orders and all five added SKUs support discount scenarios. API and browser Qwen CAP-00515% returned28.12THB/20.81%.62tests+Python6pass; no auth/IAM/data replacement. Frontend2bc06b9 theme/Sign-in follow-up is live without another Backend update. See verification.md. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS unchanged.
+
+
+## Product listing persistence — 25 October 2026
+
+VERIFIED_LOCAL; AWS pending at this commit. Manual/CSV creation saves price and entered quantity. Existing products have an edit form with conflict protection; unknown remains unknown and historic finance is unchanged. See product-listing.md and verification.md. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
