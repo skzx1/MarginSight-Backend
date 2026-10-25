@@ -9,7 +9,7 @@
 - สูตร authoritative อยู่ `backend/src/domain/` เงินเป็น integer satang ใช้ Decimal ค่าบริการจริงแทน estimated ห้ามหักซ้ำ ค่าที่ขาดยัง unknown ต้นทุน/fee rule มี effective dates และ reconciliation ต้องตรงสตางค์.
 - Export browser preview ด้วย `npm run export:preview` หลังแก้สูตรหรือ type แล้วให้ Frontend sync generated artifact; ห้ามสร้างสูตรมือชุดที่สอง.
 - ตรวจ JWT + membership/tenant ทุกเส้นทาง รวม uploads/jobs/OCR/LINE. Guest capability ใช้เฉพาะ MOCK tenant และ guest routes มี origin checks และ strict tenant binding; ตามผู้ใช้ 25 ต.ค. 2026 ไม่มี guest expiry หรือโควตาจำนวนใช้งานที่แอปกำหนดเอง.
-- Bedrock assistantเลือก Qwen3 32B (`qwen.qwen3-32b-v1:0`) แบบ direct Converse us-east-1 ตามผู้ใช้24ต.ค.2026; Qwenเลือก bounded toolแล้วแอปแสดงผลจาก deterministic engineโดยตรง ไม่เรียกโมเดลรอบสองเพื่อสรุปเงินและไม่ส่ง model narrationออกไป. ดูผล deploy/API/browserล่าสุดใน docs/status.md และ docs/verification.md แยกจาก configหรือ localstub. Haiku4.5ยัง account access403 เป็นประวัติทางเลือกที่ไม่ได้เปิด. OCRยังNova Liteแยกจากassistant; ไม่มี training/fine-tuningด้วยข้อมูลร้าน. OCRdraftต้องตรวจยืนยัน. Missing LINE/marketplace inputsบล็อกเฉพาะ live integrationนั้น.
+- Bedrock assistantเลือก Qwen3 32B (`qwen.qwen3-32b-v1:0`) แบบ direct Converse us-east-1 ตามผู้ใช้24ต.ค.2026; Qwenเลือก bounded toolแล้วแอปแสดงผลจาก deterministic engineโดยตรง ไม่เรียกโมเดลรอบสองเพื่อสรุปเงินและไม่ส่ง model narrationออกไปในเส้นทางคำนวณการเงิน. ดูผล deploy/API/browserล่าสุดใน docs/status.md และ docs/verification.md แยกจาก configหรือ localstub. Haiku4.5ยัง account access403 เป็นประวัติทางเลือกที่ไม่ได้เปิด. OCRยังNova Liteแยกจากassistant; ไม่มี training/fine-tuningด้วยข้อมูลร้าน. OCRdraftต้องตรวจยืนยัน. Missing LINE/marketplace inputsบล็อกเฉพาะ live integrationนั้น.
 - อัปเดต stack เดิมด้วย template-external-roles.yaml; ห้าม deploy foundation ทับ full stack ห้ามสร้าง roles/stack ใหม่เพียงเพราะแยก repo.
 
 ## การส่งมอบและความปลอดภัย
@@ -29,3 +29,5 @@
 ภาพใน `docs/design/` และบันทึก `docs/ui-design.md` เป็น local-only ตาม `docs/reference-policy.md` และ `.gitignore`. อ่านประกอบได้เมื่อไฟล์มีอยู่ แต่ห้ามใช้เป็น dependency ของ build/test/deploy หรือถือว่า clone ใหม่ต้องมีไฟล์เหล่านี้. ใช้ Backend source/contracts และคู่มือที่ยัง tracked เป็นหลัก.
 
 25 October 2026: User removed app usage quotas (guest lifetime/session/write/AI/import/receipt counts and chat history counts). Preserve tenant/origin checks, payload validation, per-request deadlines, actual provider quotas and the $350 team budget. Do not reinstate app quotas from older plan text.
+
+25 October 2026: General conversation is user-authorized through the existing Bedrock Qwen model, with no tools or shop data attached. Only general-chat text may be rendered directly from the model. Recorded financial claims and cards still require the deterministic engine. General mode never bypasses membership/origin checks.
