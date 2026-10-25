@@ -41,6 +41,24 @@
       ],
       "Default": "amazon.nova-lite-v1:0",
       "Description": "Assistant model; verify access/runtime IAM before an explicit switch. OCR remains Nova Lite."
+    },
+    "FeeRulesEnabled": {
+      "Type": "String",
+      "AllowedValues": [
+        "true",
+        "false"
+      ],
+      "Default": "false"
+    },
+    "FeeRulesIndexKey": {
+      "Type": "String",
+      "Default": "",
+      "AllowedPattern": "^$|^fee-rules/v1/[a-f0-9]{64}/index[.]json$"
+    },
+    "FeeRulesIndexSha256": {
+      "Type": "String",
+      "Default": "",
+      "AllowedPattern": "^$|^[a-f0-9]{64}$"
     }
   },
   "Conditions": {
@@ -101,6 +119,48 @@
             ]
           },
           "AssertDescription": "Qwen must use direct in-Region us-east-1 inference."
+        }
+      ]
+    },
+    "FeeRuleIndex": {
+      "RuleCondition": {
+        "Fn::Equals": [
+          {
+            "Ref": "FeeRulesEnabled"
+          },
+          "true"
+        ]
+      },
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Equals": [
+                  {
+                    "Ref": "FeeRulesIndexKey"
+                  },
+                  ""
+                ]
+              }
+            ]
+          },
+          "AssertDescription": "Enabled fee retrieval requires an immutable index key."
+        },
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Equals": [
+                  {
+                    "Ref": "FeeRulesIndexSha256"
+                  },
+                  ""
+                ]
+              }
+            ]
+          },
+          "AssertDescription": "Enabled fee retrieval requires the index SHA-256."
         }
       ]
     }
@@ -901,6 +961,15 @@
             },
             "ASSISTANT_MODEL_ID": {
               "Ref": "AssistantModelId"
+            },
+            "FEE_RULES_ENABLED": {
+              "Ref": "FeeRulesEnabled"
+            },
+            "FEE_RULES_INDEX_KEY": {
+              "Ref": "FeeRulesIndexKey"
+            },
+            "FEE_RULES_INDEX_SHA256": {
+              "Ref": "FeeRulesIndexSha256"
             }
           }
         },
@@ -1313,6 +1382,15 @@
             },
             "ASSISTANT_MODEL_ID": {
               "Ref": "AssistantModelId"
+            },
+            "FEE_RULES_ENABLED": {
+              "Ref": "FeeRulesEnabled"
+            },
+            "FEE_RULES_INDEX_KEY": {
+              "Ref": "FeeRulesIndexKey"
+            },
+            "FEE_RULES_INDEX_SHA256": {
+              "Ref": "FeeRulesIndexSha256"
             }
           }
         },

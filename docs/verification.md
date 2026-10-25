@@ -224,3 +224,11 @@ Initial frontend9f3edfe followed by appearance-only2bc06b9 (cream/ink/terracotta
 ## Product price/quantity persistence — 25 October 2026
 
 VERIFIED_LOCAL: fixed dropped form/CSV listing values end to end. See product-listing.md for API limits, zero/missing behavior, partial saves and optimistic concurrency. Frontend56/Backend67 tests plus Python6 pass; builds/bundled handlers/unchanged domain contract pass. Local browser MOCK create249.99THB/42units, refresh and edit0/0 pass. Historical engine inputs/profit unchanged; cross-tenant/read-only/stale/invalid writes rejected. No personal-store values inferred or rewritten. AWS publication pending at this source commit. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
+
+
+## Preserve deployed Fee Rules during product fix — 25 October 2026
+
+Deployment preparation failed closed before SAM upload: the live stack had FeeRulesEnabled/FeeRulesIndexKey/FeeRulesIndexSha256 absent from Git. Read-only backup/source-map comparison found deployed ai.ts plus fee-rules.ts; api.ts otherwise matched the pre-price source. Recovered and reviewed those exact existing runtime sources and normalized the live original external-roles template (only restore local CodeUri and remove generated SamResourceId metadata). Kept the price fix; did not remove live parameters, create IAM access, alter research index or switch model/Region. Fee retrieval remains Titan Embed Text v2 direct us-east-1, immutable S3 index SHA, bounded/quota-limited, platform-filtered, reference-only and never approved calculation rates. Recovered source has no dataset/training operation. Existing foundation bootstrap templates remain unchanged; this release updates the existing external-roles stack only.
+
+Reverification passed Backend70 tests including platform/illustration exclusion, corrupt-index rejection before any embedding attempt, and model-failure fallback preserving profit900satang/historical inputs; Frontend56/Python6 unchanged. No inference was called for this verification. AWS update still pending at this commit; retain overall PARTIAL_WITH_EXTERNAL_BLOCKERS.
+

@@ -130,3 +130,8 @@ VERIFIED_AWS: Backend031467b deployed through reviewed existing-stack update; fr
 ## Product listing persistence — 25 October 2026
 
 VERIFIED_LOCAL; AWS pending at this commit. Manual/CSV creation saves price and entered quantity. Existing products have an edit form with conflict protection; unknown remains unknown and historic finance is unchanged. See product-listing.md and verification.md. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
+
+
+## Fee Rules preservation before listing release — 25 October 2026
+
+Recovered already-deployed Fee Rules source/template omitted from Git before continuing product-price deployment. Backend70 local tests now pass, Frontend56 unchanged; no removed live parameter/IAM/region/model/index change. See verification.md. Deployment pending; PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
