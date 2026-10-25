@@ -24,6 +24,10 @@ test('raw tables, Markdown and fabricated citations are rejected even with suppo
   assert.ok(!result.includes('5%'));assert.ok(!/[|*`]/.test(result));assert.ok(result.includes('ข้อมูลจำลอง'));
  }
 });
+test('additional VAT is never described as already included and additional simultaneously',async()=>{
+ const result=await mockFeeAnswer(async()=>JSON.stringify({sentences:[{text:'ค่าคอมมิชชัน 5% รวม VAT 7% เพิ่มเติมครับ',sourceIds:['shopee']}]}),'ค่าคอม',[],[evidence]);
+ assert.ok(result.includes('ยังไม่รวม VAT 7%'));assert.ok(!result.includes('VAT 7% เพิ่มเติม'));
+});
 test('actual corpus matches the requested fee type even when all semantic scores tie',()=>{
  const corpus=JSON.parse(readFileSync(new URL('../../knowledge/fee-rules/corpus.json',import.meta.url),'utf8'));
  const vector=Array(1024).fill(1),index:FeeIndex={schemaVersion:1,modelId:TITAN_EMBED_V2,dimensions:1024,corpusVersion:corpus.version,createdAt:'2026-10-25T00:00:00.000Z',chunks:corpus.chunks.map((c:any)=>({...c,embedding:vector}))};

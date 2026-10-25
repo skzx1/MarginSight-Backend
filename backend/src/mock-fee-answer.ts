@@ -19,6 +19,11 @@ export async function mockFeeAnswer(model:TextModel,message:string,history:unkno
    if(!/[ก-๙]/.test(sentence.text)||/[|*`#\n\r]|https?:|\]\(/i.test(sentence.text))throw Error('RAW_FORMAT');
    const sources=sentence.sourceIds.map(id=>records.find(m=>m.id===id));
    if(sources.some(m=>!m))throw Error('UNSUPPORTED_CITATION');
+   const sourceText=sources.map(m=>m!.excerpt).join(' ').replace(/\*/g,'');
+   // Preserve explicit additional-VAT meaning when Thai generation uses a contradictory phrase.
+   if(/VAT[^.\n]{0,30}(?:additional|added|exclusive)|excluding VAT/i.test(sourceText)&&!/conflict|unverified/i.test(sourceText)){
+    sentence.text=sentence.text.replace(/(?:ยัง)?(?:ไม่)?รวม VAT\s*(\d+(?:\.\d+)?%)\s*เพิ่มเติม/gi,'ยังไม่รวม VAT $1');
+   }
    const supported=new Set(numbers(sources.map(m=>m!.excerpt).join(' ')));
    if(numbers(sentence.text).some(n=>!supported.has(n)))throw Error('UNSUPPORTED_NUMBER');
   }
