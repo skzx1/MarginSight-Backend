@@ -1,0 +1,2948 @@
+{
+  "schemaVersion": 1,
+  "documents": [
+    {
+      "file": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "platform": "SHOPEE",
+      "sha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "asOf": "2026-10-24",
+      "provenance": "USER_SUPPLIED_RESEARCH"
+    },
+    {
+      "file": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "platform": "LAZADA",
+      "sha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "asOf": "2026-10-24",
+      "provenance": "USER_SUPPLIED_RESEARCH"
+    },
+    {
+      "file": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "platform": "TIKTOK",
+      "sha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "asOf": "2026-10-24",
+      "provenance": "USER_SUPPLIED_RESEARCH"
+    },
+    {
+      "file": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "platform": "LINE",
+      "sha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "asOf": "2026-10-24",
+      "provenance": "USER_SUPPLIED_RESEARCH"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "shopee-62f46e524dc6b078",
+      "platform": "SHOPEE",
+      "title": "Shopee Thailand seller-fee specification",
+      "text": "**Snapshot:** 24 October 2026 · THB · Thailand domestic marketplace · Standard (Non-Mall) and Mall/Official sellers",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 2,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-a51bc3f5973833e1",
+      "platform": "SHOPEE",
+      "title": "Executive finding",
+      "text": "Shopee’s current public fee policy is Help Center article 77254, revised **3 July 2026**, with the sale-fee schedule explicitly changed effective **4 August 2026, 00:00 Thailand time**. It defines payment, platform infrastructure, account-maintenance, sale, installment and Special SPayLater charges, including bases and VAT treatment. It links category schedules as Google Drive files; the schedule rows were not independently normalized here. Therefore exact category-specific sale rates are **UNVERIFIED** and must be looked up in the linked sheet/PDF or seller settlement—not invented. Official page: https://help.shopee.co.th/portal/4/article/77254",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 5,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://help.shopee.co.th/portal/4/article/77254"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-56fb0965e537f323",
+      "platform": "SHOPEE",
+      "title": "Five-line executive summary",
+      "text": "1. **All-in fee range:** no defensible single range; category sale rates, campaign/service enrollment, shipping and return adjustments are seller/order-specific or unavailable.\n2. **Known standard-order charges:** 3% transaction fee + 7% VAT on the stated payment base, and ฿1 infrastructure fee + VAT per eligible successful order; not a complete take-rate.\n3. **Commission:** category/tier formula is `(starting item price − seller-funded discount) × rate`; schedule effective 4 Aug 2026, but exact category rows remain unnormalized. Eligible small shops at ≤฿10,000 prior-30-day sales may get a 0.5–1.5% sale-fee discount; exact eligibility/tier is unresolved.\n4. **Typical illustration:** ฿1,000 item + ฿40 buyer shipping gives ฿34.454 raw payment/PIF subtotal; illustrative whole-baht rounding yields ฿34, before sale fee, seller shipping, campaigns, ads or affiliate.\n5. **Production rule:** use seller-specific fee schedule, program terms and escrow/settlement statement; Mall fee VAT wording remains conflicting and unresolved.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 9,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-1669380ba309d391",
+      "platform": "SHOPEE",
+      "title": "Evidence and status convention",
+      "text": "**Official** = directly stated in current Shopee policy/official seller or developer documentation; **official but inaccessible/unverified** = official link/search record exists but contents unavailable or page is gated; **secondary** = non-Shopee source (not used for rates); **inferred** = arithmetic or interpretation clearly identified; **unverified** = no authoritative numeric term found. Publication/revision date is distinguished from effective date. Where policy leaves rounding, settlement is authoritative.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 16,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-eda2924cbac8507c",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Payment Transaction Fee / ค่าธรรมเนียมการทำธุรกรรม** | 3% × (buyer amount payable + buyer-paid shipping + Shopee Item PRM + Shopee Coins); exclude seller-funded item discount. Buyer amount payable is net of applicable discounts/coins, so added-back platform PRM/coins are included once. | All sellers; successful eligible payment, excluding installment credit card and Special SPayLater. 3% ex VAT; VAT 7% added. No cap/minimum published. Current; unchanged on 4 Aug 2026. Official, policy 77254 revised 3 Jul 2026; corroborating official seller education article 404, dated 7 Apr 2026: https://seller.shopee.co.th/edu/article/404 |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 22,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://seller.shopee.co.th/edu/article/404"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-e985d66b65456c3c",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Platform Infrastructure Fee / ค่าธรรมเนียมโครงสร้างพื้นฐานแพลตฟอร์ม** | ฿1 per successful order, flat—not percentage. | All sellers/payment channels; success status. Ex VAT (VAT 7% additional). No cap; amount itself is the minimum. Current, unchanged 4 Aug 2026. Official policy 77254; exception/waiver details are linked but not quantified in this specification: https://shopee.co.th/m/PlatformInfrastructureFee |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 23,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://shopee.co.th/m/PlatformInfrastructureFee"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-b8cb57e2009547f8",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Account Maintenance Fee / ค่าธรรมเนียมการรักษาบัญชี** | ฿20/month for inactive seller account; if balance insufficient in a collection cycle, Shopee says it takes remaining available balance as final collection. | Inactive sellers, monthly. Policy groups this with fees “including VAT 7%” (so ฿20 VAT-inclusive). No universal minimum beyond balance capture. Current, unchanged 4 Aug 2026. Official policy 77254. “Inactive” duration/trigger details not stated in the article: unverified. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 24,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-40ef7c6333eb3ce1",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Mall Sellers Sale Transaction Fee / ค่าธรรมเนียมการขาย (Sale Transaction Fee) สำหรับ Mall Sellers** | Category rate × (starting item price − seller-funded item discount); excludes shipping and other discounts. | Mall only, successful orders, all payment channels. Category-dependent rates are in the linked Thai/English schedules. Policy 77254 says fees (4) incl VAT 7%; a later Seller Education Hub article 2219 dated 20 Aug 2026 has been reported to say Mall sale/promotional-service rates exclude VAT, but that article body was not independently retrieved in this verification. Treat Mall VAT as **conflicting/unverified**, not resolved. Effective category schedule 4 Aug 2026. Eligible small-shop sale-fee discount of 0.5–1.5% may apply if shop sales/GMV are ≤฿10,000 in the preceding 30 days; exact tier, eligible shop types and effective date are not established here. Official policy: https://help.shopee.co.th/portal/4/article/77254; schedule links are embedded there. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 25,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://help.shopee.co.th/portal/4/article/77254"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-61d6c64a9ef3cff6",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Non-Mall Sellers Sale Transaction Fee / ค่าธรรมเนียมการขายสำหรับ Non-Mall Sellers** | Category rate × (starting item price − seller-funded item discount); excludes shipping and other discounts. | Standard/Non-Mall only, successful orders, all payment channels. Category rates linked from 77254; not normalized here. Policy says VAT 7% included. Same 4 Aug schedule effective date. Eligible small-shop sale-fee discount of 0.5–1.5% may apply if shop sales/GMV are ≤฿10,000 in the preceding 30 days; exact tier, eligible shop types and effective date are not established here. No cap/minimum otherwise located. Official policy 77254: https://help.shopee.co.th/portal/4/article/77254. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 26,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://help.shopee.co.th/portal/4/article/77254"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-03d6650f65b585b0",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Credit Card Installment Payment Transaction Fee / ค่าธรรมเนียมการทำธุรกรรมผ่านบัตรเครดิตแบบผ่อนชำระ** | 3-month: 5%; 6-month: 6.5%; 10 months or more: 7%. × buyer amount payable for installment card + shipping paid with installment card + Shopee Item PRM + Shopee Coins; excludes seller discount. | All sellers; only eligible installment-card orders. Ex VAT; VAT added. No cap/minimum published. Current, unchanged 4 Aug 2026. Official policy 77254. 3% base transaction component plus installment uplift described by Shopee; do not add the separate 3% again. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 27,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-c782851cb6b311bc",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Special SPayLater Transaction Fee / ค่าธรรมเนียมการทำธุรกรรมผ่าน Special SPayLater** | 1 month 3%; 2 months 4%; 3 months 5%; 5 months 6.5%; 12 months 7%. × buyer amount payable with Special SPayLater + shipping paid with it + Shopee Item PRM + Shopee Coins; excludes seller discount. | All sellers; Special SPayLater only. Ex VAT; VAT added. No cap/minimum published. Current, unchanged 4 Aug 2026. Official policy 77254. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 28,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-08b961e9590e4012",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Promotional service / program fees** (current unified English/Thai label not found) | No universal rate. PRIME Seller (formerly Free Shipping Xtra/Discount Xtra) is an opt-in program; fee schedule/eligibility is personalized or linked and not available as a public numeric rate here. | Program-enrolled sellers only; exact program/category/order conditions and VAT not verified. Official program overview, updated 10 Aug 2026: https://seller.shopee.co.th/edu/article/19217 . Do not assume historic “service fee” from 2021 remains current. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 29,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://seller.shopee.co.th/edu/article/19217"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-2431b167d57bc88f",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Campaign enrollment / campaign fee** | No universal current campaign participation fee or numeric admission rule verified. Campaigns may require seller discount, campaign price, stock or other conditions visible at enrollment; individual event terms control. | Campaign-specific, Seller Centre gated. Official data not found publicly. No rate, cap, minimum or VAT may be asserted. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 30,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-852eec393d8ec3b2",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Advertising / โฆษณา Shopee Ads** | CPC/other campaign spend is budget-based; no universal order percentage or mandatory account charge found. Seller sets budget/uses prepaid balance per the current ad product. | Optional. Exact current product billing mechanics, minimum bids, VAT and credit expiry must be verified in account terms; no universal rate verified. Official education explains ad types, not full rate card: https://seller.shopee.co.th/edu/article/13629 |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 31,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://seller.shopee.co.th/edu/article/13629"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-ee40c66635532ec8",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Affiliate Marketing Solution (AMS) / โปรโมทผ่านพาร์ทเนอร์** | Seller pays commission for eligible attributed completed orders; no single standard commission rate found (seller-selected/offer-specific). A 7-day click window is described in official AMS education. | Optional; specific products/campaign/commission settings govern. Returned/cancelled or ineligible orders excluded per terms. VAT, cap and current default rate not verified. Official: https://seller.shopee.co.th/edu/article/17414 . Do not confuse with Seller Affiliate/Shopee Social Partners, where Shopee pays the seller owner of a link: https://seller.shopee.co.th/edu/article/14970 |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 32,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://seller.shopee.co.th/edu/article/17414",
+        "https://seller.shopee.co.th/edu/article/14970"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-ee5e379702608b6e",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Shipping / logistics, return shipping, COD, fulfillment** | No single seller shipping fee. Buyer-paid shipping, seller shipping promotions, measured parcel/route/partner costs, pickup charges, return shipping and COD are separate components. Current route/weight schedule and fee applicability must be read from carrier/service selection. | Carrier/service/weight/zone/program dependent; no universal rate or VAT rule verified. Shipping education says schedule effective 1 Apr 2025 and mentions pickup fee in some Standard Delivery pickup cases, but those dated tables are not a current 2026 universal rate card: https://seller.shopee.co.th/edu/article/3863 . COD surcharge: official data not found. FBS warehousing/pick/pack fees: official current price list not verified. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 33,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://seller.shopee.co.th/edu/article/3863"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-42005a2b419d9dea",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Refund/return/cancellation/penalties** | Policy says fees 1,2,4–7 may not be collected / may be waived if order cancelled or product returned/refunded within Shopee Guarantee or other Shopee-set period. Exact fee reversal timing, partial-refund allocation and retained fees not specified. | Case-specific; PIF and payment/sale/installment/SPayLater fee reversal follows accepted event policy, not assumed automatic. Penalty/account-health sanctions are distinct from fees; no monetary universal penalty schedule verified. Official policy 77254 plus official payment education article 404. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 34,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-b22343c9ebdd4e1d",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **VAT and WHT** | Policy 77254: fees (1),(2),(6),(7) are **VAT-exclusive**; fees (3)–(5) are **VAT-inclusive**. This explicitly yields 7% VAT on transaction, PIF, installment and SPayLater, but says sale/maintenance fees already include it. Seller Education 2219 conflicts for Mall sale and promotional-service fee treatment (rates reportedly ex VAT); unresolved. Shopee help pages on seller WHT/filing were not retrieved in sufficient detail to state seller-specific WHT rate/base. | VAT is fee-level tax, not an extra commission unless stated. WHT depends on payer/seller tax profile and transaction classification; no general WHT amount should be applied in this model. Request Shopee tax invoice/withholding certificate and tax advice. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 35,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-18e7d7d6bffd4d66",
+      "platform": "SHOPEE",
+      "title": "Fee ledger (all rates THB; seller-side unless stated)",
+      "text": "| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Listing/subscription/withdrawal/account charges** | No universal listing fee, seller subscription fee or withdrawal fee found for standard/Mall marketplace seller. ShopeeVIP is a buyer subscription, not seller fee. Inactive account fee above is the one verified account fee. | No general numeric fee verified; seller-specific banking/payment terms can differ. Official data not found for seller withdrawal fee or paid seller subscription. |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 36,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "shopee-111cf1fd298996e3",
+      "platform": "SHOPEE",
+      "title": "Category coverage (the requested 11 buckets)",
+      "text": "1. Commission/referral: sale transaction fees above (Mall and Non-Mall schedules) and AMS affiliate (optional, terms-specific).\n2. Transaction/payment: payment transaction, installment card, Special SPayLater.\n3. Services/programs: PIF, account maintenance, PRIME/free-shipping programs, Seller Coins and optional services; no universal public program charge beyond PIF.\n4. Campaign fees/requirements: event-specific and Seller Centre gated; no universal fee found.\n5. Vouchers/discount funding/base: seller-funded item discount lowers sale-fee base; Shopee-funded PRM/Coins enter payment-fee base; shipping/other discounts excluded from sale-fee base. Voucher funding attribution and per-campaign co-funding proportions must be obtained from order settlement.\n6. Shipping, returns, COD, fulfillment: separate, service/parcel-dependent; no single current rate card validated.\n7. Affiliate: AMS seller-paid commission versus Seller Affiliate/Social Partners seller-received compensation are distinct.\n8. Advertising: optional, spend/budget based; no order take-rate established.\n9. Refund/return/cancel/penalties: policy potentially waives specified fees; acceptance/time window and ledger reversal are essential. Penalties not quantified.\n10. VAT/WHT: clear VAT split in current fee policy except Mall conflict; WHT seller-specific/unverified.\n11. Listing/subscription/withdrawal/account: only inactive-account ฿20/mo verified; other universal fees not found.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 39,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-eae5245022e6a6be",
+      "platform": "SHOPEE",
+      "title": "Formula specification (auditable; do not blend unlike bases)",
+      "text": "For each order, retain raw order/escrow and statement lines; determine category, seller tier, payment method, promotion funding, fulfillment, status and enrollment first.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 52,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-1f4b77d5c8ff3105",
+      "platform": "SHOPEE",
+      "title": "Formula specification (auditable; do not blend unlike bases)",
+      "text": "- `sale_base = max(0, starting_item_price - seller_funded_item_discount)` (per policy; per-SKU allocation required for multi-item orders).\n- `sale_fee = apply_current_account_discount(category_rate[tier, category, effective_date], eligible_smallshop_discount, sale_base)`. The policy describes a 0.5–1.5% small-shop sale-fee discount for shops at or below ฿10,000 in preceding 30-day sales, but the exact tier/eligibility application is not normalized here; obtain actual Seller Center rate before calculating.\n- `payment_base = buyer_item_amount_payable_ex_shipping + buyer_paid_shipping + Shopee_Item_PRM + Shopee_Coins`. This separates goods amount from shipping so shipping is counted exactly once. In the examples, “Buyer payable” means checkout total including shipping; the payment base starts from goods payable, adds shipping, then adds Shopee PRM/Coins. Exclude seller-funded discount only once (it is already reflected in buyer goods payable); do not subtract it a second time. Reconcile the exact meaning of each API amount to order fields.\n- `payment_fee_exVAT = 0.03 * payment_base`; `VAT = 0.07 * payment_fee_exVAT`; payment fee billed = sum.\n- Installment card/SPayLater: substitute payment-method-specific rate and corresponding paid amount/shipping base; do **not** stack standard 3% separately because the policy describes those rates as inclusive of the base transaction component.\n- `PIF_exVAT = 1 THB` per successful order; `PIF_VAT=0.07` when taxable.\n- `account_maintenance = 20 THB/month` for qualifying inactive account, VAT inclusive; balance capture can be partial per policy.\n- Net settlement is not fully determinable from these public inputs: `buyer/platform funding receipts + seller proceeds − fee ledger − shipping/fulfillment − optional programs/ads/affiliate − tax/adjustment lines`. Reconcile to actual escrow and adjustments, not this simplified equation.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 54,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-17e38c3a83506ed5",
+      "platform": "SHOPEE",
+      "title": "Formula specification (auditable; do not blend unlike bases)",
+      "text": "**Rounding:** Shopee Terms of Service §20.3 states fees including VAT with a fractional satang of **50 satang or more** round up to a whole baht; below 50 satang round down. The term does not explicitly say whether multiple fee types are rounded separately or in aggregate, so examples show raw arithmetic and illustrative per-fee whole-baht posting; match the exact fee lines in settlement. Source: https://help.shopee.co.th/portal/4/article/77241.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 63,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://help.shopee.co.th/portal/4/article/77241"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-8dc22ce15742f9c6",
+      "platform": "SHOPEE",
+      "title": "Worked cases (illustrative; fees not shown are deliberately excluded)",
+      "text": "These cases use only verified 3% payment fee and ฿1 PIF. Do not treat totals as total seller fees or total take rate. The payment base is buyer amount payable plus buyer shipping and the specific Shopee Item PRM/Coins listed in the policy; an arbitrary platform voucher is **not** assumed to be PRM. Examples use simplified same-order attribution. VAT on fees (1),(2) is 7%. Sale fee shown only as base because schedule rate is unverified.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 66,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "shopee-542cf84b98db36c1",
+      "platform": "SHOPEE",
+      "title": "Worked cases (illustrative; fees not shown are deliberately excluded)",
+      "text": "| Case | Item / seller discount / named Shopee Item PRM / coins / buyer shipping | Buyer payable | Payment base | Payment charge incl. VAT | PIF incl. VAT | Unrounded subtotal | Sale-fee base |\n| Normal order | ฿1,000 / 0 / 0 / 0 / ฿40 | ฿1,040 | ฿1,040 | ฿31.20 + ฿2.184 VAT = ฿33.384; whole-baht fee **฿33** | ฿1.00 + ฿0.07 VAT = ฿1.07; whole-baht fee **฿1** | raw ฿34.454; illustrative rounded total **฿34** | ฿1,000 |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 70,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "shopee-9b23901ebf230394",
+      "platform": "SHOPEE",
+      "title": "Worked cases (illustrative; fees not shown are deliberately excluded)",
+      "text": "| Case | Item / seller discount / named Shopee Item PRM / coins / buyer shipping | Buyer payable | Payment base | Payment charge incl. VAT | PIF incl. VAT | Unrounded subtotal | Sale-fee base |\n| Seller discount + Shopee Item PRM example | ฿1,000 / ฿100 / ฿100 Shopee Item PRM / 0 / ฿40 | ฿840 | ฿940 (add back named PRM ฿100) | ฿28.20 + ฿1.974 VAT = ฿30.174; whole-baht fee **฿30** | ฿1.00 + ฿0.07 VAT = ฿1.07; whole-baht fee **฿1** | raw ฿31.244; illustrative rounded total **฿31** | ฿900 |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 71,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "shopee-5c14373b38a1eb66",
+      "platform": "SHOPEE",
+      "title": "Worked cases (illustrative; fees not shown are deliberately excluded)",
+      "text": "| Case | Item / seller discount / named Shopee Item PRM / coins / buyer shipping | Buyer payable | Payment base | Payment charge incl. VAT | PIF incl. VAT | Unrounded subtotal | Sale-fee base |\n| Campaign opt-in | ฿1,500 / ฿150 / ฿50 Shopee Item PRM / ฿20 Coins / ฿40 | ฿1,320 | ฿1,390 (add back named PRM ฿50 and coins ฿20) | ฿41.70 + ฿2.919 VAT = ฿44.619; whole-baht fee **฿45** | ฿1.00 + ฿0.07 VAT = ฿1.07; whole-baht fee **฿1** | raw ฿45.689; illustrative rounded total **฿46** | ฿1,350 |",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 72,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "shopee-d92754e6951487b7",
+      "platform": "SHOPEE",
+      "title": "Worked cases (illustrative; fees not shown are deliberately excluded)",
+      "text": "All case arithmetic was tool-calculated. The campaign case does **not** insert an unverified campaign fee or PRIME charge. In an actual campaign, add actual seller-funded voucher/price cut, program fee, shipping subsidy, ad and affiliate entries from the corresponding statement; only seller-funded item discount reduces the stated sale base.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 74,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "shopee-cbb68a01d88b940b",
+      "platform": "SHOPEE",
+      "title": "One refund/cancellation example",
+      "text": "Order above in standard case is cancelled before completion and accepted under the applicable Shopee policy period: policy 77254 says Shopee may not collect / may waive fees (1),(2),(4)–(7) for cancellation or product return/refund within Shopee Guarantee or other designated period. Thus the illustrative payment+PIF amount should not be treated as a final earned deduction if the qualifying reversal applies. It is **not** evidence that every previously posted line auto-reverses immediately; record original charge and subsequent signed reversal/adjustment separately, verify accepted order state and actual escrow. Account-maintenance fee (3) is not included among this waiver list. Partial return/refund treatment is not publicly specified here.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 77,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "shopee-bff71a8c87490c9c",
+      "platform": "SHOPEE",
+      "title": "Campaign calendar and requirements",
+      "text": "No Shopee public complete 2026 campaign calendar or universal campaign fee was found. Treat event dates as campaign dates, not fee-effective dates. Seller Centre event terms control; capture enrollment, price floor/discount, stock, funding split, campaign charge, fulfillment, VAT and refund treatment. The 4 Aug 2026 schedule date is the sale-fee revision, not a campaign calendar.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 80,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-bc79b629c80542a7",
+      "platform": "SHOPEE",
+      "title": "API/settlement map (official names; use settlement truth)",
+      "text": "Official Open Platform FAQ 479 (updated **16 May 2025**) maps Seller Center Income Report columns to endpoints/properties: https://open.shopee.com/faq/479",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 83,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://open.shopee.com/faq/479"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-5e4c077cc2b587b4",
+      "platform": "SHOPEE",
+      "title": "API/settlement map (official names; use settlement truth)",
+      "text": "- Endpoint **`v2.payment.get_escrow_detail`**: `order_income.buyer_paid_shipping_fee` = Shipping Fee Paid by Buyer; `order_income.shopee_shipping_rebate` = Shipping Rebate From Shopee; `order_income.shopee_discount` = Rebate Provided by Shopee; `order_income.seller_transaction_fee` = seller transaction fee (FAQ mapping); `order_income.instalment_plan` = installment tenure.\n- Endpoint **`v2.order.get_order_detail`**: `buyer_username`, `create_time` (per FAQ mapping).\n- Official API product scopes, exact required access scopes, pagination and complete object schema must be verified in current API docs/app approval. FAQ provides endpoint/property mapping but not a full rate/base mapping; do not infer fee bases from field labels. Preserve raw response, order ID, escrow/adjustment references and timestamps.\n- API page for escrow detail schema: https://open.shopee.com/documents/v2/v2.payment.get_escrow_detail (direct access not successfully verified in this run). Exact API authorization scope names: **Official data not found/verified**.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 85,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://open.shopee.com/documents/v2/v2.payment.get_escrow_detail"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-87c98b835e2bda68",
+      "platform": "SHOPEE",
+      "title": "Fee history (verified minimum chronology)",
+      "text": "- **1 April 2025:** seller shipping education’s then-published route/parcel table effective date; not evidence of a current 2026 rate. https://seller.shopee.co.th/edu/article/3863\n- **7 April 2026:** seller education article 404 updated; confirms payment transaction fee calculation/effective date and successful-order/waiver notes. https://seller.shopee.co.th/edu/article/404\n- **20 April 2026:** Shopee Affiliate commission rate article says rates apply from that date; rates vary by affiliate product/category and are not a universal seller fee. https://help.shopee.co.th/10/article/123898\n- **3 July 2026:** policy 77254 revision date; transaction, PIF, account-maintenance, installment and SPayLater changes table says “no change” for 4 Aug; policy includes current broad terms.\n- **4 August 2026, 00:00:** sale-fee category rates for Mall and Non-Mall changed; some categories unchanged, others +1 or +2 percentage points ex VAT per introductory paragraph. Actual category rows in linked schedules were not normalized in this document.\n- **10 August 2026:** PRIME Seller education article date; program formerly Free Shipping Xtra/Discount Xtra. This is program rebranding/terms, not a general fee effective date.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 91,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://seller.shopee.co.th/edu/article/3863",
+        "https://seller.shopee.co.th/edu/article/404",
+        "https://help.shopee.co.th/10/article/123898"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-4d71f9728afb064f",
+      "platform": "SHOPEE",
+      "title": "Conflicts and unresolved items",
+      "text": "1. **Mall sale-fee VAT:** Help Center 77254 says fees (3)-(5), including Mall sale fee, include VAT 7%. Seller Education Hub article 2219 (dated 20 Aug 2026) states that Mall sale and promotional-service rates exclude VAT. These are conflicting official sources; the Hub article is newer and Mall-specific, so provisionally prefer it for Mall schedule interpretation, but block production VAT treatment until current Seller Center schedule/invoice or written Shopee clarification resolves the conflict.\n2. **Category-specific rates:** links exposed from 77254 to Thai/English files for both tiers and before/after schedule; numeric rows were not verified/normalized. Rate per category is blocked.\n3. **Current campaign calendars, campaign fees, PRIME service rates, free-shipping co-funding, COD, FBS fees, withdrawal charges, exact return-shipping charges:** no complete public numeric source verified. Seller Centre/contract/settlement evidence required.\n4. **WHT:** seller profile, fee type and tax documents matter; no one-size-fits-all seller WHT rate/base established.\n5. **Order-field arithmetic:** policy says buyer-payable plus shipping + platform PRM + Coins, but exact API field definitions for voucher funding and payment base need verification against escrow response and statement. Avoid duplicate additions.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 99,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-e277ca7305efca8b",
+      "platform": "SHOPEE",
+      "title": "Official sources reviewed",
+      "text": "- Shopee TH Help Center, **นโยบายค่าธรรมเนียม / Fee Policy**, revision 3 Jul 2026; category changes effective 4 Aug 2026: https://help.shopee.co.th/portal/4/article/77254\n- Shopee Seller Education Hub, **Payment Transaction Fee**, dated 7 Apr 2026: https://seller.shopee.co.th/edu/article/404\n- Shopee Seller Education Hub, **PRIME Seller**, dated 10 Aug 2026: https://seller.shopee.co.th/edu/article/19217\n- Shopee Seller Education Hub, **Affiliate Marketing Solution**, dated 1 Jul 2026: https://seller.shopee.co.th/edu/article/17414\n- Shopee Seller Education Hub, **AMS vs Seller Affiliate**, dated 14 Jul 2022: https://seller.shopee.co.th/edu/article/14970\n- Shopee Seller Education Hub, **Shipping options and fees**, historical schedule effective 1 Apr 2025: https://seller.shopee.co.th/edu/article/3863\n- Shopee Open Platform FAQ 479, updated 16 May 2025: https://open.shopee.com/faq/479\n- Shopee Open Platform escrow detail API documentation: https://open.shopee.com/documents/v2/v2.payment.get_escrow_detail\n- Seller Education Hub article 2219, reported publication 20 Aug 2026, inaccessible body / unresolved VAT conflict: https://seller.shopee.co.th/edu/article/2219\n- Affiliate rate page, effective 20 Apr 2026, partner commission not seller take-rate: https://help.shopee.co.th/10/article/123898",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 106,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [
+        "https://help.shopee.co.th/portal/4/article/77254",
+        "https://seller.shopee.co.th/edu/article/404",
+        "https://seller.shopee.co.th/edu/article/19217",
+        "https://seller.shopee.co.th/edu/article/17414",
+        "https://seller.shopee.co.th/edu/article/14970",
+        "https://seller.shopee.co.th/edu/article/3863",
+        "https://open.shopee.com/faq/479",
+        "https://open.shopee.com/documents/v2/v2.payment.get_escrow_detail",
+        "https://seller.shopee.co.th/edu/article/2219",
+        "https://help.shopee.co.th/10/article/123898"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "shopee-bb0f22698f6961cf",
+      "platform": "SHOPEE",
+      "title": "Official sources reviewed",
+      "text": "**Bottom line:** use public policy for the fixed fee formulas, but do not deploy a production full-fee calculator until category tables, Mall VAT conflict, enrollment-specific costs, order funding attribution and actual refund reversals are verified against the seller’s current statements and contract.",
+      "sourceFile": "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 117,
+      "sourceSha256": "f00a96d094cb1c3e04e94135d9fe77cf1e5d208c86a1fab1625a397ed0b81149",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-633b1ce9a166d8b9",
+      "platform": "LAZADA",
+      "title": "Lazada Thailand seller-fee specification",
+      "text": "**Snapshot:** 24 October 2026 · **Currency:** THB · **Scope:** domestic Thailand Marketplace (general seller) and LazMall. This is a research specification, not a binding seller tariff. Seller Center login-only fee schedules, enrollment terms, and settlement statements prevail. “Official” below means Lazada/its Open Platform; “secondary” means independent or third-party reporting. Where the public official page did not expose the fee table body, that limitation is explicit rather than treating a search snippet as a fully inspected schedule.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 3,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-17ed6a853fe31fc1",
+      "platform": "LAZADA",
+      "title": "Executive findings and source quality",
+      "text": "The dependable public picture is: a completed-order Marketplace Service Fee (MSF/commission), a payment/transaction fee, and optional/program-dependent fees. Public sources disagree on VAT presentation, program bundling and some rates. The current official LazMall join page displays headline commission of **17.5%** and payment fee of **3.21%** (VAT-inclusive wording), while also presenting a 6–13% category table; no effective date or clear reconciliation was exposed. The official Seller Center has fee-table/program notices updated **6 May 2026** and a fee/Premium Package change notice dated **25 June 2026**, but accessible page bodies did not reveal a complete current leaf-category schedule. Therefore exact Marketplace and LazMall rates remain seller/category-specific and unverified from a complete official tariff.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 7,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-376f9f8aede8d659",
+      "platform": "LAZADA",
+      "title": "Executive findings and source quality",
+      "text": "DataGlass Labs reports that the official Lazada schedule effective **1 August 2026** is VAT-exclusive and specifies category-cluster ranges, with VAT added; KhumMai independently reports the same-date VAT-inclusive endpoints and selected leaf rates. UpscaleRank likewise reports those same endpoints, but these fee blogs are not independent official authority and likely share source material. Rates below are consequently marked secondary where applicable, not “official verified.” [DataGlass Labs, marketplace fee dataset](https://www.dataglasslabs.com/research/marketplace-fees) · [KhumMai, Lazada fee guide](https://khummai.com/lazada-fees) · [UpscaleRank](https://upscalerank.com/lazada-fees-thailand/) · [Official fee FAQ (10 Aug 2026 indexed)](https://sellercenter.lazada.co.th/helpcenter/s/faq/knowledge?categoryId=1000028085&hybrid=1&language=en-US&m_station=BuyerHelp&questionId=1000147680) · [LazMall joining page](https://sellercenter.lazada.co.th/apps/register/lazmall/joining)",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 9,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://www.dataglasslabs.com/research/marketplace-fees",
+        "https://khummai.com/lazada-fees",
+        "https://upscalerank.com/lazada-fees-thailand/",
+        "https://sellercenter.lazada.co.th/helpcenter/s/faq/knowledge?categoryId=1000028085&hybrid=1&language=en-US&m_station=BuyerHelp&questionId=1000147680",
+        "https://sellercenter.lazada.co.th/apps/register/lazmall/joining"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-f58ef33786449fba",
+      "platform": "LAZADA",
+      "title": "Five-line executive summary",
+      "text": "1. **All-in fee range:** not defensibly quantifiable from public evidence; official general-seller leaf rates and program bases are not fully accessible.\n2. **Official Mall-page headline:** 17.5% commission + 3.21% payment fee are displayed with VAT-inclusive wording; their bases and relation to the page’s 6–13% category table are not reconciled.\n3. **Secondary-only signals:** third parties report 1 Aug 2026 category clusters and 8.56% VAT-inclusive Premium Package; these are not production-verified official tariffs.\n4. **Conditional headline arithmetic:** 17.5% + 3.21% = 20.71% only if both charges apply to the same base; this is not a verified all-in Lazada take-rate.\n5. **Production rule:** confirm seller tier, leaf category, Premium Package/enrollment, shipping and tax lines in Seller Center/settlement before using any example.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 13,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-4b9fe21e741e377c",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 1. Commission/referral | **Marketplace Service Fee (MSF)** / ค่าธรรมเนียมบริการมาร์เก็ตเพลซ; often called commission/referral fee | Category- and seller-tier-specific. Latest secondary sources report VAT-exclusive clusters (Marketplace / LazMall): Electronics **5.5–15% / 5.5–17.5%**; Fashion **7.5–16% / 9–17.5%**; FMCG **15% / 17.5%**; General merchandise **9.5–15% / 12–17.5%**; Digital gift cards **12% / 14.5%**. These are cluster ranges, not a substitute for SKU leaf category. Selected secondary VAT-inclusive leaf examples: phones/tablets and camera/game console/TV **6.96% both**; large appliances **10.17% both**; printers/digital cards **11.24% Marketplace**; smart devices/audio **13.91% MP, 16.05% Mall**; beauty/health/home/sports/food/tools **16.05% MP, 18.73% Mall**; apparel/shoes/bags/fashion jewelry **17.12% MP, 18.73% Mall**; gold/platinum **8.03% MP, 9.63% Mall**. | Completed orders, category and seller program affect rate. Secondary sources say base is item price after seller-funded discounts, shipping excluded; platform-funded discounts may be treated differently—verify the individual campaign/settlement. DataGlass says official cluster figures VAT-exclusive and VAT 7% added; the leaf examples above are VAT-inclusive. **No official cap/minimum found.** | 1 Aug 2026 schedule reported; secondary corroboration only. Fee FAQ is official and dated 10 Aug 2026 but article body inaccessible. Current leaf-level official rate: **not independently verified**. [DataGlass] [KhumMai] [UpscaleRank] [official FAQ] |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 23,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-075d574bdbbae0a9",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 2. Transaction/payment | **Payment fee** / ค่าธรรมเนียมการชำระเงิน | The current official LazMall joining page displays **3.21% VAT-inclusive**, based on **item price**; the general fee FAQ body is inaccessible. Secondary guides instead claim a base including buyer-paid shipping, net of seller discount. | Posted Mall-page headline only; do not extend to general sellers. Treat the fee base, general seller rate, discounts, COD and cap/minimum as unresolved until current official policy/settlement confirms them. VAT-inclusive wording appears on LazMall page. | Current page retrieved 24 Oct 2026; no effective date displayed. Conflicts with secondary fee-base claims. [KhumMai] [UpscaleRank] [official FAQ] [LazMall joining page] |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 24,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-843e515eea400bd5",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 3. Service/programs | **Premium Package** / พรีเมียมแพ็กเกจ; other historical program names include Lazada Special Free Shipping and Campaign Voucher | Secondary latest report: **8% pre-VAT = 8.56% incl. VAT** one rate effective 1 Aug 2026. Another source reports Premium Package as optional. | Enrollment-dependent; reported calculated on net item value, not shipping. New claimed package may bundle free-shipping and campaign-voucher benefits; older schedules separate program fees. Do not stack old separate rates with the new package without account-specific confirmation. **No cap/minimum publicly verified.** | 1 Aug 2026 (secondary). Official schedule/table unavailable for direct inspection. [DataGlass] [KhumMai] [UpscaleRank] |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 25,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-ed6680789fb3bad4",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 4. Campaign | Campaign participation / campaign service fees | No universal campaign entry fee/rate or calendar-wide fee found. Campaign-specific discounts, co-funding and program enrollment can create cost. Exact campaign calendar, eligibility, submission deadlines and seller contribution are account/SKU/campaign-specific. | Seller tier, product, campaign, and funding split matter. No general cap/minimum/VAT treatment established. Avoid copying third-party “typical” discount tiers as rules. | **Official data not found** publicly in accessible material. Confirm campaign invitation/brief in Seller Center. Seller Center FAQ currently lists October 2026 payment cycle, not a campaign-fee calendar. [Seller Center FAQ index](https://sellercenter.lazada.co.th/helpcenter/s/faq) |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 26,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://sellercenter.lazada.co.th/helpcenter/s/faq"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-2c7f78f733bc8290",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 5. Vouchers | Seller voucher; platform voucher; campaign voucher / คูปองร้านค้า, คูปองแพลตฟอร์ม, คูปองแคมเปญ | No universal voucher fee rate. Seller-funded discount lowers seller proceeds; platform-funded/co-funded voucher treatment depends on funding terms and settlement line. Campaign Voucher reportedly bundled into Premium Package as of 1 Aug 2026 by secondary source, conflicting with older separate program schedules. | Formula depends on funding payer and order eligibility. Exact fee bases for platform-funded discount and stacking not publicly verified. No universal cap/minimum. | Current rules are campaign-specific; bundling claim is secondary/unverified. [KhumMai] [Seller Center FAQ] |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 27,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-8772d49c6de4d61b",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 6. Shipping/logistics/COD/fulfillment | Delivery/shipping fee, logistics fee, COD, insurance/surcharge; **no single universal seller fee** | Actual carrier/logistics amounts vary by weight, route, service, subsidy and adjustment. Open Platform shipping estimate/transaction docs enumerate Delivery, International Delivery, COD, Insurance and Surcharge transaction types, but publish no universal Thai seller rate in the cited page. Payment fee may include buyer-paid shipping per secondary source. | Seller shipping charge/subsidy and billed logistics cost are separate. COD is a payment method/transaction type; no additional universal COD surcharge located. Fulfilled-by-Lazada/storage/handling fee schedule: **not found**. Shipping fee API describes `shipping_fee` as actual shipping cost paid by seller, including shipping fee discount. VAT/caps are service-specific and unknown absent fee line. | No common rate/effective date established. [Open Platform shipping fee API](https://open.lazada.com/apps/doc/api?path=%2Flogistics%2Fepis%2Festimate_shipping_fee) [Get order list](https://open.lazada.com/doc/doc.htm) |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 28,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://open.lazada.com/apps/doc/api?path=%2Flogistics%2Fepis%2Festimate_shipping_fee",
+        "https://open.lazada.com/doc/doc.htm"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-3376bd31511a03d5",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 7. Affiliate | **Sponsored Affiliate** | Official Seller Center search-indexed FAQ says minimum commission **4%**, minimum storewide base commission **4%**. Seller sets commission; fee applies only if attribution/qualifying conditions: shopper visits store/product within 48 hours; qualifying purchase within 7 days after click; order received under program requirements. | Commission base/formula and VAT/cap details not fully exposed in snippet. Seller-/product-set rate and attribution requirements apply. Do not assume this is a mandatory marketplace fee. | Official FAQ exists; rate is from official search snippet, article not opened; present status **official snippet / incomplete verification**. [Sponsored Affiliate FAQ](https://sellercenter.lazada.co.th/helpcenter/s/faq/knowledge?&language=en-US&m_station=BuyerHelp&questionId=1000147733&hybrid=1&categoryId=1000028077) |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 29,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://sellercenter.lazada.co.th/helpcenter/s/faq/knowledge?&language=en-US&m_station=BuyerHelp&questionId=1000147733&hybrid=1&categoryId=1000028077"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-9fdcdd1fa16218e9",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 8. Advertising | Sponsored Solutions / Sponsored Discovery (ad spend) | Auction/budget-based; no fixed platform fee rate found. Charges follow campaign/billing account and actual ad delivery, not a standard per-order percentage. | Seller-controlled spend; CPC/other bid products, credits and taxes depend on product terms. No general minimum/maximum or VAT inclusion can be stated. | **Official Thailand tariff not found** in accessible public results. [Open Platform Getting Started](https://open.lazada.com/doc/doc.htm) |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 30,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://open.lazada.com/doc/doc.htm"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-2c36552c2887672a",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 9. Returns/cancel/refund/penalties | Returns/refunds/claim adjustments; seller performance penalties | Official FAQ search snippet says MSF is charged only on successful orders. Secondary sources say full cancellation/full return reverses MSF and payment fee; partial return leaves fees on retained items. Not validated against official policy body. Non-fee penalties (account actions, order limits, delisting) are not a published universal cash fee. | Return shipping, lost parcel, claim, refund and fee reversal are distinct accounting lines; settlement/claim decision controls. No general penalty amount/cap found. | Exact reversal timing/rules **unverified**. Use Finance > Account Statement and transaction detail. [Official fee FAQ] [Official account-statement FAQ](https://sellercenter.lazada.co.th/helpcenter/s/faq/knowledge?&language=en-US&m_station=BuyerHelp&questionId=1000147915&hybrid=1&flag=tempWebview&categoryId=1000028086) |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 31,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://sellercenter.lazada.co.th/helpcenter/s/faq/knowledge?&language=en-US&m_station=BuyerHelp&questionId=1000147915&hybrid=1&flag=tempWebview&categoryId=1000028086"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-8f14886f93d806d3",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 10. Taxes/VAT/WHT | VAT on platform services; WHT on service payments | Thailand VAT is reported at 7% in schedules; fee sources disagree whether published rate is net or inclusive. If rate is VAT-exclusive, VAT-inclusive equivalent = rate × 1.07. Official FAQ snippet says WHT for service fee **3%** and cites Ministerial Regulation 361 (B.E. 2563); exact withholding base, payment/commission treatment and seller eligibility require official tax invoice/withholding certificate. | Seller-specific tax status matters. Do not add VAT again to a rate stated inclusive. WHT is tax withholding/credit, not necessarily an additional platform fee; reconcile tax documents. No fee caps/minimum. | VAT/WHT administration current status not fully verified. Official article titled “Tax Invoice and Withholding tax” is linked from Finance FAQ; no authoritative accessible complete current explanation captured. [Official FAQ] [Thai Revenue Department electronic-service VAT FAQ](https://eservice.rd.go.th/rd-ves-web/assets/pdf/eService-FAQs_oct_19_2021.pdf) |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 32,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://eservice.rd.go.th/rd-ves-web/assets/pdf/eService-FAQs_oct_19_2021.pdf"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-51cc3fe6e76d078e",
+      "platform": "LAZADA",
+      "title": "Fee register — all required categories",
+      "text": "| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 11. Other listing/subscription/withdrawal/account fees | Listing fee, subscription/monthly fee, fixed order fee, withdrawal/bank fee, account setup | **Official data not found** for a current general Thailand seller listing, monthly subscription, withdrawal, or fixed per-order charge. Secondary guides report no fixed order/monthly charge and free registration; this is not sufficient to certify absence across seller types/services. | Service add-ons, Seller Center tools, external provider marketplace, financing, or failed/urgent bank transactions may have separate terms. Check contract and statement. | Unknown / not verified as universally zero. [UpscaleRank] [Lazada Seller Center](https://sellercenter.lazada.co.th/seller/support-center) |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 33,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://sellercenter.lazada.co.th/seller/support-center"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "lazada-dc92e7be4c48ef6b",
+      "platform": "LAZADA",
+      "title": "Formula specification (use as provisional until matched to settlement)",
+      "text": "Let `P` = listed item price, `SD` = seller-funded item discount, `PD` = platform-funded discount, `S_b` = buyer-paid shipping, `r_msf` = applicable category/tier MSF rate. The official LazMall page displays `r_pay = 0.0321` on item price, but the general-seller rate and authoritative fee base are unresolved.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 37,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-00ec2e29f2e66b40",
+      "platform": "LAZADA",
+      "title": "Formula specification (use as provisional until matched to settlement)",
+      "text": "- Provisional commission basis: `B_msf = P − SD` (platform discount treatment not verified); `MSF = B_msf × r_msf`.\n- Official Mall payment-fee case, if applicable: use the current Seller Center base as given (public join page displays 3.21% × item price, but reconcile with settlement); do not infer shipping or voucher treatment from a secondary article.\n- Provisional payment basis reported by secondary guides: `B_pay = (P − SD) + S_b`; `PaymentFee = B_pay × 0.0321`. This is not adopted as official; do not use until the seller’s current policy confirms it.\n- Provisional Premium Package basis: `B_prog = P − SD`; `ProgramFee = B_prog × r_prog`, where reported 1 Aug 2026 `r_prog = 0.0856` VAT-inclusive. Confirm inclusion/eligibility before charging this in a model.\n- If rate quoted pre-VAT: `fee incl. VAT = base × rate × 1.07`; if inclusive already, **do not multiply again**.\n- Expected settlement before COGS, seller-paid freight, ads, affiliate, returns and taxes: buyer product/shipping payment + any reimbursed platform subsidy − seller discount − MSF − payment fee − enrolled program fees − logistics/adjustment lines. Settlement statement is authoritative; do not reconstruct from product price alone.\n- No official Thai rounding rule found; preserve full precision until matched to the seller’s Finance statement and tax invoice.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 39,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-4506cc22c51cf854",
+      "platform": "LAZADA",
+      "title": "Formula specification (use as provisional until matched to settlement)",
+      "text": "These formulas are explicitly **inferred from secondary sources**, not represented as fully verified official Lazada rules. [KhumMai] [DataGlass] [Official fee FAQ]",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 47,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-9822253e44f820f9",
+      "platform": "LAZADA",
+      "title": "Worked examples (illustrative, not a promised payout)",
+      "text": "Amounts are computed from the provisional formulas above. Rates are VAT-inclusive secondary examples; VAT is not added again. Platform voucher funding is set to zero because its exact settlement treatment is unknown.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 51,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "lazada-f670b76a019a2141",
+      "platform": "LAZADA",
+      "title": "Worked examples (illustrative, not a promised payout)",
+      "text": "1. **Marketplace, general merchandise example:** item price ฿1,000; seller discount ฿100; buyer-paid shipping ฿40; assumed applicable MSF **16.05%** (reported VAT-inclusive selected general categories); no optional program. Net item base ฿900. MSF = 900 × 16.05% = **฿144.45**. Payment fee = (900 + 40) × 3.21% = **฿30.17**. Fees total **฿174.62**; remainder from item and buyer shipping receipts = 940 − 174.62 = **฿765.38**, before seller-paid shipping, COGS, ads, affiliate, returns/tax adjustments. Rate/category must be checked against actual leaf SKU.\n2. **Marketplace, fashion example:** item price ฿1,200; seller discount ฿0; buyer shipping ฿0; illustrative MSF **17.12% (secondary-only example; conflicts with the current official LazMall headline 17.5%)**. MSF = **฿205.44**; payment fee = **฿38.52**; total **฿243.96**; remainder **฿956.04** before other costs. This demonstrates why a Marketplace-wide flat commission is unsafe.\n3. **LazMall + reported Premium Package example:** item ฿2,000; seller discount ฿0; buyer shipping ฿60; illustrative MSF **18.73%**, program **8.56%**. MSF **฿374.60**; payment fee `(2,000+60)×3.21%` = **฿66.13**; program fee **฿171.20**; total **฿611.93**; remainder from ฿2,060 receipts **฿1,448.07**. The 18.73% rate may not fit every Mall category; package enrollment/bundling and base must be checked in Seller Center.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 53,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "lazada-947ae5b069841375",
+      "platform": "LAZADA",
+      "title": "Worked examples (illustrative, not a promised payout)",
+      "text": "**Return/cancel example:** two items at ฿250 each; one is returned and the other retained. Provisional rule from secondary sources: reverse the fee on the returned item and retain fees on the kept ฿250 item only; assuming a 16.05% MSF and no shipping, retained-item MSF = ฿40.125 and payment fee = ฿8.025, total ฿48.15 (rounded once to two decimals; independently rounded line items sum to ฿48.16). If both items/order are fully cancelled/returned, secondary sources say both fees reverse (฿0 net fee), but official reversal timing, shipping charges and refund adjustment are **not verified**. Match the actual adjustment lines rather than applying this as a guaranteed rule.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 57,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "lazada-dfd67f1246fbec7a",
+      "platform": "LAZADA",
+      "title": "Campaign calendar and seller tiers",
+      "text": "- No reliable public official 2026 day-by-day submission calendar, cutoff time, campaign fee table, or universal voucher obligation was found. Campaigns are invitation/slot-specific; use the live Seller Center campaign registration screen and the campaign-specific terms. Do not use third-party claims of standard Pay Day/Mega Sale/11.11 discounts or CPC multipliers as official facts.\n- “Marketplace” versus “LazMall” is the seller distinction in the fee schedules. Additional seller programs (including Premium Package/Top Seller) are enrollment-based; rates shown in secondary reporting may change by date and category. Account-specific/negotiated arrangements may differ.\n- 2026 reported fee changes: 1 May (reported MSF/program adjustment), 25 June (another reported change), and 1 August (reported current MSF clusters and Premium Package 8% pre-VAT). These dates and figures are secondary-reported, not verified against accessible notice body. A public secondary dataset states 1 August superseded 25 June. Another secondary report says a September 2026 competition-authority measure froze platform fee rises for six months; the claim and legal scope were not verified in a primary government source, so **do not treat as settled fee law**. [DataGlass] [KhumMai fee updates](https://khummai.com/fee-updates) [PostToday](https://www.posttoday.com/smart-sme/741803)",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 61,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://khummai.com/fee-updates",
+        "https://www.posttoday.com/smart-sme/741803"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-9c0610b3264e26ea",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "Official Open Platform page documents `GET /finance/transaction/details/get`, operation **QueryTransactionDetails**, “Authorization Required,” description: query seller transaction details within a date range. Listed fields include `fee_type` (transaction type ID), `details` (transaction details), `seller_sku`, `lazada_sku`, `amount` (total transaction value), `VAT_in_amount` (VAT in amount), `WHT_amount`, and `WHT_included_in_amount`; use the page’s full current schema rather than assuming this is an exhaustive response. The page’s indexed “Latest update” is **28 July 2022**, so the schema may be stale. Thailand service endpoint from official Open Platform logistics documentation: `https://api.lazada.co.th/rest`. The finance detail page lists authorization as required but the retrieved documentation did **not** expose a named OAuth scope/permission string; report scope as **not found**, not guessed. [QueryTransactionDetails official docs](https://open.lazada.com/apps/doc/api?path=%2Ffinance%2Ftransaction%2Fdetails%2Fget) · [Official API endpoint region table](https://open.lazada.com/apps/doc/api?path=%2Flogistics%2Fepis%2Festimate_shipping_fee)",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 67,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [
+        "https://api.lazada.co.th/rest`",
+        "https://open.lazada.com/apps/doc/api?path=%2Ffinance%2Ftransaction%2Fdetails%2Fget",
+        "https://open.lazada.com/apps/doc/api?path=%2Flogistics%2Fepis%2Festimate_shipping_fee"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-509fd71741f585c8",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "| Accounting concept | API property / interpretation | Limits |\n| fee type | `fee_type` | Identifier only; map IDs using current seller statement/finance docs; no current complete enum verified. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 71,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-9bb19d555c7e5fe2",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "| Accounting concept | API property / interpretation | Limits |\n| line narrative | `details` | Text detail; do not parse as a stable enum without validation. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 72,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-3d931bb6a6b99ad5",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "| Accounting concept | API property / interpretation | Limits |\n| SKU linkage | `seller_sku`, `lazada_sku` | May be blank/irrelevant on order-level fees. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 73,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-7cbcc24026355363",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "| Accounting concept | API property / interpretation | Limits |\n| fee amount | `amount` | Sign convention/currency precision must be validated from live response. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 74,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-509aacc8674ce707",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "| Accounting concept | API property / interpretation | Limits |\n| VAT component | `VAT_in_amount` | Useful to distinguish inclusive fee/VAT; preserve exact API key spelling/case. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 75,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-170c2d4e9331ba73",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "| Accounting concept | API property / interpretation | Limits |\n| withholding tax | `WHT_amount`, `WHT_included_in_amount` | Confirm signs and schema/version on account. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 76,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-3943235df811dad7",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "| Accounting concept | API property / interpretation | Limits |\n| logistics fee detail | shipping API result includes `transactionId`, `transactionType`, `transactionName`, `amount`, `taxAmount`, `currency` | These are from a distinct logistics endpoint, not assumed fields of finance transaction endpoint. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 77,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-9410dd2b7dd6b9a8",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "| Accounting concept | API property / interpretation | Limits |\n| order shipping | `shipping_fee` | Official GetOrder description: actual shipping cost paid by seller, including shipping fee discount. Not identical to buyer-paid shipping. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 78,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-c08234fa8a264d86",
+      "platform": "LAZADA",
+      "title": "API mapping and extraction",
+      "text": "No API scope string, current rate endpoint, or guaranteed one-to-one `fee_type` mapping to the fee register was verified. Use account authorization and a small date-limited test query; reconcile response against Seller Center Finance > Account Statement before production use.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 80,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-2a004340622a4178",
+      "platform": "LAZADA",
+      "title": "Policy history (reported; confidence caveat)",
+      "text": "| Date | Change reported | Confidence |\n| 1 May 2026 | Marketplace Service Fee and Lazada program fee adjustments reportedly began. | Secondary reporting; source announcement body unavailable. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 86,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-8817fb5c639d065e",
+      "platform": "LAZADA",
+      "title": "Policy history (reported; confidence caveat)",
+      "text": "| Date | Change reported | Confidence |\n| 25 June 2026 | Another MSF/program schedule reportedly took effect; later superseded. | Secondary dataset / fee-update pages. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 87,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-9c0ef9c712ee0de4",
+      "platform": "LAZADA",
+      "title": "Policy history (reported; confidence caveat)",
+      "text": "| Date | Change reported | Confidence |\n| 1 Aug 2026 | Current secondary schedule: revised MSF category clusters; Premium Package reported unified at 8% before VAT (8.56% incl. VAT). | Secondary dataset with claimed source-document corroboration; primary tariff body not independently inspected. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 88,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-d3aa6814cb553235",
+      "platform": "LAZADA",
+      "title": "Policy history (reported; confidence caveat)",
+      "text": "| Date | Change reported | Confidence |\n| 10 Aug 2026 | Official Seller Center “Marketplace Service Fee and Example of Payment Fee” FAQ last updated, per search index. | Official title/date visible in search result; body inaccessible. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 89,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-95708a004b2dcf55",
+      "platform": "LAZADA",
+      "title": "Policy history (reported; confidence caveat)",
+      "text": "| Date | Change reported | Confidence |\n| Sep 2026 | Reported competition-authority fee-rise freeze for six months. | Unverified; no primary order/notice located. Treat as a lead, not a rule. |",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 90,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-03860a57e45e6383",
+      "platform": "LAZADA",
+      "title": "Explicit unknowns / seller verification checklist",
+      "text": "1. Current official SKU leaf-category table for both Marketplace and LazMall; whether a newly published platform restriction/freeze changed implementation.\n2. Exact MSF and payment-fee treatment of platform-funded/co-funded discounts, voucher stacking, bundle discounts, partial refunds, shipping subsidy, and cash-on-delivery.\n3. Which 1 Aug program benefits are bundled; whether legacy enrolled sellers are grandfathered or separately billed.\n4. Campaign-specific rates, calendar, eligibility, submission cutoffs, seller-funded voucher obligations and VAT.\n5. Current Thailand COD, reverse logistics, fulfillment/storage, remote-area, failed delivery, overweight and return-to-sender tariffs.\n6. Current tax invoice and WHT base/rates for each fee and seller legal form; tax treatment must follow Lazada invoices and official Revenue Department guidance.\n7. Listing/subscription/withdrawal/account fees and whether universal zeros apply to all service add-ons/account types.\n9. API current schema, fee type dictionary, rate limit, date-window behavior, scope string, signs and currency; the specific QueryTransactionDetails page states an older update date (28 July 2022), while the Finance API overview is marked updated **19 July 2024**. Treat the fields as provisional until current schema and seller response are validated; the Thailand API host is not independently verified.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 94,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "lazada-0645c7bbede72de1",
+      "platform": "LAZADA",
+      "title": "Explicit unknowns / seller verification checklist",
+      "text": "**Operational source of truth:** Seller Center Finance → Account Statement → transaction details; inspect the seller’s exact SKU category, program enrollment, campaign terms, tax invoice, and payout adjustments. Public research did not justify filling the above unknowns with guessed values.",
+      "sourceFile": "Lazada_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 103,
+      "sourceSha256": "d1e1075e85a3a24c3e51e8aaf8ec8d641d0631884b49d8f4420ac1bbce95e4e9",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "tiktok-302622e08e3a8935",
+      "platform": "TIKTOK",
+      "title": "TikTok Shop Thailand — seller fee specification",
+      "text": "**Snapshot:** Thailand, THB, 24 October 2026. **Scope:** standard (Non-Mall) and Mall shops. This is a research specification, not a shop quote. **Officially verified** means directly stated in the linked TikTok Seller Center or Open Platform page. If a category table, Seller Center-only rate, or live settlement field was inaccessible, it is marked **UNVERIFIED** rather than inferred.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 3,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "tiktok-afe4318bd6e96d70",
+      "platform": "TIKTOK",
+      "title": "Executive summary",
+      "text": "There is no defensible universal TikTok Shop take-rate. Per-order deductions can include the seller-tier/category commission, a 3.21% transaction fee, Commerce Growth Fee (usually 6.96% electronics / 8.03% other categories, subject to exceptions and cap), infrastructure fee, optional campaign/program charges, seller-funded promotion, affiliate and ads. Current commission tables are linked in official Seller Center pages, but their individual category rows were not normalized in this research; do not publish a generic total percentage. Baseline formula: `commission + transaction + eligible growth fee + eligible order fee`, plus seller-selected costs. Use Finance settlement for posted values.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 7,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "tiktok-e833ddc1fd0c3302",
+      "platform": "TIKTOK",
+      "title": "Five-line executive summary",
+      "text": "1. **All-in fee range:** no universal range; the current 5 Jul category-commission rows were not normalized in this audit.\n2. **Standard fixed/percentage components:** transaction fee 3.21%; Commerce Growth Fee 6.96% electronics / 8.03% other (eligible cases, capped ฿199/item); infrastructure ฿1.07 per eligible delivered order.\n3. **Campaign/program costs:** seller-sponsored BCD/Flash can add 3.21% on seller-discounted item price; other 9.9/11.11/12.12/LIVE terms are account/campaign-specific.\n4. **Illustrative typical case, not a rate quote:** with hypothetical 7.00% commission on a ฿1,000 item, 8.03% growth fee, 3.21% transaction fee and ฿1.07 infrastructure fee, shown subtotal is ฿183.47 before seller-selected costs.\n5. **Production rule:** use actual category table, eligibility and Finance settlement; don't use the hypothetical commission as a current category rate.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 11,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "tiktok-7e76c193c98cd2b4",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 1. Commission / referral | **Platform Commission Fee / ค่าคอมมิชชัน**; Mall: **Mall Commission Fee / ค่าคอมมิชชันร้านค้า Mall** | `commission = (item price − seller-funded discount) × category rate`. Shipping and platform-funded discount are excluded under the official guidance. Category/subcategory-specific. | Current rate-card revision effective **5 July 2026, 00:00 Thailand time**. Rates are stated tax-inclusive. Complete numeric rows were linked as official PDFs but not normalized here: **category rates UNVERIFIED in this document**. Mall article includes a Guitar illustration at **13.91%**; that is not a universal/category table. Official sources: [Non-Mall commission schedule](https://seller-th.tiktok.com/university/essay?knowledge_id=6837808312370945&lang=en), [Mall commission schedule](https://seller-th.tiktok.com/university/essay?knowledge_id=7485510424282896&lang=en). No general cap/minimum found. |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 21,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=6837808312370945&lang=en",
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=7485510424282896&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-6b343b198ee75794",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 2. Payment / transaction | **Transaction Fee / ค่าธรรมเนียมคำสั่งซื้อ** | **3.21% × (customer payment + platform discount)** under the rule effective **21 March 2026**. Fee is VAT-inclusive. | Successful delivered orders; full pre-delivery cancellation is not charged. After-delivery return/refund, including partial, does not reverse this fee under the official page. Official source [Transaction Fee policy](https://seller-th.tiktok.com/university/essay?knowledge_id=10011830&lang=en), effective 21 Mar 2026; its example gives ฿28.89 on a ฿900 base. Confirm which shipping component is included in “customer payment” from the order’s own settlement. |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 22,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=10011830&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-97d8b2a944f70a8a",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 3. Services/programs | **Commerce Growth Fee / ค่าธรรมเนียมสนับสนุนการเติบโตของร้านค้า** | `min((item price − seller discount) × rate, ฿199/item)`. From **6 May 2026**: **6.96% electronics**, **8.03% other goods**. Small Non-Mall sellers below **฿10,000 GMV in the prior 30 days**: **6.42% / 7.49%** respectively (0.54 percentage-point reduction). | Rates tax-inclusive. Not charged to sellers shipping exclusively with their own fleet. New-shop first-30-day waiver; for shops onboarded after **16 July 2026**, waiver capped at **฿1,000**. Delivered-and-later-returned orders retain the fee. Official [Commerce Growth Fee policy](https://seller-th.tiktok.com/university/essay?knowledge_id=4831419884979969&lang=en), effective 6 May 2026. Eligibility is rolling/account-specific; check Seller Center. |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 23,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=4831419884979969&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-1196bf4fc2ab3581",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n|  | **Platform Infrastructure Fee / ค่าธรรมเนียมโครงสร้างพื้นฐานแพลตฟอร์ม** | **฿1.07 per delivered order**, regardless of item count; tax-inclusive. | Effective **1 October 2025**. Waived for sellers with **1–100 orders** in the prior 30-day assessment period ending on the **20th**, for the following month. Full pre-delivery cancellation is refunded; partial cancellation may retain item-level fee; delivered return retains it. Official [Infrastructure Fee policy](https://seller-th.tiktok.com/university/essay?knowledge_id=4832028500215569&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 24,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=4832028500215569&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-7388151b683870cd",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n|  | **Pre-order service fee / ค่าบริการพรีออเดอร์** | Mall article illustrates **2.14% × (item price − seller discount)**; tax-inclusive example. | Eligibility and current applicability beyond the Mall context are not fully established from public text; **do not apply universally**. Official source: [Mall commission and fee article](https://seller-th.tiktok.com/university/essay?knowledge_id=7485510424282896&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 25,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=7485510424282896&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-54e22d7e48f369fd",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n|  | **Seller-funded credit-card installment / ค่าธรรมเนียมผ่อนชำระบัตรเครดิต** | Tenor rates, effective **1 January 2025**: 3/4/6/10 months = **1.07% / 2.14% / 2.675% / 3.21%**. Current guidance says seller-funded installment interest applies to delivered orders from **21 February 2026**. | Optional seller funding; separate from transaction fee. Exact per-tenor calculation base and tax presentation must be validated against current program terms/settlement; no universal application. Official [installment policy](https://seller-th.tiktok.com/university/essay?knowledge_id=5244223578949377&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 26,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=5244223578949377&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-34ca1b1e075f7739",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n|  | **TikTok PayLater 0% Interest Free Program / โปรแกรมผ่อนชำระ 0%** | Participating-seller fee: `program rate × (customer payment − customer refund) × 1.07 VAT multiplier`. Official illustration uses **2%**. | Seller-/offer-specific; 2% is an illustration, **not a universal rate**. Its example refunds the interest subsidy when consumer refunds. Separate from ordinary PayLater, for which another Seller Center article says no additional seller fee. Official [program terms](https://seller-th.tiktok.com/university/essay?knowledge_id=3220348016690961&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 27,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=3220348016690961&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-53414bd6f1b418b4",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 4. Campaign fees | **Brand Crazy Deals / Flash Sales Service Fee** (exact Thai Seller Center label not independently verified); **3.21% × (item price − seller-funded discount)**; VAT-inclusive. | Effective **1 January 2025**. Applies to participating seller-sponsored BCD/Flash eligible orders; buyer shipping and platform discount excluded. BCD and Flash are non-stackable on the same product. Full qualifying refund is refunded; partial-refund treatment follows current settlement/program terms. | Verified specific campaign fee, not a universal 9.9/11.11/12.12/LIVE entry fee. Other event entry fees, minimum discount, co-funding and seller eligibility are campaign-specific; **Official data not found** as universal rates. Sources: [BCD/Flash terms, 20 Feb 2025](https://seller-th.tiktok.com/university/essay?knowledge_id=7498481985029905&lang=en); corroborating [BCD/FS terms, 15 Nov 2024](https://seller-th.tiktok.com/university/essay?knowledge_id=6351467314644737&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 28,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=7498481985029905&lang=en",
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=6351467314644737&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-cbd34a85d3f4a1d3",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 5. Voucher / discount costs | Seller-funded item discounts, platform voucher, co-funded voucher, platform subsidy | Keep every funding source separate. Commission and Commerce Growth bases subtract seller discount but exclude platform discounts; transaction-fee base adds platform discount. Platform’s portion of co-funded promotion is not automatically seller cost. | No universal campaign contribution rate. The official fee overview identifies multiple platform-funded promotions; seller co-funding is an order/campaign settlement line. Use actual campaign agreement and statement. [Fee overview](https://seller-th.tiktok.com/university/essay?knowledge_id=3233897186412289&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 29,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=3233897186412289&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-29cdb293af66a8fa",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 6. Shipping and logistics | **Platform shipping fee / ค่าจัดส่ง**, seller shipping discount, logistics adjustments, return shipping | No single rate: carrier, route, weight, pickup address, and subsidy determine charges. From **16 February 2025**, higher of seller-declared and LSP-measured weight is used; from **1 April 2025**, actual LSP pickup address is used. | Shipping amounts/rate card, COD surcharge, warehouse/fulfillment fee and return shipping tariff: **Official data not found as universal rate**. Official policy says platform shipping fee is VAT-exempt. Return-shipping responsibility varies by fault: seller fault—seller; LSP fault—LSP; buyer/change-of-mind—platform under the cited policy. Sources: [shipping adjustments](https://seller-th.tiktok.com/university/essay?knowledge_id=8839325974333186&lang=en), [return-shipping policy](https://seller-th.tiktok.com/university/essay?knowledge_id=10008550&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 30,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=8839325974333186&lang=en",
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=10008550&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-8e1da50a873e2203",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 7. Affiliate / creator | **Creator Affiliate Commission / ค่าคอมมิชชันแอฟฟิลิเอต** | Seller sets rate. Official creator rule: `commission = actual paid item price × seller-set rate`; actual paid price subtracts platform coupon, merchant coupon and product tax. | Not a universal platform rate. Cancellation before receipt / qualifying refund generally removes commission; partial refund may reduce it. Creator guidance is not proof of a mandatory seller-wide fee. Official [creator commission guidance](https://seller-th.tiktok.com/university/essay?knowledge_id=6837910133393153&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 31,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=6837910133393153&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-81bc8adf028e5bbf",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 8. Advertising | TikTok Shop Ads / ad spend; auto-pay from settlement if enabled | Auction-/campaign/account-configured actual ad spend; no universal per-order percentage, public minimum or cap verified. | Treat as seller-selected marketing cost, not standard platform take-rate. Auto-pay from settled balances is an account setting. Current Thai ads billing terms and API mapping **UNVERIFIED**. Source: [official fee overview](https://seller-th.tiktok.com/university/essay?knowledge_id=3233897186412289&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 32,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=3233897186412289&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-e8bfd04a34cb498a",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 9. Refund, return, cancellation, penalties | Reversals and seller-fault adjustments | Delivered return/refund: transaction, Commerce Growth and infrastructure fees are retained under the relevant pages; the BCD/Flash service fee is refunded on a full qualifying return and adjusted pro-rata for a partial refund. Mall commission is refunded for full return and on returned items for partial refund. Non-Mall commission reversal should be checked in settlement. | Full pre-delivery cancellation: transaction and growth fees not charged; infrastructure treatment depends on full vs partial cancellation. Penalty amounts/thresholds are not fully published in accessible sources: **UNVERIFIED**. Seller-fault return shipping may be separately charged. Sources: fee pages above; [seller cancellation/return policy, updated 23 Sep 2026](https://seller-th.tiktok.com/university/essay?knowledge_id=6837799362217730&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 33,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=6837799362217730&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-6391bd04e2082634",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 10. Taxes on fees | VAT and withholding | TikTok tax explainer says Thai platform service fees carry **7% VAT**; the core rates in the rows above are published as tax-inclusive. Corporate sellers: **3% WHT** on platform services under TikTok’s stated procedure; Thai Happy Logistics: **1% WHT** for corporate sellers. The Thai tax article is dated **20 Jan 2026** and says local corporate sellers using the platform from **1 Jul 2025** accept the WHT-agent arrangement. | TikTok says it acts as withholding agent and issues certificate; individuals excluded from this corporate WHT treatment. Shipping fee is stated VAT-exempt. Seller/legal status and tax invoice control. Official [Basic Tax Information for Sellers](https://seller-th.tiktok.com/university/essay?knowledge_id=8856797734799105&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 34,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=8856797734799105&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-fa6823ee28067304",
+      "platform": "TIKTOK",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 11. Other | Listing, account, withdrawal, other settlement lines; withholding-agent contract stamp duty | No universal listing/monthly/account fee verified. TikTok’s tax article (20 Jan 2026) also states **฿30 stamp duty per WHT-agent contract**: for contracts dated on/before 31 Dec 2025, collected by 15 Jan 2026; for contracts after 31 Dec 2025, upon contract generation. Other lines include shipping adjustments, chargebacks, compensation, seller shipping discounts, fee adjustments and co-funded voucher deductions. | Contract stamp duty is not a per-order rate; exact applicability/collection to be checked in Seller Center tax documents. Other amounts are event-specific; read the statement line. Do not treat an unknown fee code as zero or map by name alone. Source: [Basic Tax Information for Sellers](https://seller-th.tiktok.com/university/essay?knowledge_id=8856797734799105&lang=en) and [official fee overview](https://seller-th.tiktok.com/university/essay?knowledge_id=3233897186412289&lang=en). |",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 35,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=8856797734799105&lang=en",
+        "https://seller-th.tiktok.com/university/essay?knowledge_id=3233897186412289&lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "tiktok-cda7a874abb910c6",
+      "platform": "TIKTOK",
+      "title": "Independent verification note",
+      "text": "The detailed transaction-fee article and the current fee overview both repeat the 3.21% transaction rate; the detailed policy controls base and effective date. Numeric 5 July commission rows remain unnormalized. No official Thai fee-rounding rule was found in accessible Seller Center materials; use Finance statement values, not a guessed rounding rule.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 39,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "tiktok-f5fb9f15e86abe08",
+      "platform": "TIKTOK",
+      "title": "Campaign calendar and funding",
+      "text": "The ordinary 9.9, 11.11 and 12.12 periods, Flash Sale and LIVE do not establish one universal fee rate. Accessible official material did **not** establish a universal 2026 campaign entry fee, extra commission, minimum discount, or platform/seller/co-funding split for those events. **Official data not found** for a fixed event fee calendar. Model each campaign from its actual Seller Center invitation and settlement entries. Keep seller price cut, seller coupon, platform coupon, subsidy, affiliate, ads and logistics separate.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 43,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "tiktok-21d233c42c8b2681",
+      "platform": "TIKTOK",
+      "title": "Formula model and worked cases",
+      "text": "For one item, before seller shipping, ads and affiliate unless stated:",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 47,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "tiktok-4328340ff3ee8f9b",
+      "platform": "TIKTOK",
+      "title": "Formula model and worked cases",
+      "text": "```text\nsale_base = item_price - seller_funded_discount\ncommission = sale_base * shop_category_rate                 # category rate required\ncommerce_growth = min(sale_base * eligible_growth_rate, 199)\ntransaction_fee = (customer_payment + platform_discount) * 0.0321\ninfrastructure_fee = 1.07 if delivered and eligible\nother = seller_program + seller_campaign + seller_affiliate + ads + shipping/adjustments\nnet_before_COGS = seller receipts + platform reimbursements - deductions - seller-funded discount\n```",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 49,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "tiktok-f4c642314ef5f403",
+      "platform": "TIKTOK",
+      "title": "Formula model and worked cases",
+      "text": "**Rounding:** no official Thai fee rounding rule was found in accessible Seller Center material. Preserve the raw decimal calculation and use the amount actually posted in the Finance statement.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 59,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "tiktok-3f686bb43c93576c",
+      "platform": "TIKTOK",
+      "title": "Formula model and worked cases",
+      "text": "Rates below are shown tax-inclusive where so stated. Since official current commission table rows were not normalized, the **7.00% commission rate in these illustrations is hypothetical** and is not asserted to be a current category rate. The 2% PayLater program rate is an official example only.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 61,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "tiktok-d7c941027cdf51c4",
+      "platform": "TIKTOK",
+      "title": "Formula model and worked cases",
+      "text": "1. **Normal delivered item:** listed ฿1,000; no seller discount; no platform voucher; customer payment ฿1,000; hypothetical category commission 7.00%; non-electronics Commerce Growth 8.03%. Commission ฿70.00 + growth ฿80.30 + transaction `(1,000 + 0) × 3.21% = ฿32.10` + infrastructure ฿1.07 = **฿183.47**, excluding shipping, ads, affiliate and any seller program. Arithmetic independently checked.\n2. **Seller discount + platform voucher:** listed ฿1,000; seller discount ฿100; platform voucher ฿100; customer pays ฿800. Commission base ฿900 at hypothetical 7.00% = ฿63.00; growth base ฿900 at 8.03% = ฿72.27; transaction base `(800+100)` = ฿900, fee ฿28.89; infrastructure ฿1.07. **Total ฿165.23**, before other costs. Platform discount excluded from commission/growth base but included in transaction base.\n3. **Campaign/program opt-in:** same inputs as case 2 plus seller enrollment in BCD/Flash at 3.21% on the seller-discounted item base: `900 × 3.21% = ฿28.89`; plus PayLater program at illustrative 2% and no refund: `฿800 × 2% × 1.07 = ฿17.12`. Total `165.23 + 28.89 + 17.12` = **฿211.24**. The 2% PayLater rate is an official example, not a universal plan rate; BCD/Flash eligibility, return policy and campaign terms must apply. BCD and Flash cannot stack on the same product.\n4. **Return after delivery:** if case 2 is delivered then fully returned, transaction ฿28.89, growth ฿72.27 and infrastructure ฿1.07 remain under the cited rules; commission treatment follows tier/order return policy (Mall policy refunds commission on returned items; verify Non-Mall settlement); seller-fault return shipping may be added. The actual reversal ledger is authoritative.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 63,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "tiktok-13e61fbb0ad5a822",
+      "platform": "TIKTOK",
+      "title": "API mapping (official schema; fee attribution still needs reconciliation)",
+      "text": "- Finance order transaction endpoint: `GET /finance/202501/orders/{order_id}/statement_transactions`; permission `seller.finance.info`. It returns SKU-linked transaction, fee/tax and settlement details. Source: [Get Transactions by Order](https://partner.tiktokshop.com/docv2/page/get-transactions-by-order).\n- Finance statement transactions: current documented version **202501**; unsettled transactions **202507**. Confirm exact endpoint paths and all properties in current Open Platform docs before implementation; this research did not verify a full Thai field map for shipping, discounts, affiliate, COD and every seller fee.\n- The 22 Sep 2026 additive API fields are: `new_customer_growth_package_fee`, `store_gmv_growth_package_fee`, `target_product_gmv_growth_package_fee`, `auto_post_shoppable_video_commission_fee`; and tax values `new_customer_growth_package_fee_tax`, `store_gmv_growth_package_fee_sales_tax`, `target_product_gmv_growth_package_tax`, `auto_post_shoppable_video_sales_tax`. The notice introduces no request parameter or new permission scope; it is an API-field change, not proof of Thai seller charges. Source: [22 Sep 2026 API change](https://partner.tiktokshop.com/docv2/page/8he1k3et).",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 70,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [
+        "https://partner.tiktokshop.com/docv2/page/get-transactions-by-order",
+        "https://partner.tiktokshop.com/docv2/page/8he1k3et"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "tiktok-b1de479812443ca5",
+      "platform": "TIKTOK",
+      "title": "Policy history and confidence",
+      "text": "- **1 Jan 2025:** BCD/Flash fee terms and seller-funded installment schedule published (current article states 3.21% BCD/Flash; installment tenor rates above).\n- **1 Oct 2025:** infrastructure fee effective at ฿1.07 per delivered order.\n- **21 Mar 2026:** transaction-fee base explicitly changed to customer payment plus platform discount.\n- **6 May 2026:** Commerce Growth rates changed to 6.96% electronics / 8.03% other, with ฿199 item cap.\n- **5 Jul 2026:** current Mall/Non-Mall commission schedule revision effective; full numeric rows still require Seller Center PDF validation.\n- **22 Sep 2026:** additive finance API fields; this is an API schema change, not evidence of changed Thai seller tariffs.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 76,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "tiktok-87ebb50a900918ae",
+      "platform": "TIKTOK",
+      "title": "Policy history and confidence",
+      "text": "**Confirmed:** transaction rate/base/effective date; Commerce Growth rates, base, cap and eligibility; infrastructure amount/assessment; BCD/Flash 3.21% terms; listed installment schedule; VAT/WHT treatment per TikTok explainer; source-defined return rules. **UNVERIFIED/account-specific:** complete Mall/Non-Mall category tables, campaign and program contribution rates, shipping/COD/FBL tariffs, affiliate/ad spend for an individual order, exact rounding, full Thai finance-field map and fee reversals in actual seller statements. Before production, reconcile at least one ordinary, discounted, campaign, canceled and returned order against Finance statement and tax invoice.",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 83,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "tiktok-6aaa6822b26f7433",
+      "platform": "TIKTOK",
+      "title": "Sources",
+      "text": "Official Seller Center URLs are linked inline above. Key effective/revision dates are in each row; source pages may be updated, so archive the policy version used. No fee blogs were used to promote any rate to “official.”",
+      "sourceFile": "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md",
+      "sourceLine": 87,
+      "sourceSha256": "33d11a7cf8d72ca1ed45776a481b42b914d15a13ae7487be9b58030a6c81664f",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-0b117894017237ea",
+      "platform": "LINE",
+      "title": "LINE Thailand commerce fees — seller-side specification",
+      "text": "**Snapshot:** 24 October 2026 · **Market/currency:** Thailand / THB. The word LINE covers distinct storefront, discovery, messaging, payment and ordering products; fee rules must not be transferred from one product to another. “Official data not found” means the public official pages reviewed do not establish a value; it is not proof a charge is zero.",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 3,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-263293e328f3e40f",
+      "platform": "LINE",
+      "title": "Active seller-facing product map",
+      "text": "| Product | Seller-side role | Fee treatment / scope |\n| **MyShop** | Store, catalog, chat orders, inventory and seller dashboard linked to LINE Official Account | Basic seller tools are promoted as free to open/use; payment and LINE SHOPPING attribution may create separate fees. |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 9,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-00ea5c153d1e791d",
+      "platform": "LINE",
+      "title": "Active seller-facing product map",
+      "text": "| Product | Seller-side role | Fee treatment / scope |\n| **LINE SHOPPING** | Consumer discovery/marketplace surface that can generate attributed MyShop orders | Its seller fee policy applies only to eligible orders and attribution conditions; not a universal MyShop fee. |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 10,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-64f711fe01db6be2",
+      "platform": "LINE",
+      "title": "Active seller-facing product map",
+      "text": "| Product | Seller-side role | Fee treatment / scope |\n| **LINE Official Account (OA)** | Messaging, chat, broadcast and links to store/order flows | OA plan/message costs are separate from marketplace/order fees. Current public plans should be confirmed in billing; current posted MyShop add-on prices may be dated/conditional. |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 11,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-0526ea5b57cab72b",
+      "platform": "LINE",
+      "title": "Active seller-facing product map",
+      "text": "| Product | Seller-side role | Fee treatment / scope |\n| **LINE MINI Eats** | Restaurant-ordering and merchant-management subscription | Separate subscription model; official pages say no per-order GP/commission. |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 12,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-1bd2a051657b06e2",
+      "platform": "LINE",
+      "title": "Active seller-facing product map",
+      "text": "| Product | Seller-side role | Fee treatment / scope |\n| **LINE MINI App** | Merchant app platform for custom customer journeys and payments | Not a uniform marketplace; implementation and payment-provider agreement determine merchant charges. No universal tariff found. |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 13,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-84e76b87324ad604",
+      "platform": "LINE",
+      "title": "Active seller-facing product map",
+      "text": "| Product | Seller-side role | Fee treatment / scope |\n| **LINE Pay / MyShop Payment Service System** | Payment method/service named by MyShop fee policy; standalone integrations may use separate contracts | MyShop’s fee policy is not a universal standalone LINE Pay merchant rate card. Current standalone rate: **Official data not found**. |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 14,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-deff907edfb75844",
+      "platform": "LINE",
+      "title": "Active seller-facing product map",
+      "text": "LINE Ads, Sponsored Stickers/Emoji and LINE Ads Affiliate are separate marketing/partner products, not a fixed seller fee on all MyShop orders. Product pages: [MyShop](https://lineforbusiness.com/th/service/myshop), [LINE MINI Eats](https://lineforbusiness.com/th/service/lineminieats), [LINE MINI App](https://developers.line.biz/en/services/line-mini-app/), and [MyShop API](https://lineforbusiness.com/th/service/myshop/feature/myshop-api).",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 16,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://lineforbusiness.com/th/service/myshop",
+        "https://lineforbusiness.com/th/service/lineminieats",
+        "https://developers.line.biz/en/services/line-mini-app/",
+        "https://lineforbusiness.com/th/service/myshop/feature/myshop-api"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-52b91b7ef61b858b",
+      "platform": "LINE",
+      "title": "Five-line executive summary",
+      "text": "1. **All-in range:** no universal MyShop/LINE take-rate; the 3% transaction fee and conditional 3% service fee apply to different order populations/bases.\n2. **Typical conditional case:** if both fees apply to equal ฿1,000 bases, total is 6% + 7% VAT = ฿64.20; this is not a rate on every MyShop order.\n3. **Campaign relief:** qualifying new sellers may get 0% transaction fee for 30 days, capped at 100 orders or ฿100,000 GMV, while the 3% service fee remains.\n4. **Separate product:** LINE MINI Eats uses a promotional one-branch subscription of ฿990/month before VAT through 31 Mar 2027 and states 0% per-order GP.\n5. **Production rule:** verify seller eligibility, LINE SHOPPING attribution, payment route and actual settlement; direct-bank-transfer promo dates conflict and post-shipment fee reversals are not specified publicly.",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 22,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-fa5e34c480399d8a",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 1. Commission/referral | MyShop policy does not identify a general sales commission separately from the **Service Fee / ค่าธรรมเนียมการใช้บริการ** below. LINE MINI Eats states **0% GP/commission per order**. LINE Ads Affiliate/Agent are separate programs. | No universal MyShop seller affiliate commission found. MINI Eats is a distinct product and its 0% commission does not apply to MyShop. | MINI Eats current product page/FAQ; price page current on 24 Oct 2026. MyShop fee policy effective 1 Sep 2023, later amended 16 Oct 2023, 15 Nov 2023 and 10 Sep 2024. [Fee policy Thai](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th), [MINI Eats](https://lineforbusiness.com/th/service/lineminieats). |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 32,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th",
+        "https://lineforbusiness.com/th/service/lineminieats"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-27eeeb2cfd5fc905",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 2. Payment/transaction | **Payment Transaction Fee / ค่าธรรมเนียมธุรกรรมการชำระเงิน**: standard **3%** on eligible MyShop Payment Service System / LINE SHOPPING orders. The policy describes buyer amount payable before LINE POINTS as the basis. | Applies to eligible completed/“Mark as Shipped” orders using covered payment routes (examples include credit/debit card, LINE Pay and mobile banking). New-seller campaign may reduce to 0% for limited eligible orders. | VAT **7% additional**; no general cap/minimum in fee policy. Policy and official campaign independently state 3%. [Policy](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th); [campaign](https://lineforbusiness.com/th/service/myshop/campaign/0percent-transaction-fee). |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 33,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th",
+        "https://lineforbusiness.com/th/service/myshop/campaign/0percent-transaction-fee"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-a4665c98733d6e12",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 3. Service/program | **Service Fee / ค่าธรรมเนียมการใช้บริการ**: **3%** for orders attributed to LINE SHOPPING surface/marketing support/LIVE and qualifying activity. Attribution may apply where a customer adds any seller item to cart from LINE SHOPPING channel/media within **7 days**. | Seller’s own chat, own ad or direct link is generally exempt unless the qualifying attribution/cart condition applies. Buyer-selected LINE MAN Messenger shipping and seller-funded coupon amounts are described as excluded from the service-fee base; the official example adds back LINE SHOPPING coupon and LINE POINTS. | VAT **7% additional**; no universal cap/minimum. Confirm other shipping/discount combinations against seller statement. Source: [Thai policy, last amendment 10 Sep 2024](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th). |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 34,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-ef6f8e17bdde2bda",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n|  | Bank-transfer feature | Direct-to-seller bank transfer is distinct from MyShop Payment Service System. The feature has been advertised with 0% transaction fee, but the two official pages conflict on the end date of its 2026 promotion: MyShop feature says **30 Sep 2026**; OA features page says **31 Dec 2026**. | As of 24 Oct 2026, do not assert the free-plan promotion is still active without checking the seller’s OA package and current feature terms. Source pages: [MyShop feature](https://lineforbusiness.com/th/service/myshop/feature/myshopadd-onfeature-bank-tranfer), [LINE OA features](https://lineforbusiness.com/th/service/line-oa-features). **Conflicting official evidence.** |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 35,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://lineforbusiness.com/th/service/myshop/feature/myshopadd-onfeature-bank-tranfer",
+        "https://lineforbusiness.com/th/service/line-oa-features"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-9e095f982d39624b",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 4. Campaign fees | MyShop 0% transaction-fee campaign; LINE SHOPPING promotions/LIVE and product campaigns | Current published campaign period **1 Apr 2026–31 Mar 2027**. Eligible new/qualifying sellers get 0% payment transaction fee for **30 days**, ending earlier at **100 orders or ฿100,000 GMV**. Seller registration by **28 Feb 2027**; qualifying order window **1 Apr 2026–28 Feb 2027**; COD does not count toward qualification. | Campaign expressly retains standard 3% service fee. Eligibility requires payment service approval, product and shipping method configured; seller must confirm enrollment/remaining allowance. No universal extra mega-sale fee. [Official campaign terms](https://lineforbusiness.com/th/service/myshop/campaign/0percent-transaction-fee), current window as listed on page. |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 36,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://lineforbusiness.com/th/service/myshop/campaign/0percent-transaction-fee"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-eb31281ecd271942",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 5. Voucher/discount costs | Seller-funded coupons, LINE SHOPPING-funded coupons, LINE POINTS and co-funded support | The Thai policy’s worked example directly states transaction base `฿230+฿200=฿430` and service base `฿230+฿50+฿200=฿480`; the seller-funded coupon and seller shipping discount are reflected earlier in the table. The English translation has a formula typo (`290+200` for both fees) despite matching the amounts; prioritize the Thai text and still reconcile alternate shipping/payment cases to settlement. | The source’s English translation has the formula typo described above; use Thai policy wording. Keep named funding sources separate and verify other coupon stacking/shipping routes against statement. [Thai policy](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th), amended 10 Sep 2024; [English translation](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=en). |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 37,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th",
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=en"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-e6a7aebc55427f72",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 6. Shipping/logistics/COD/fulfillment | MyShop shipping-label/iShip carrier services; LINE MAN Messenger delivery; COD | The service-fee policy expressly excludes buyer-selected LINE MAN Messenger shipping charges from the service-fee base. Carrier charges, seller-funded shipping discounts, COD terms, return shipping and fulfillment depend on the carrier/route/contract. | No universal merchant shipping, COD, return-shipping or warehouse rate found in public official material. COD orders do not qualify toward the new-seller campaign’s eligibility order. MyShop shipping feature: [MyShop shipping overview](https://lineforbusiness.com/th/service/myshop). |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 38,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://lineforbusiness.com/th/service/myshop"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-5b74804b099d74df",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 7. Affiliate/creator | No universal seller-side per-order affiliate fee identified for MyShop. LINE Ads Affiliate/Agent are separate agreements. | No standard rate or base found. Do not apply creator/affiliate cost unless an actual order attribution or partner agreement posts one. | **Official data not found** for a universal MyShop merchant charge. Program-specific partner terms required. |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 39,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-1677df7b5ef69f9b",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 8. Advertising | LINE Ads, Sponsored Stickers/Emoji, paid OA broadcasts | Separate budget-/product-priced advertising. Not a fixed percentage of MyShop orders. | Universal rate, minimum, cap and fee VAT per ad product **Official data not found** in reviewed pages; use the advertiser’s account invoice/terms. |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 40,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-5849220fac650db8",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 9. Refund/return/cancel/penalties | Policy trigger: order successfully completed and marked “Mark as Shipped.” | Pre-shipment cancellation not meeting this trigger should not incur policy fees. For post-shipment refund/return, whether transaction fee/service fee/VAT are reversed, how partial refunds are allocated and timing are **Official data not found** in public policy. Seller is responsible for cancellation/return/refund handling; no universal cash penalty schedule found. | Reconcile original charge and later adjustment as separate ledger entries; do not assume immediate automatic reversal. Source: [fee policy](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th). |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 41,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-a57d86977dcdb792",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 10. VAT/WHT | VAT on applicable MyShop fees; policy includes WHT illustration | **7% VAT** applies to listed 3% fees. Policy illustrates WHT for sellers required to remit: 3% of combined fee amounts (example ฿27.30 × 3% = ฿0.82). | WHT example is not proof every seller/order is withheld or every LINE product has same treatment. Verify legal entity/tax status, certificate and invoice; WHT is a tax credit/withholding, not necessarily an extra platform fee. [Fee policy](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th). |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 42,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-11eec9d78f1cd93f",
+      "platform": "LINE",
+      "title": "Fee ledger — the 11 shared categories",
+      "text": "| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 11. Other/listing/subscription/withdrawal/account fees | MyShop basic tools; OA packages; LINE MINI Eats subscription; standalone payment services | MyShop basic storefront/tools promoted as free; no universal MyShop listing/monthly/withdrawal/account charge found. OA message plans are separate. LINE MINI Eats: one-branch promotional **฿990/month vs ฿1,700/month**, 30-day trial, promotion through **31 Mar 2027**, figures exclude 7% VAT; multi-branch pricing quote-based. | MINI Eats official page/FAQ says **0% per-order commission**. Current MyShop/OA package prices need account-side confirmation; web pages may show plan prices without an effective date. No universal standalone LINE Pay/MINI App merchant tariff found. Sources: [MINI Eats pricing](https://lineforbusiness.com/th/service/lineminieats), [FAQ](https://lineforbusiness.com/th/helpcenter/line-mini-eats), [MyShop API/features](https://lineforbusiness.com/th/service/myshop/feature/myshop-api). |",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 43,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://lineforbusiness.com/th/service/lineminieats",
+        "https://lineforbusiness.com/th/helpcenter/line-mini-eats",
+        "https://lineforbusiness.com/th/service/myshop/feature/myshop-api"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "FEE_RULE"
+    },
+    {
+      "id": "line-d76f116b5efcbace",
+      "platform": "LINE",
+      "title": "Fee formulas and worked cases",
+      "text": "For eligible MyShop orders only:",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 47,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "line-e12f8d2c7b20c83b",
+      "platform": "LINE",
+      "title": "Fee formulas and worked cases",
+      "text": "```text\ntransaction_fee = eligible_payment_base * 0.03   # or 0 within campaign limits\nservice_fee = eligible_attributed_base * 0.03   # only when attribution conditions apply\nVAT = (transaction_fee + service_fee) * 0.07\nfee_total = transaction_fee + service_fee + VAT\nseller_net = seller receipts - fees/tax - seller-funded discounts - shipping/other adjustments\n```",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 49,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "line-4bbb1751ff206962",
+      "platform": "LINE",
+      "title": "Fee formulas and worked cases",
+      "text": "The Thai fee policy says fee amounts including VAT are rounded to two decimal places: if the third decimal is 0.0050 or greater, round up; otherwise round down. Source: [Thai policy](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th). Apply after calculating each fee as specified in the fee policy; confirm the posted amount against the statement.",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 57,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "line-3bdb7fcf74e754d8",
+      "platform": "LINE",
+      "title": "Fee formulas and worked cases",
+      "text": "1. **Ordinary eligible order:** assume ฿1,000 verified base for each fee, completed and marked shipped, LINE SHOPPING-attributed. Payment fee = 30.00; service fee = 30.00; VAT = 4.20; total = **฿64.20**. This is conditional, not a universal take-rate: many orders have only one fee or neither.\n2. **Seller + platform coupons / published policy illustration:** item ฿500; seller item coupon ฿50; LINE SHOPPING coupon ฿50; shipping ฿40; seller shipping discount ฿10; LINE POINTS ฿200; buyer payment ฿230. Thai policy formula: transaction base `230+200=430` → fee ฿12.90; service base `230+50+200=480` → fee ฿14.40; VAT ฿1.91; total fee **฿29.21**. The English translation instead prints `(290+200) × 3%` for both formulas, inconsistent with the fee amounts; use Thai policy formula and validate against settlement.\n3. **Eligible new-seller campaign:** assume qualifying seller within first 100 orders, below ฿100,000 GMV cap and within 30-day benefit; both normal bases assumed ฿1,000, with attribution. Transaction fee 0; service fee 30; VAT 2.10; total **฿32.10**. Campaign waives only transaction fee; seller must still satisfy all criteria.\n4. **Return/cancellation after shipping:** if a fee was posted and the order is later returned, public policy does not specify reversal timing or partial refund arithmetic. Set expected reversal as `UNVERIFIED`; keep original debit and actual credit/debit adjustment separate. A pre-shipment cancellation that never meets completed/Mark-as-Shipped trigger is not a qualifying fee order under the policy wording.",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 59,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "ILLUSTRATION"
+    },
+    {
+      "id": "line-df528fe9c0d3a4d9",
+      "platform": "LINE",
+      "title": "API and integration evidence",
+      "text": "- Official MyShop API page describes order/status, product, inventory and price/discount functions; supports up to **10 API keys** and **3 webhooks**. It uses MyShop Seller profile; it does not establish access to Shopee/Lazada/TikTok seller finance data. Source: [MyShop API overview](https://lineforbusiness.com/th/service/myshop/feature/myshop-api), checked 24 Oct 2026.\n- Linked API document did not load in this audit. Exact endpoint names, authentication properties, order fields, fee/settlement properties, refund events and status enums are **UNVERIFIED / Official data not found** here. Do not invent schema names.\n- LINE SHOPPING consumer/product and MyShop order data are not assumed to expose fee components as API fields. Use exported statement/receipt or request formal API documentation and seller consent.",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 66,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://lineforbusiness.com/th/service/myshop/feature/myshop-api"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "UNCERTAIN_OR_ILLUSTRATIVE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-58c27c6fc5fcd380",
+      "platform": "LINE",
+      "title": "Confidence, conflicts and verification steps",
+      "text": "**Confirmed from official published pages:** 3% transaction fee and conditional 3% service fee; 7% VAT; policy amendment dates (1 Sep 2023; 16 Oct 2023; 15 Nov 2023; 10 Sep 2024); 2026 transaction-fee waiver conditions; MINI Eats single-branch promotional subscription/no per-order GP; MyShop API key/webhook limits.",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 72,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-8dc6b5f4078061cc",
+      "platform": "LINE",
+      "title": "Confidence, conflicts and verification steps",
+      "text": "**Conflict / unresolved:** direct bank-transfer promotion end date (30 Sep vs 31 Dec 2026 across official pages); post-shipment return/refund fee reversals; current OA subscription rates; standalone LINE Pay and MINI App merchant charges; shipping/COD/return carrier tariffs; API schema and fee fields. The Thai mixed-coupon policy gives the formula; its English translation has a numerical typo, so cite/use the Thai wording.",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 74,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-1cb9d50bf60b1efe",
+      "platform": "LINE",
+      "title": "Confidence, conflicts and verification steps",
+      "text": "**Production check:** obtain anonymized seller settlement + tax invoice for (a) direct chat, (b) LINE SHOPPING-attributed order, (c) seller and platform coupon + LINE POINTS, (d) COD, (e) canceled before shipment, (f) returned after shipment. Ask LINE in writing to confirm the service-fee base and bank-transfer promotion date. Keep raw settlement lines as source of truth.",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 76,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION"
+      ],
+      "kind": "CONTEXT"
+    },
+    {
+      "id": "line-6eb8bda3408fdc16",
+      "platform": "LINE",
+      "title": "Source list and dates",
+      "text": "- [LINE SHOPPING Seller Fees Policy, Thai](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th), effective 1 Sep 2023; amendments 16 Oct 2023, 15 Nov 2023, 10 Sep 2024.\n- [LINE SHOPPING Seller Fees Policy, English translation](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=en), same policy context; formula text differs in the mixed-coupon example, so prioritize the Thai wording.\n- [MyShop 0% transaction-fee campaign](https://lineforbusiness.com/th/service/myshop/campaign/0percent-transaction-fee), campaign 1 Apr 2026–31 Mar 2027, with qualifying-order limits noted above.\n- [MyShop bank-transfer feature](https://lineforbusiness.com/th/service/myshop/feature/myshopadd-onfeature-bank-tranfer) and [LINE OA feature listing](https://lineforbusiness.com/th/service/line-oa-features), conflicting 2026 benefit end dates.\n- [LINE MINI Eats](https://lineforbusiness.com/th/service/lineminieats) and [FAQ](https://lineforbusiness.com/th/helpcenter/line-mini-eats), one-branch promo through 31 Mar 2027.\n- [MyShop API overview](https://lineforbusiness.com/th/service/myshop/feature/myshop-api), accessed 24 Oct 2026.",
+      "sourceFile": "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+      "sourceLine": 80,
+      "sourceSha256": "a205fbddede88ce48bd31cd6932d223bea477d6fd37fced383ca6e3b1d613283",
+      "sourceUrls": [
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th",
+        "https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=en",
+        "https://lineforbusiness.com/th/service/myshop/campaign/0percent-transaction-fee",
+        "https://lineforbusiness.com/th/service/myshop/feature/myshopadd-onfeature-bank-tranfer",
+        "https://lineforbusiness.com/th/service/line-oa-features",
+        "https://lineforbusiness.com/th/service/lineminieats",
+        "https://lineforbusiness.com/th/helpcenter/line-mini-eats",
+        "https://lineforbusiness.com/th/service/myshop/feature/myshop-api"
+      ],
+      "asOf": "2026-10-24",
+      "effectiveFrom": null,
+      "effectiveTo": null,
+      "verification": "USER_SUPPLIED_RESEARCH",
+      "calculationEligible": false,
+      "cautions": [
+        "RESEARCH_NOT_INDEPENDENTLY_VERIFIED",
+        "NOT_APPROVED_FOR_CALCULATION",
+        "CONFLICTING_EVIDENCE"
+      ],
+      "kind": "CONTEXT"
+    }
+  ],
+  "version": "d9004663dc7a494f7deb039ded393b35c1172d19bf626072312506014b3e37a8"
+}
