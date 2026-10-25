@@ -173,3 +173,8 @@ Frontend-only74file publication and one wildcardCloudFrontinvalidation, with pri
 ## Plain Thai fee answers — 25 October 2026
 
 Two code-only updates to existing stack; reused Qwen/Titan/private index and existing IAM/settings. Eight assistant requests on two isolated MOCK tenants; reference-summary call bounded to500 output tokens, router/planner350, existing deadlines retained. No reindex/training/resource creation/REAL data mutation/frontend publication. Metadata gate13:21:32UTC: laggedActualSpend0.034USD, budget350USD/trial25USD, last budget update18:46:19.853+07. Not final charges or realtime remaining credit. Standard model/API/storage charges may accrue.
+
+
+## R2 static publication — 25 October 2026
+
+Verified account109991964227 / ap-southeast-1, total team cap350USD and existing trial target25USD. Fresh budget gates; reported laggedActualSpend0.034USD, LastUpdated2026-10-25 11:46:19.853000+00:00; not real-time remaining credit or final release bill. One74file publication and one wildcardCloudFrontinvalidation, plus private readback and old-static backup in ephemeralCloudShelltmp. No new resources/IAM/paidcapacity/model switch/index rebuild/training/Marketplace or backend overwrite. One isolatedMOCK browser shop and one financial assistant request; actualmodel calls/tokens not measured. No REALmerchant writes/OCR/LINE operations. Ordinary build/API/Lambda/Bedrock/DynamoDB/S3/CDN/log usage can accrue.
