@@ -145,3 +145,8 @@ VERIFIED_AWS for product listing persistence and corrections. Frontendf9bc84e/Ba
 ## Seven MOCK product listings — 25 October 2026
 
 VERIFIED_LOCAL Backend73 tests/build/bundled handlers/unchanged contract. All seven guest fixtures have explicit MOCK price/quantity; existing guest catalogs fill only missing fixture fields using conditional writes. No REAL/personal/custom/edited values or historical finance changed. See storefront-listings.md. AWS deployment pending at this commit; PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
+
+
+## Application usage quotas removed — 25 October 2026
+
+User requested all app usage limits removed: no 2-hour guest lifetime, daily/session/write/AI/import/receipt quotas, 100-chat or 200-turn caps. Guest records no longer receive 24-hour TTL; legacy rows read by the app have TTL removed conditionally without changing financial values/version. Opaque guest tokens remain MOCK-only, origin/tenant-bound, revocable and stored in sessionStorage; Cognito remains unchanged. File/content validation, per-request deadlines/token/context bounds, native browser/provider quotas and the $350 team budget remain. Local verification and AWS release evidence follow; deployment is pending at this source commit. No cloud charges from these local tests. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS unchanged.

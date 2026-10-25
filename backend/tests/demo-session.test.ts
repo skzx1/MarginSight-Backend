@@ -34,7 +34,8 @@ test('one-click sessions seed separate MOCK tenants; no static password or acces
  await assert.rejects(call(undefined,'/demo/api/me/stores'),/UNAUTHORIZED/);
  await assert.rejects(call(a.accessToken,'/demo/api/me/stores',undefined,'https://wrong.example'),/DEMO_ORIGIN_NOT_ALLOWED/);
  const row=await db.get('jobs','DEMOSESSION#'+createHash('sha256').update(a.accessToken).digest('hex'),'SESSION');assert(row);row.value.expiresAt=1;await db.put('jobs',row);
- await assert.rejects(inStore(a,'/products'),/DEMO_SESSION_EXPIRED/);
+ assert.equal((await inStore(a,'/products')).items.length,8);
+ row.value.revoked=true;await db.put('jobs',row);await assert.rejects(inStore(a,'/products'),/DEMO_SESSION_REVOKED/);
 });
 test('full demo uses shared financial engine, evidence, simulation, rules, reconciliation and export',async()=>{
  const {start,inStore}=fixture(),s=await start(),dashboard=await inStore(s,'/dashboard');
@@ -99,16 +100,26 @@ test('guest input cannot claim REAL provenance; imported jobs remain tenant-boun
   }
   assert.equal((await repo.job(a.store,result.id)).value.status,'COMPLETED');
  }
- await assert.rejects(inStore(a,'/imports',{kind:'orders',fileName:'again.csv',adapter:'mock-v1',dataOrigin:'MOCK'}),/DEMO_IMPORT_LIMIT/);
+ await inStore(a,'/imports',{kind:'orders',fileName:'again.csv',adapter:'mock-v1',dataOrigin:'MOCK'});
  assert.equal((await inStore(b,'/orders')).items.length,6);
- for(const table of ['memberships','catalog','ledger','jobs'] as const)for(const row of Object.values(db.data[table]))if(row.PK.startsWith(pk(a.store))||row.PK.startsWith('USER#guest-'))assert(row.expiresAt&&row.expiresAt<=Math.floor(Date.now()/1000)+86400);
+ for(const table of ['memberships','catalog','ledger','jobs'] as const)for(const row of Object.values(db.data[table]))if(row.PK.startsWith(pk(a.store))||row.PK.startsWith('USER#guest-'))assert.equal(row.expiresAt,undefined);
  for(let i=0;i<3;i++)await inStore(b,'/receipts',{fileName:'mock.png',dataOrigin:'MOCK'});
- await assert.rejects(inStore(b,'/receipts',{fileName:'mock.png',dataOrigin:'MOCK'}),/DEMO_AI_LIMIT/);
+ for(let i=0;i<21;i++)await inStore(b,'/receipts',{fileName:'mock.png',dataOrigin:'MOCK'});
 });
-test('session creation is origin-bound and has a global daily limit; clients cannot choose identities',async()=>{
+test('session creation is origin-bound and has no app daily quota; clients cannot choose identities',async()=>{
  const {start,call}=fixture();
  await assert.rejects(call(undefined,'/demo/session',{},'https://wrong.example'),/DEMO_ORIGIN_NOT_ALLOWED/);
  await assert.rejects(call(undefined,'/demo/session',{store:'PRIVATE',subject:'victim'}),/INVALID_DEMO_REQUEST/);
- for(let i=0;i<20;i++)await start();
- await assert.rejects(start(),/DEMO_DAILY_LIMIT/);
+ for(let i=0;i<22;i++){const s=await start();assert.equal(s.nonExpiring,true);assert.equal(s.expiresAt,undefined);}
+});
+
+test('old application quotas cannot reject writes, imports or receipts; legacy TTL is removed without changing data',async()=>{
+ const {db,start,inStore}=fixture(),s=await start();
+ db.reserve=async()=>{throw Error('APP_QUOTA_MUST_NOT_BE_CALLED')};
+ for(let i=0;i<55;i++)await inStore(s,'/imports',{kind:'orders',fileName:'unlimited.csv',adapter:'mock-v1',dataOrigin:'MOCK'});
+ for(let i=0;i<24;i++)await inStore(s,'/receipts',{fileName:'unlimited.png',dataOrigin:'MOCK'});
+ const key=JSON.stringify([pk(s.store),'PRODUCT#BAG-001']),row=db.data.catalog[key];assert(row);
+ row.expiresAt=1;const before=structuredClone(row.value),version=row.version;
+ await inStore(s,'/products');assert.equal(db.data.catalog[key].expiresAt,undefined);assert.deepEqual(db.data.catalog[key].value,before);assert.equal(db.data.catalog[key].version,version);
+ assert.equal((await inStore(s,'/dashboard')).profitSatang,26800);
 });

@@ -30,19 +30,13 @@ export class AI {
  constructor(private repo:Repository,private client?:ModelRuntime,private feeRules:FeeRuleRetriever|undefined=feeRuleRetrieverFromEnv()){}
  enabled(){return process.env.AI_ENABLED==='true'}
  settings(){return modelConfig()}
- private async reserveModelAttempt(store:string){
-  const limit=Number(process.env.AI_DAILY_CALL_LIMIT??30);
-  demand(Number.isInteger(limit)&&limit>=0&&limit<=500,'INVALID_AI_LIMIT',503);
-  demand(await this.repo.db.reserve(pk(store),new Date().toISOString().slice(0,10),limit),'AI_LIMIT_REACHED',429);
-  await this.repo.db.flush();
- }
  private async converse(store:string,args:any,deadline=Date.now()+16000,purpose:'assistant'|'receipt'='assistant'){
   demand(this.enabled(),'AI_NOT_CONFIGURED',503);
   const config=modelConfig(purpose),outputTokens=Number(process.env.AI_OUTPUT_TOKENS??500);
   demand(Number.isInteger(outputTokens)&&outputTokens>=1&&outputTokens<=500,'INVALID_AI_TOKEN_LIMIT',503);
   if(purpose==='assistant')demand(Buffer.byteLength(JSON.stringify(args))<=65536,'MODEL_CONTEXT_TOO_LARGE',413);
   demand(deadline>Date.now(),'MODEL_DEADLINE_EXCEEDED',503);
-  await this.reserveModelAttempt(store);const key=JSON.stringify(config);
+  await this.repo.db.flush();const key=JSON.stringify(config);
   if(!this.client&&!this.runtimes.has(key))this.runtimes.set(key,createModelRuntime(config));
   const client=this.client??this.runtimes.get(key)!;
   return client.send(new ConverseCommand({modelId:config.model,...args,
@@ -57,7 +51,7 @@ export class AI {
   if(this.enabled()&&this.feeRules){
    const query=z.object({message:z.string().min(1).max(1500),sku:z.string().min(1).max(100).optional(),month:z.string().regex(/^\d{4}-\d{2}$/).default(new Date().toISOString().slice(0,7))}).parse(body);
    if(query.sku){const input=await this.latestInput(store,query.sku,query.month);
-    try{feeRuleEvidence=await this.feeRules.retrieve({platform:input.order.platform,orderAt:input.order.orderAt,text:query.message},()=>this.reserveModelAttempt(store));}
+    try{feeRuleEvidence=await this.feeRules.retrieve({platform:input.order.platform,orderAt:input.order.orderAt,text:query.message},()=>this.repo.db.flush());}
     catch{feeRuleEvidence=emptyFeeEvidence(input.order.orderAt,'UNAVAILABLE');}
    }
   }

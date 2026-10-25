@@ -14,7 +14,7 @@ const date=normalizeDate;
 const schema=z.object({kind:z.enum(importTypes),fileName:z.string().min(1).max(120).regex(/^[^\/\\\u0000-\u001f\u007f]+\.(csv|xlsx)$/i),adapter:z.enum(['mock-v1','merchant-v1']).default('mock-v1'),dataOrigin:z.enum(['MOCK','REAL']).default('MOCK'),acknowledgeOwnership:z.boolean().optional()});
 export async function createImport(repo:Repository,files:Files,store:string,body:unknown,user?:string){
  const input=schema.parse(body);demand((input.adapter==='mock-v1'&&input.dataOrigin==='MOCK')||(input.adapter==='merchant-v1'&&input.dataOrigin==='REAL'),'REAL_ADAPTER_REQUIRES_VERIFIED_SCHEMA');if(input.dataOrigin==='REAL')demand(!!user&&input.acknowledgeOwnership===true,'MERCHANT_INPUT_ACKNOWLEDGEMENT_REQUIRED');
- demand(await repo.db.reserve(pk(store)+'#IMPORT',new Date().toISOString().slice(0,10),50),'IMPORT_DAILY_LIMIT_REACHED',429);
+ 
  const type=input.fileName.toLowerCase().endsWith('.xlsx')?'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':'text/csv';
  const job=await repo.createJob(store,{...input,createdBy:user,type,status:'UPLOADED',objectKey:'',chunks:0});const objectKey=`${store}/imports/${job.id}/${input.fileName}`;
  await repo.updateJob(store,job.id,{objectKey});return {id:job.id,uploadUrl:await files.uploadUrl(objectKey,type),contentType:type};

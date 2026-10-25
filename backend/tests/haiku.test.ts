@@ -42,13 +42,13 @@ test('Haiku cannot override selected SKU, invent profit, change discount or invo
  const f=await fixture([{content:[tool]},{content:[{type:'text',text:'กำไร 9999 บาท'}]}]);
  const result=await f.ai.assistant('DEMO-001',question);assert.equal((result as any).reason,'MODEL_NUMBERS_REJECTED');assert.equal(result.result?.profitSatang,-1410);
 });
-test('Haiku access errors return safe financial fallback and consume the attempted-call quota',async()=>{
+test('Haiku access errors return safe financial fallback and do not impose a daily attempted-call quota',async()=>{
  const secret=Object.assign(new Error('private provider error body'),{status:403});
- const f=await fixture([secret]);const result=await f.ai.assistant('DEMO-001',question);
+ const f=await fixture([secret,secret]);const result=await f.ai.assistant('DEMO-001',question);
  assert.equal((result as any).reason,'MODEL_ACCESS_DENIED');assert.equal(result.model,null);
  assert.equal(result.result?.profitSatang,-1410);assert.ok(!JSON.stringify(result).includes('private provider'));
- process.env.AI_DAILY_CALL_LIMIT='1';const second=await f.ai.assistant('DEMO-001',question);
- assert.equal((second as any).reason,'AI_LIMIT_REACHED');assert.equal(f.requests.length,1);
+ process.env.AI_DAILY_CALL_LIMIT='0';const second=await f.ai.assistant('DEMO-001',question);
+ assert.equal((second as any).reason,'MODEL_ACCESS_DENIED');assert.equal(f.requests.length,2);
 });
 test('configuration rejects cross-Region profiles and disallowed Regions before any model request',()=>{
  configure();assert.equal(modelConfig().transport,'mantle-messages');assert.equal(modelConfig('receipt').model,NOVA_LITE);
