@@ -5,7 +5,7 @@ export function needsRecordedData(message:string){
  const measure=/กำไร|ขาดทุน|ยอดขาย|รายรับ|รายจ่าย|ยอดเงิน|ออเดอร์|คำสั่งซื้อ|สต็อก|คงเหลือ|ต้นทุน|ราคาขาย|มาร์จิ้น|margin|profit|revenue|sales|payout|inventory|stock|orders?/i;
  const period=/เดือนนี้|เดือนที่แล้ว|สัปดาห์นี้|สัปดาห์ที่แล้ว|วันนี้|เมื่อวาน|this month|last month|this week|last week|today|yesterday|20\d{2}-\d{2}/i;
  const amount=/เท่าไร|เท่าไหร่|กี่|เหลือ|มากที่สุด|น้อยที่สุด|สูงสุด|ต่ำสุด|สินค้าไหน|สินค้าตัวไหน|how much|how many|which product|most|least|highest|lowest/i;
- if(/เขียนโค้ด|ตัวอย่างโค้ด|write.{0,20}code|ช่วยแต่ง|เขียนแคปชั่น|แคปชั่น|sales pitch|เขียนโฆษณา/i.test(message)&&!period.test(message)&&!/ของร้าน|ร้านฉัน|my (?:shop|store)/i.test(message))return false;
+ if(/ช่วยตอบ|ช่วยร่าง|ช่วยเขียน|ร่างข้อความ|ปรับข้อความ|เขียนโค้ด|ตัวอย่างโค้ด|write.{0,20}code|ช่วยแต่ง|เขียนแคปชั่น|แคปชั่น|sales pitch|เขียนโฆษณา/i.test(message)&&!period.test(message)&&!/ของร้าน|ร้านฉัน|my (?:shop|store)/i.test(message))return false;
  if(measure.test(message)&&(period.test(message)||amount.test(message)||/คำนวณ|calculate|compute|ของร้าน|ร้านฉัน|my shop|my store|our store/i.test(message)))return true;
  if(/(?:แคมเปญ|โปรแกรม|campaign).*(?:เหลือ|เท่าไร|เท่าไหร่|คุ้ม|กำไร)/i.test(message))return true;
  if(!period.test(message)&&!/ของร้าน|ร้านฉัน|my (?:shop|store)/i.test(message)&&/ยังไง|อย่างไร|วิธี|แนวทาง|ไอเดีย|แนะนำ|เทคนิค|tips|ideas|strategy|how to|how can|ways to/i.test(message)&&!/ลด(?:ราคา)?\s*(?:-?\d|สิบ|ยี่สิบ)/i.test(message))return false;

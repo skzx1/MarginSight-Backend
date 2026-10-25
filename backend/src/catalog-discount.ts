@@ -17,6 +17,7 @@ export interface CatalogDiscountScenario {
 export function discountPercent(message:string):number|undefined{
  const targeted=[...message.matchAll(/(?:ลด(?:ราคา)?|discount(?:\s+of)?)\s*(-?\d+(?:\.\d+)?)\s*(?:%|เปอร์(?:เซ็นต์)?|percent)/ig)].map(m=>m[1]);
  const raw=targeted.length?targeted:[...message.matchAll(/(-?\d+(?:\.\d+)?)\s*(?:%|เปอร์(?:เซ็นต์)?|percent)/ig)].map(m=>m[1]);
+ if(!raw.length&&/ไม่ลดราคา|ไม่ปรับส่วนลด|ราคาเดิม/.test(message))raw.push('0');
  if(!raw.length&&/ลด(?:ราคา)?\s*สิบห้าเปอร์/.test(message))raw.push('15');
  if(!raw.length||new Set(raw.map(v=>new Decimal(v).toString())).size!==1)return;
  const value=new Decimal(raw[0]);demand(value.gte(0)&&value.lte(100),'INVALID_DISCOUNT');return value.toNumber();

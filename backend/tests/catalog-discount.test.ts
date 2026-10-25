@@ -40,7 +40,7 @@ test('missing and zero catalog values remain distinct; a future cost is not curr
 test('discount rounding is exact to satang, ambiguous percentages ask back, and invalid/forged inputs are rejected',async()=>{
  const {repo,call,store,base}=await productFixture();await call(base+'/products/ASAW/listing',{sellingPriceSatang:30,expectedListingVersion:1});await call(base+'/products/ASAW/cost-versions',{sku:'ASAW',unitCostSatang:10,effectiveFrom:'2026-10-20T00:00:00.000Z',sourceRef:'decimal rounding case',dataOrigin:'REAL',method:'MERCHANT_CONFIRMED_UNIT_COST'});
  const r=(await catalogDiscount(repo,store,{sku:'ASAW',message:'ลดราคา 15%'},at)).catalogScenario;assert.equal(r.discountedPriceSatang,26);assert.equal(r.differenceBeforeExpensesSatang,16);
- assert.equal(discountPercent('ลดราคา สิบห้าเปอร์'),15);assert.equal(discountPercent('ลดราคา 0%'),0);assert.equal(discountPercent('discount 100%'),100);assert.equal(discountPercent('ลดราคา 10% หรือ ลดราคา 20%'),undefined);
+ assert.equal(discountPercent('ลดราคา สิบห้าเปอร์'),15);assert.equal(discountPercent('ลดราคา 0%'),0);assert.equal(discountPercent('discount 100%'),100);assert.equal(discountPercent('ไม่ลดราคาแต่เข้าแคมเปญ'),0);assert.equal(discountPercent('ลดราคา 10% หรือ ลดราคา 20%'),undefined);
  const unclear=await catalogDiscount(repo,store,{sku:'ASAW',message:'ลดราคาเท่าไรดี'},at);assert.deepEqual(unclear.catalogScenario.missingFields,['discountPct']);
  for(const message of ['ลดราคา -1%','ลดราคา 101%'])await assert.rejects(()=>catalogDiscount(repo,store,{sku:'ASAW',message},at),/INVALID_DISCOUNT/);
  await assert.rejects(()=>call(base+'/assistant/catalog-discount',{sku:'ASAW',message:'ลดราคา 20%',sellingPriceSatang:999999}));
