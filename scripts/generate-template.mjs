@@ -30,13 +30,21 @@ for(const name of ['Assistant','LineWorker'])resources[name].Properties.Policies
  Effect:'Allow',Action:'bedrock:InvokeModel',Resource:sub('arn:${AWS::Partition}:bedrock:us-east-1::foundation-model/qwen.qwen3-32b-v1:0'),
  Condition:{StringEquals:{'aws:RequestedRegion':'us-east-1'}}
 },ref('AWS::NoValue')]});
+for(const name of ['Assistant','LineWorker']){
+ resources[name].Properties.Environment={Variables:{...env,FEE_RULES_ENABLED:ref('FeeRulesEnabled'),FEE_RULES_INDEX_KEY:ref('FeeRulesIndexKey'),FEE_RULES_INDEX_SHA256:ref('FeeRulesIndexSha256')}};
+ resources[name].Properties.Policies[0].Statement.push({'Fn::If':['UseFeeRules',{Effect:'Allow',Action:'bedrock:InvokeModel',Resource:'arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-embed-text-v2:0',Condition:{StringEquals:{'aws:RequestedRegion':'us-east-1'}}},ref('AWS::NoValue')]});
+ resources[name].Properties.Policies[0].Statement.push({'Fn::If':['UseFeeRules',{Effect:'Allow',Action:'s3:GetObject',Resource:sub('${UploadsBucket.Arn}/fee-rules/v1/*/index.json')},ref('AWS::NoValue')]});
+}
 writeFileSync('template.yaml',JSON.stringify({
  AWSTemplateFormatVersion:'2010-09-09',Transform:'AWS::Serverless-2016-10-31',Description:'MarginSight economical serverless prototype - MOCK merchant data, private storage',
  Parameters:{DemoEnabled:{Type:'String',AllowedValues:['true','false'],Default:'false'},
   AIRegion:{Type:'String',AllowedValues:['us-east-1','ap-southeast-1','ap-southeast-7'],Default:'us-east-1'},
   AIEnabled:{Type:'String',AllowedValues:['true','false'],Default:'false'},LineSecretArn:{Type:'String',Default:''},
-  AssistantModelId:{Type:'String',AllowedValues:['amazon.nova-lite-v1:0','anthropic.claude-haiku-4-5','qwen.qwen3-32b-v1:0'],Default:'amazon.nova-lite-v1:0',Description:'Assistant model; verify access/runtime IAM before an explicit switch. OCR remains Nova Lite.'}},
- Conditions:{HasLineSecret:{'Fn::Not':[{'Fn::Equals':[ref('LineSecretArn'),'']}]},UseHaiku:{'Fn::Equals':[ref('AssistantModelId'),'anthropic.claude-haiku-4-5']},UseQwen:{'Fn::Equals':[ref('AssistantModelId'),'qwen.qwen3-32b-v1:0']}},
- Rules:{HaikuRegion:{RuleCondition:{'Fn::Equals':[ref('AssistantModelId'),'anthropic.claude-haiku-4-5']},Assertions:[{Assert:{'Fn::Equals':[ref('AIRegion'),'us-east-1']},AssertDescription:'Haiku must use the in-Region us-east-1 Mantle endpoint.'}]},QwenRegion:{RuleCondition:{'Fn::Equals':[ref('AssistantModelId'),'qwen.qwen3-32b-v1:0']},Assertions:[{Assert:{'Fn::Equals':[ref('AIRegion'),'us-east-1']},AssertDescription:'Qwen must use direct in-Region us-east-1 inference.'}]}},
+  AssistantModelId:{Type:'String',AllowedValues:['amazon.nova-lite-v1:0','anthropic.claude-haiku-4-5','qwen.qwen3-32b-v1:0'],Default:'amazon.nova-lite-v1:0',Description:'Assistant model; verify access/runtime IAM before an explicit switch. OCR remains Nova Lite.'},
+  FeeRulesEnabled:{Type:'String',AllowedValues:['true','false'],Default:'false'},
+  FeeRulesIndexKey:{Type:'String',Default:'',AllowedPattern:'^$|^fee-rules/v1/[a-f0-9]{64}/index[.]json$'},
+  FeeRulesIndexSha256:{Type:'String',Default:'',AllowedPattern:'^$|^[a-f0-9]{64}$'}},
+ Conditions:{HasLineSecret:{'Fn::Not':[{'Fn::Equals':[ref('LineSecretArn'),'']}]},UseHaiku:{'Fn::Equals':[ref('AssistantModelId'),'anthropic.claude-haiku-4-5']},UseQwen:{'Fn::Equals':[ref('AssistantModelId'),'qwen.qwen3-32b-v1:0']},UseFeeRules:{'Fn::Equals':[ref('FeeRulesEnabled'),'true']}},
+ Rules:{HaikuRegion:{RuleCondition:{'Fn::Equals':[ref('AssistantModelId'),'anthropic.claude-haiku-4-5']},Assertions:[{Assert:{'Fn::Equals':[ref('AIRegion'),'us-east-1']},AssertDescription:'Haiku must use the in-Region us-east-1 Mantle endpoint.'}]},QwenRegion:{RuleCondition:{'Fn::Equals':[ref('AssistantModelId'),'qwen.qwen3-32b-v1:0']},Assertions:[{Assert:{'Fn::Equals':[ref('AIRegion'),'us-east-1']},AssertDescription:'Qwen must use direct in-Region us-east-1 inference.'}]},FeeRuleIndex:{RuleCondition:{'Fn::Equals':[ref('FeeRulesEnabled'),'true']},Assertions:[{Assert:{'Fn::Not':[{'Fn::Equals':[ref('FeeRulesIndexKey'),'']}]},AssertDescription:'Enabled fee retrieval requires an immutable index key.'},{Assert:{'Fn::Not':[{'Fn::Equals':[ref('FeeRulesIndexSha256'),'']}]},AssertDescription:'Enabled fee retrieval requires the index SHA-256.'}]}},
  Resources:resources,Outputs:outputs
 },null,2)+'\n');

@@ -1,0 +1,112 @@
+{
+  "checkedAt": "2026-10-25T07:42:33.076Z",
+  "scope": "real operator Qwen classification on a developer-authored synthetic challenge set; not independent/production accuracy or probability calibration",
+  "model": "qwen.qwen3-32b-v1:0",
+  "promptVersion": "router-v2",
+  "calls": 68,
+  "inputTokens": 64025,
+  "outputTokens": 3835,
+  "transportErrors": 0,
+  "total": 68,
+  "accuracy": 0.9117647058823529,
+  "byRoute": {
+    "FEE_PIPELINE": {
+      "expected": 31,
+      "correct": 29,
+      "recall": 0.9354838709677419,
+      "precision": 1
+    },
+    "NORMAL_CHAT": {
+      "expected": 23,
+      "correct": 19,
+      "recall": 0.8260869565217391,
+      "precision": 1
+    },
+    "CLARIFY": {
+      "expected": 14,
+      "correct": 14,
+      "recall": 1,
+      "precision": 0.7
+    }
+  },
+  "p50Ms": 2344,
+  "p95Ms": 3351,
+  "failures": [
+    {
+      "id": "R04",
+      "group": "clear-fee",
+      "expected": "FEE_PIPELINE",
+      "predicted": "CLARIFY",
+      "confidence": 0,
+      "reason": "ROUTER_UNAVAILABLE",
+      "platforms": [],
+      "needsCalculation": false,
+      "latencyMs": 3140,
+      "correct": false
+    },
+    {
+      "id": "R31",
+      "group": "app-help",
+      "expected": "NORMAL_CHAT",
+      "predicted": "CLARIFY",
+      "confidence": 0,
+      "reason": "ROUTER_UNAVAILABLE",
+      "platforms": [],
+      "needsCalculation": false,
+      "latencyMs": 2313,
+      "correct": false
+    },
+    {
+      "id": "R42",
+      "group": "injection",
+      "expected": "NORMAL_CHAT",
+      "predicted": "CLARIFY",
+      "confidence": 0.3,
+      "reason": "LOW_CONFIDENCE",
+      "platforms": [],
+      "needsCalculation": false,
+      "latencyMs": 3078,
+      "correct": false
+    },
+    {
+      "id": "R62",
+      "group": "context",
+      "expected": "NORMAL_CHAT",
+      "predicted": "CLARIFY",
+      "confidence": 0.65,
+      "reason": "LOW_CONFIDENCE",
+      "platforms": [
+        "SHOPEE",
+        "LAZADA"
+      ],
+      "needsCalculation": false,
+      "latencyMs": 3455,
+      "correct": false
+    },
+    {
+      "id": "R63",
+      "group": "context",
+      "expected": "FEE_PIPELINE",
+      "predicted": "CLARIFY",
+      "confidence": 0.65,
+      "reason": "LOW_CONFIDENCE",
+      "platforms": [],
+      "needsCalculation": false,
+      "latencyMs": 3230,
+      "correct": false
+    },
+    {
+      "id": "R64",
+      "group": "context",
+      "expected": "NORMAL_CHAT",
+      "predicted": "CLARIFY",
+      "confidence": 0.6,
+      "reason": "LOW_CONFIDENCE",
+      "platforms": [],
+      "needsCalculation": false,
+      "latencyMs": 3046,
+      "correct": false
+    }
+  ],
+  "invalidOutputs": 2
+}

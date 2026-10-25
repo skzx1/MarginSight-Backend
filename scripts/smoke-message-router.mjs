@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {mkdir,writeFile} from 'node:fs/promises';
+if(!process.argv.includes('--invoke-aws')){console.log('Plan: two isolated MOCK sessions, eight routed Qwen questions. --invoke-aws incurs model/API usage; no real merchant records.');process.exit(0);}
+const aws=(service,operation,args=[],region='ap-southeast-1')=>JSON.parse(execFileSync(process.env.AWS_CLI??'aws',[service,operation,...args,'--region',region,'--output','json'],{encoding:'utf8'}));
+assert.equal(aws('sts','get-caller-identity').Account,'109991964227');
+const budget=aws('budgets','describe-budget',['--account-id','109991964227','--budget-name','Hackathon-Team10'],'us-east-1').Budget;
+assert.equal(Number(budget.BudgetLimit.Amount),350);assert.equal(budget.BudgetLimit.Unit,'USD');assert.ok(Number(budget.CalculatedSpend.ActualSpend.Amount)<25);
+const stack=aws('cloudformation','describe-stacks',['--stack-name','marginsight']).Stacks[0];assert.equal(stack.StackStatus,'UPDATE_COMPLETE');
+const outputs=Object.fromEntries(stack.Outputs.map(o=>[o.OutputKey,o.OutputValue]));
+const origin=outputs.WebUrl.replace(/\/$/,'');const observations=[];
+const request=async(path,body,token)=>{
+ const r=await fetch(outputs.ApiUrl+path,{method:'POST',headers:{origin,'content-type':'application/json',...(token?{authorization:'Bearer '+token}:{})},body:JSON.stringify(body),signal:AbortSignal.timeout(30000)});
+ const value=await r.json();assert.equal(r.status,200,`HTTP ${r.status} / ${value.error??'request'}`);return value;
+};
+const session=()=>request('/demo/session',{});
+const ask=async(s,id,message,expected,{sku=null,history=[],profit,scenario}={})=>{
+ const start=Date.now(),answer=await request('/demo/api/stores/'+s.store+'/assistant',{mode:'chat',message,context:{start:'2026-10-01',end:'2026-10-31',sku},history,...(scenario?{scenario}:{})},s.accessToken);
+ const observation={id,expected,predicted:answer.decision?.route,provider:answer.provider,confidence:answer.decision?.confidence,durationMs:Date.now()-start,profitSatang:answer.result?.profitSatang??null,evidenceStatuses:answer.feeRuleEvidence?.map(e=>e.status)??[],catalog:answer.catalogScenario?{discountedPriceSatang:answer.catalogScenario.discountedPriceSatang,differenceBeforeExpensesSatang:answer.catalogScenario.differenceBeforeExpensesSatang,netProfitSatang:answer.catalogScenario.netProfitSatang}:undefined};
+ observations.push(observation);console.log(JSON.stringify(observation));
+ observation.passed=answer.decision.route===expected;
+ if(expected==='NORMAL_CHAT')observation.passed&&=answer.provider==='normal-chat'&&answer.feeRuleEvidence===undefined&&answer.result===undefined;
+ if(expected==='CLARIFY')observation.passed&&=answer.provider==='clarify';
+ if(profit!==undefined)observation.passed&&=answer.provider==='calculator'&&answer.result?.profitSatang===profit;
+ await mkdir('tmp/message-router',{recursive:true});await writeFile('tmp/message-router/aws-smoke-partial.json',JSON.stringify({scope:'partial deployed MOCK observations, not a completed acceptance report',observations},null,2));
+ return answer;
+};
+const a=await session();assert.equal(a.dataOrigin,'MOCK');
+await ask(a,'normal','สวัสดีครับ','NORMAL_CHAT');
+const fee=await ask(a,'policy','Shopee คิดค่าคอมกี่เปอร์เซ็นต์','FEE_PIPELINE');
+observations.at(-1).passed&&=fee.provider==='fee-reference'&&fee.feeRuleEvidence?.some(e=>e.status==='READY')===true&&fee.note?.includes('วันที่มีผล: ยังไม่ยืนยัน')===true;
+const follow=await ask(a,'follow-up','แล้ว Lazada ล่ะ','FEE_PIPELINE',{history:[{role:'user',text:'Shopee คิดค่าคอมกี่เปอร์เซ็นต์'},{role:'assistant',text:fee.answer}]});
+observations.at(-1).passed&&=follow.provider==='fee-reference'&&follow.feeRuleEvidence?.some(e=>e.matches.some(m=>m.platform==='LAZADA'))===true;
+const b=await session();assert.equal(b.dataOrigin,'MOCK');
+await ask(b,'ambiguous','คุ้มไหม','CLARIFY');
+const discount=await ask(b,'discount','ถ้าลดราคา 15% จะเหลือกำไรเท่าไร','FEE_PIPELINE',{sku:'BAG-001'});
+observations.at(-1).passed&&=discount.provider==='catalog-calculator'&&discount.catalogScenario?.discountedPriceSatang===17000&&discount.catalogScenario?.differenceBeforeExpensesSatang===4000&&discount.catalogScenario?.netProfitSatang===null&&discount.result===undefined;
+const cost=await ask(b,'cost','ต้นทุน CAP-005 ที่บันทึกไว้เท่าไร','FEE_PIPELINE',{sku:'CAP-005'});observations.at(-1).passed&&=cost.provider==='calculator'&&cost.answer.includes('70.00');
+const campaign={platform:'shopee',category:'general',sellerType:'NON_MALL',campaigns:['shopee-prime'],commissionRateBps:null,commissionVat:'UNKNOWN',paymentRateBps:null,paymentBase:'REVENUE',buyerShippingSatang:0,fixedFeeExempt:false,growthTier:'STANDARD',primeElectronicsRateBps:null,liveRateBps:null,confirmed:true};
+const planning=await ask(b,'campaign','ลองแคมเปญนี้ ลดราคา 20% จะเหลือเท่าไร','FEE_PIPELINE',{sku:'BAG-001',scenario:campaign});
+observations.at(-1).passed&&=planning.provider==='catalog-calculator'&&planning.catalogScenario?.netProfitSatang===null&&planning.catalogScenario?.knownCampaignFeeSatang===1370&&planning.catalogScenario?.platformFeeSatang===null&&planning.catalogScenario?.differenceAfterKnownFeesBeforeOtherExpensesSatang===1523;
+await ask(b,'recorded-profit','กำไรเดือนนี้เท่าไร','FEE_PIPELINE',{profit:26800,scenario:campaign});
+const noAuth=await fetch(outputs.ApiUrl+'/me/stores');assert.equal(noAuth.status,401);
+const cross=await fetch(outputs.ApiUrl+'/demo/api/stores/PRIVATE/assistant',{method:'POST',headers:{origin,'content-type':'application/json',authorization:'Bearer '+b.accessToken},body:JSON.stringify({mode:'chat',message:'hello',context:{start:'2026-10-01',end:'2026-10-31',sku:null},history:[]})});assert.equal(cross.status,403);
+const report={checkedAt:new Date().toISOString(),scope:'deployed web-chat API on two isolated MOCK stores; not browser/LINE/native-marketplace/real-merchant proof',observations,failures:observations.filter(o=>!o.passed).map(o=>o.id),unauthenticatedStatus:401,crossTenantStatus:403};
+await mkdir('tmp/message-router',{recursive:true});await writeFile('tmp/message-router/aws-smoke.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+if(report.failures.length)process.exitCode=1;

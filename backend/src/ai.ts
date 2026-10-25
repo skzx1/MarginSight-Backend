@@ -11,6 +11,7 @@ import {compareProgram} from './domain/program.js';
 import type {CalculationInput} from './domain/model.js';
 import {marketplaceInput,marketplaceScenarioSchema} from './marketplace-scenario.js';
 import {feeRuleRetrieverFromEnv,emptyFeeEvidence,type FeeRuleRetriever,type FeeRuleEvidence} from './fee-rules.js';
+import {WebChat} from './web-chat.js';
 export function numericClaimsMatch(text:string,result:unknown){
  const allowed=new Set<string>();const walk=(v:any)=>{if(typeof v==='number'){const n=new Decimal(v);for(const value of [n,n.abs(),n.div(100),n.abs().div(100)])allowed.add(value.toString())}else if(Array.isArray(v))v.forEach(walk);else if(v&&typeof v==='object')Object.values(v).forEach(walk)};walk(result);
  return [...text.matchAll(/-?\d+(?:\.\d+)?/g)].every(m=>allowed.has(new Decimal(m[0]).toString()));
@@ -33,7 +34,7 @@ export class AI {
  settings(){return modelConfig()}
  private async converse(store:string,args:any,deadline=Date.now()+16000,purpose:'assistant'|'receipt'='assistant'){
   demand(this.enabled(),'AI_NOT_CONFIGURED',503);
-  const config=modelConfig(purpose),outputTokens=Number(process.env.AI_OUTPUT_TOKENS??500);
+  const config=modelConfig(purpose),outputTokens=Number(args.inferenceConfig?.maxTokens??process.env.AI_OUTPUT_TOKENS??500);
   demand(Number.isInteger(outputTokens)&&outputTokens>=1&&outputTokens<=500,'INVALID_AI_TOKEN_LIMIT',503);
   if(purpose==='assistant')demand(Buffer.byteLength(JSON.stringify(args))<=65536,'MODEL_CONTEXT_TOO_LARGE',413);
   demand(deadline>Date.now(),'MODEL_DEADLINE_EXCEEDED',503);
@@ -60,6 +61,17 @@ export class AI {
    demand(answer.length>0&&answer.length<=8000,'EMPTY_MODEL_RESPONSE',503);
    return {kind:'GENERAL',provider:'bedrock-chat',model:this.settings().model,store,answer,contextUsed:'GENERAL_CONVERSATION_ONLY'};
   }catch{return unavailable('MODEL_UNAVAILABLE')}
+ }
+ async routedChat(store:string,body:unknown){
+  const deadline=Date.now()+23000;
+  const model=async(system:string,payload:unknown)=>{
+   const response=await this.converse(store,{system:[{text:system}],messages:[{role:'user',content:[{text:JSON.stringify(payload)}]}],inferenceConfig:{maxTokens:350}},Math.min(deadline,Date.now()+7000));
+   if(response.stopReason!=='end_turn'||!response.output?.message?.content?.every((b:any)=>typeof b.text==='string'))console.warn(JSON.stringify({event:'CHAT_MODEL_PROTOCOL',stopReason:response.stopReason??'missing',blockKinds:response.output?.message?.content?.map((b:any)=>Object.keys(b))??[]}));
+   demand(response.stopReason==='end_turn'&&response.output?.message?.content?.every((b:any)=>typeof b.text==='string'),'CHAT_INVALID_MODEL_OUTPUT',503);
+   const text=response.output.message.content.map((b:any)=>b.text).join('');demand(text.trim().length>0&&text.length<=5000,'CHAT_INVALID_MODEL_OUTPUT',503);return text;
+  };
+  const boundedLookup=this.feeRules?{retrieve:async(...args:Parameters<FeeRuleRetriever['retrieve']>)=>{demand(deadline-Date.now()>=5500,'CHAT_DEADLINE',503);return this.feeRules!.retrieve(...args);}}:undefined;
+  return new WebChat(this.repo,model,boundedLookup,()=>this.repo.db.flush()).answer(store,body);
  }
  async assistant(store:string,body:any){
   const deadline=Date.now()+23000;

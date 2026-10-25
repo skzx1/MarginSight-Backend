@@ -43,6 +43,28 @@ class UpdateParametersTest(unittest.TestCase):
         self.assertEqual(result, {**self.live, 'AssistantModelId': module.QWEN})
         self.assertEqual(module.parameters_for_update(self.declared, result), result)
 
+    def test_fee_parameters_start_disabled_and_explicit_enable_preserves_live_model(self):
+        declared = self.declared | {'FeeRulesEnabled', 'FeeRulesIndexKey', 'FeeRulesIndexSha256'}
+        live = {**self.live, 'AssistantModelId': module.QWEN}
+        result = module.parameters_for_update(declared, live)
+        self.assertEqual(result['FeeRulesEnabled'], 'false')
+        enabled = {'FeeRulesEnabled': 'true', 'FeeRulesIndexKey': 'fee-rules/v1/' + 'a'*64 + '/index.json', 'FeeRulesIndexSha256': 'b'*64}
+        ready = module.parameters_for_update(declared, live, fee_rules=enabled)
+        self.assertEqual(ready['AssistantModelId'], module.QWEN)
+        self.assertEqual(module.parameters_for_update(declared, ready), ready)
+        disabled = module.parameters_for_update(declared, ready, fee_rules={'FeeRulesEnabled': 'false'})
+        self.assertEqual(disabled['FeeRulesIndexKey'], ready['FeeRulesIndexKey'])
+
+    def test_fee_enable_rejects_missing_hash_and_objects_outside_knowledge_prefix(self):
+        declared = self.declared | {'FeeRulesEnabled', 'FeeRulesIndexKey', 'FeeRulesIndexSha256'}
+        for key, digest in [('some-merchant/report.csv', 'b'*64), ('fee-rules/v1/'+'a'*64+'/index.json', '')]:
+            with self.assertRaises(AssertionError):
+                module.parameters_for_update(declared, self.live, fee_rules={'FeeRulesEnabled': 'true', 'FeeRulesIndexKey': key, 'FeeRulesIndexSha256': digest})
+
+    def test_sam_empty_parameter_is_explicitly_quoted_instead_of_becoming_an_unknown_key(self):
+        self.assertIn('ParameterKey=LineSecretArn,ParameterValue=""', module.sam_overrides(self.live))
+        self.assertIn('ParameterKey=AIEnabled,ParameterValue="true"', module.sam_overrides(self.live))
+
 
 if __name__ == '__main__':
     unittest.main()

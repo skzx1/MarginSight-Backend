@@ -19,7 +19,13 @@
     "smoke:local": "node scripts/smoke-local.mjs",
     "smoke:aws": "node scripts/smoke-aws.mjs",
     "export:preview": "node scripts/export-browser-preview.mjs",
-    "package:deploy": "node scripts/package-deploy.mjs"
+    "package:deploy": "node scripts/package-deploy.mjs",
+    "fees:corpus": "node scripts/build-fee-corpus.mjs",
+    "fees:index": "tsx scripts/index-fee-rules.ts",
+    "fees:smoke": "node scripts/fee-rules-smoke.mjs",
+    "chat:export": "node scripts/export-message-router.mjs",
+    "chat:eval": "tsx scripts/evaluate-message-router.ts",
+    "chat:smoke": "node scripts/smoke-message-router.mjs"
   },
   "overrides": {
     "exceljs": {

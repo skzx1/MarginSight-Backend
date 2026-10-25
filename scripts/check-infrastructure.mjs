@@ -10,6 +10,14 @@ for(const name of ['template.yaml','template-foundation.yaml','template-external
     assert.equal(resource.Properties.Environment.Variables.BEDROCK_MODEL_ID,'amazon.nova-lite-v1:0');
   }
   if(name!=='template-foundation.yaml'){
+    assert.equal(template.Parameters.FeeRulesEnabled.Default,'false');
+    for(const [resourceName,resource] of Object.entries(template.Resources))if(resource.Type==='AWS::Serverless::Function'){
+      const env=resource.Properties.Environment.Variables;
+      if(['Assistant','LineWorker'].includes(resourceName)){
+        assert.deepEqual(env.FEE_RULES_ENABLED,{Ref:'FeeRulesEnabled'});
+        assert.deepEqual(env.FEE_RULES_INDEX_SHA256,{Ref:'FeeRulesIndexSha256'});
+      }else assert.ok(!('FEE_RULES_ENABLED' in env),'Do not grant unrelated handlers fee-index access');
+    }
     assert.deepEqual(template.Parameters.AssistantModelId.AllowedValues,['amazon.nova-lite-v1:0','anthropic.claude-haiku-4-5','qwen.qwen3-32b-v1:0']);
     assert.equal(template.Parameters.AssistantModelId.Default,'amazon.nova-lite-v1:0','do not activate an unavailable model by default');
     assert.deepEqual(template.Rules.HaikuRegion.Assertions[0].Assert,{'Fn::Equals':[{Ref:'AIRegion'},'us-east-1']});
