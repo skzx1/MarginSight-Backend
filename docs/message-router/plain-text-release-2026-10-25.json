@@ -1,0 +1,116 @@
+{
+  "checkedAt": "2026-10-25T13:36:37.724102+00:00",
+  "sourceCommit": "29faac3",
+  "localTests": {
+    "passed": 114,
+    "failed": 0
+  },
+  "aws": {
+    "checkedAt": "2026-10-25T13:35:19.470354+00:00",
+    "stackStatus": "UPDATE_COMPLETE",
+    "lastUpdatedTime": "2026-10-25 13:34:21.357000+00:00",
+    "functions": [
+      {
+        "name": "marginsight-api",
+        "codeSha256": "BwS+97aZRezrGTxVWJhnZ5TCh9FdZlNA41Ntje7SQjc=",
+        "feeRulesEnabled": "false"
+      },
+      {
+        "name": "marginsight-assistant",
+        "codeSha256": "BwS+97aZRezrGTxVWJhnZ5TCh9FdZlNA41Ntje7SQjc=",
+        "feeRulesEnabled": "true"
+      },
+      {
+        "name": "marginsight-importworker",
+        "codeSha256": "BwS+97aZRezrGTxVWJhnZ5TCh9FdZlNA41Ntje7SQjc=",
+        "feeRulesEnabled": "false"
+      },
+      {
+        "name": "marginsight-ocrworker",
+        "codeSha256": "BwS+97aZRezrGTxVWJhnZ5TCh9FdZlNA41Ntje7SQjc=",
+        "feeRulesEnabled": "false"
+      },
+      {
+        "name": "marginsight-linewebhook",
+        "codeSha256": "BwS+97aZRezrGTxVWJhnZ5TCh9FdZlNA41Ntje7SQjc=",
+        "feeRulesEnabled": "false"
+      },
+      {
+        "name": "marginsight-lineworker",
+        "codeSha256": "BwS+97aZRezrGTxVWJhnZ5TCh9FdZlNA41Ntje7SQjc=",
+        "feeRulesEnabled": "true"
+      },
+      {
+        "name": "marginsight-seed",
+        "codeSha256": "BwS+97aZRezrGTxVWJhnZ5TCh9FdZlNA41Ntje7SQjc=",
+        "feeRulesEnabled": "false"
+      }
+    ],
+    "indexChecksumMatched": true,
+    "privateBucketPublicAccessBlocked": true,
+    "priorEnvironmentPreserved": true,
+    "changeSetArn": "arn:aws:cloudformation:ap-southeast-1:109991964227:changeSet/samcli-deploy1792935150/793a561c-cf72-453f-8b8b-4f1379f967ea"
+  },
+  "live": {
+    "checkedAt": "2026-10-25T13:36:22.086Z",
+    "scope": "isolated MOCK AWS API; not official rate validation",
+    "observations": [
+      {
+        "platform": "SHOPEE",
+        "message": "Shopee คิดค่าคอมมิชชันเท่าไหร่",
+        "passed": true,
+        "durationMs": 8362,
+        "provider": "fee-reference",
+        "answer": "ข้อมูลจำลอง (MOCK)\n\nร้านทั่วไป (Non-Mall) คิดค่าคอมมิชชันตามอัตราหมวดสินค้า คูณกับราคาสินค้าเริ่มต้นหลังหักส่วนลดที่ผู้ขายจัด รวม VAT 7% แล้ว\n\nร้าน Mall คิดค่าคอมมิชชันแบบเดียวกันกับร้านทั่วไป แต่อัตรา VAT มีข้อขัดแย้งระหว่างเอกสาร ยังไม่ชัดเจนว่ารวม VAT แล้วหรือไม่\n\nอ้างอิง: เอกสาร SHOPEE ณ 2026-10-24 (ส่วน 26); SHOPEE ณ 2026-10-24 (ส่วน 25)\nhttps://help.shopee.co.th/portal/4/article/77254",
+        "note": "ข้อมูลจำลองจากเอกสารอ้างอิง ณ 2026-10-24; ช่วงวันที่ที่เลือกเป็นช่วงข้อมูลร้าน ไม่ใช่วันที่มีผลของอัตรา; ไม่แทนกฎที่บันทึกในร้าน",
+        "sourceFiles": [
+          "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+          "Shopee_Thailand_Fee_Spec_2026-10-24.md"
+        ]
+      },
+      {
+        "platform": "LAZADA",
+        "message": "Lazada มีค่าธรรมเนียมการชำระเงินเท่าไหร่",
+        "passed": true,
+        "durationMs": 5730,
+        "provider": "fee-reference",
+        "answer": "ข้อมูลจำลอง (MOCK)\n\nLazada ค่าธรรมเนียมการชำระเงินสำหรับร้าน LazMall อยู่ที่ 3.21% ซึ่งรวม VAT แล้ว คำนวณจากราคาสินค้าเท่านั้น\n\nอัตราค่าธรรมเนียมสำหรับร้านทั่วไปยังไม่มีข้อมูลชัดเจน อาจขึ้นอยู่กับเงื่อนไขและประเภทของร้านค้า\n\nอ้างอิง: เอกสาร LAZADA ณ 2026-10-24 (ส่วน 24)",
+        "note": "ข้อมูลจำลองจากเอกสารอ้างอิง ณ 2026-10-24; ช่วงวันที่ที่เลือกเป็นช่วงข้อมูลร้าน ไม่ใช่วันที่มีผลของอัตรา; ไม่แทนกฎที่บันทึกในร้าน",
+        "sourceFiles": [
+          "Lazada_Thailand_Fee_Spec_2026-10-24.md"
+        ]
+      },
+      {
+        "platform": "TIKTOK",
+        "message": "TikTok Shop คิดค่าคอมมิชชันเท่าไหร่",
+        "passed": true,
+        "durationMs": 6006,
+        "provider": "fee-reference",
+        "answer": "ข้อมูลจำลอง (MOCK)\n\nค่าคอมมิชชันของ TikTok Shop ขึ้นอยู่กับหมวดสินค้า โดยมีตัวอย่างค่าคอมมิชชันร้านค้า Mall อยู่ที่ 13.91% รวม VAT แล้ว\n\nอัตราค่าคอมมิชชันทั่วไปสำหรับร้านค้าทั่วไปและร้าน Mall แตกต่างกัน และอัตราค่าคอมมิชชันอาจมีการเปลี่ยนแปลงตามการประกาศของ TikTok Shop\n\nอ้างอิง: เอกสาร TIKTOK ณ 2026-10-24 (ส่วน 21)\nhttps://seller-th.tiktok.com/university/essay?knowledge_id=6837808312370945&lang=en\nhttps://seller-th.tiktok.com/university/essay?knowledge_id=7485510424282896&lang=en",
+        "note": "ข้อมูลจำลองจากเอกสารอ้างอิง ณ 2026-10-24; ช่วงวันที่ที่เลือกเป็นช่วงข้อมูลร้าน ไม่ใช่วันที่มีผลของอัตรา; ไม่แทนกฎที่บันทึกในร้าน",
+        "sourceFiles": [
+          "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md"
+        ]
+      },
+      {
+        "platform": "LINE",
+        "message": "LINE SHOPPING คิดค่าธรรมเนียมเท่าไหร่",
+        "passed": true,
+        "durationMs": 6375,
+        "provider": "fee-reference",
+        "answer": "ข้อมูลจำลอง (MOCK)\n\nค่าธรรมเนียมการใช้บริการ LINE SHOPPING คือ 3% ของยอดสั่งซื้อที่ถูกจัดว่ามาจากช่องทาง LINE SHOPPING โดยค่าธรรมเนียมนี้ยังไม่รวม VAT 7%แล้ว\n\nค่าธรรมเนียมธุรกรรมการชำระเงินสำหรับการใช้ MyShop Payment Service System อยู่ที่ 3% ของยอดที่ลูกค้าต้องจ่ายก่อนหัก LINE POINTS และยังไม่รวม VAT 7%\n\nอ้างอิง: เอกสาร LINE ณ 2026-10-24 (ส่วน 34); LINE ณ 2026-10-24 (ส่วน 33)\nhttps://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th\nhttps://lineforbusiness.com/th/service/myshop/campaign/0percent-transaction-fee",
+        "note": "ข้อมูลจำลองจากเอกสารอ้างอิง ณ 2026-10-24; ช่วงวันที่ที่เลือกเป็นช่วงข้อมูลร้าน ไม่ใช่วันที่มีผลของอัตรา; ไม่แทนกฎที่บันทึกในร้าน",
+        "sourceFiles": [
+          "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+          "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+          "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md"
+        ]
+      }
+    ]
+  },
+  "scope": "Existing AWS MOCK assistant API; concise Thai reference prose, no frontend republish",
+  "limits": [
+    "Citation and numeric-token guards do not prove complete semantic entailment",
+    "Not official tariff validation or real merchant/browser proof"
+  ]
+}

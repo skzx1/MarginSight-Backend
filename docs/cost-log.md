@@ -168,3 +168,8 @@ Reused existing Qwen/Titan model, private pinned134chunk index and stack; two co
 Fresh STS109991964227 / ap-southeast-1 and budget gates before publication13:10:31UTC: cap350USD total, existing operator trial25USD; laggedActualSpend0.034USD, LastUpdated11:46:19.853UTC. Not current remaining credit or final measured deployment cost.
 
 Frontend-only74file publication and one wildcardCloudFrontinvalidation, with privateS3readback and old-static backup in ephemeralCloudShelltmp. Existing backend was concurrently updated by another release and deliberately preserved after source verification. No new IAM/resources/paidcapacity/model switch/indexrebuild/training/Marketplace action or REALmerchant write. One isolatedMOCK browser session; zero model generations/OCR/LINE calls from this release. Build/static/API/storage/CDN/log usage may accrue; ordinary operational monitoring remains necessary.
+
+
+## Plain Thai fee answers — 25 October 2026
+
+Two code-only updates to existing stack; reused Qwen/Titan/private index and existing IAM/settings. Eight assistant requests on two isolated MOCK tenants; reference-summary call bounded to500 output tokens, router/planner350, existing deadlines retained. No reindex/training/resource creation/REAL data mutation/frontend publication. Metadata gate13:21:32UTC: laggedActualSpend0.034USD, budget350USD/trial25USD, last budget update18:46:19.853+07. Not final charges or realtime remaining credit. Standard model/API/storage charges may accrue.
