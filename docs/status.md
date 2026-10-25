@@ -233,3 +233,10 @@ READY_FOR_DEPLOY after explicit user commit/push/deploy request. Upstream4a4dca4
 ## Website router release verified — 25 October 2026
 
 VERIFIED_AWS_API + VERIFIED_BROWSER_MOCK after user-approved commit/push/deploy. Source5f3c19f + corpusa0a273b/deploymentdocsa60f393, Frontend4c6880d published. Existing stack UPDATE_COMPLETE, reviewed7function hashes match, config/private research index/IAM preserved. API8/8plus401/403pass; browser rank2/3follow-up correct.108Backend/83Frontend/9Python tests and clean installs pass. Classifier development benchmark61/68 remains a separate known limitation; research134chunks are not approved tariff rules. See latest verification.md and deployment report. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS unchanged.
+
+
+## Owner-approved MOCK document answers — 25 October 2026
+
+Runtime source43531e3 (preceded by66d1cec) deployed to existing AWS stack. All four supplied documents are approved for cited MOCK reference answers. Server-trusted membership.dataOrigin=MOCK controls access; REAL retains verification gate. Corpus/Titan/S3 checksum/IAM/environment/financial catalogs/formula remain unchanged. Explicit fee-label matching prevents commission/payment substitution.
+
+Local112/112 tests and standalone build/package/structure checks passed. Final live isolated-MOCK API4/4 passed with expected commission rows Shopee25/26, TikTok21, payment Lazada24, LINE33/34. Initial live answers exposed topic mismatches and were corrected before final acceptance. Evidence: docs/message-router/mock-reference-release-2026-10-25.json. This does not verify official tariffs, missing numeric rates, real merchant data, native integrations or the browser presentation. Overall project remains PARTIAL_WITH_EXTERNAL_BLOCKERS.

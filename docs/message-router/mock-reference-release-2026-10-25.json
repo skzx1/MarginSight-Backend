@@ -1,0 +1,117 @@
+{
+  "checkedAt": "2026-10-25T13:06:59.340453+00:00",
+  "sourceCommit": "43531e3",
+  "approval": "Owner approves four supplied fee documents for MOCK website reference answers, not official tariff verification",
+  "localTests": {
+    "passed": 112,
+    "failed": 0
+  },
+  "aws": {
+    "checkedAt": "2026-10-25T13:05:46.428549+00:00",
+    "stackStatus": "UPDATE_COMPLETE",
+    "lastUpdatedTime": "2026-10-25 13:04:51.083000+00:00",
+    "functions": [
+      {
+        "name": "marginsight-api",
+        "codeSha256": "gLZBGYg1m8qxTK8lu/hp/k05ZDv6AliRhHZpdciqyM0=",
+        "feeRulesEnabled": "false"
+      },
+      {
+        "name": "marginsight-assistant",
+        "codeSha256": "gLZBGYg1m8qxTK8lu/hp/k05ZDv6AliRhHZpdciqyM0=",
+        "feeRulesEnabled": "true"
+      },
+      {
+        "name": "marginsight-importworker",
+        "codeSha256": "gLZBGYg1m8qxTK8lu/hp/k05ZDv6AliRhHZpdciqyM0=",
+        "feeRulesEnabled": "false"
+      },
+      {
+        "name": "marginsight-ocrworker",
+        "codeSha256": "gLZBGYg1m8qxTK8lu/hp/k05ZDv6AliRhHZpdciqyM0=",
+        "feeRulesEnabled": "false"
+      },
+      {
+        "name": "marginsight-linewebhook",
+        "codeSha256": "gLZBGYg1m8qxTK8lu/hp/k05ZDv6AliRhHZpdciqyM0=",
+        "feeRulesEnabled": "false"
+      },
+      {
+        "name": "marginsight-lineworker",
+        "codeSha256": "gLZBGYg1m8qxTK8lu/hp/k05ZDv6AliRhHZpdciqyM0=",
+        "feeRulesEnabled": "true"
+      },
+      {
+        "name": "marginsight-seed",
+        "codeSha256": "gLZBGYg1m8qxTK8lu/hp/k05ZDv6AliRhHZpdciqyM0=",
+        "feeRulesEnabled": "false"
+      }
+    ],
+    "indexChecksumMatched": true,
+    "privateBucketPublicAccessBlocked": true,
+    "priorEnvironmentPreserved": true,
+    "changeSetArn": "arn:aws:cloudformation:ap-southeast-1:109991964227:changeSet/samcli-deploy1792933391/64f231d1-ce34-45a4-913c-ba65e8c0f508"
+  },
+  "live": {
+    "checkedAt": "2026-10-25T13:06:43.239Z",
+    "scope": "isolated MOCK AWS API; not official rate validation",
+    "observations": [
+      {
+        "platform": "SHOPEE",
+        "message": "Shopee คิดค่าคอมมิชชันเท่าไหร่",
+        "passed": true,
+        "durationMs": 6186,
+        "provider": "fee-reference",
+        "answer": "ข้อมูลจำลอง (MOCK) — ใช้เอกสารอ้างอิงที่เจ้าของเดโมอนุมัติ ไม่ใช่การยืนยันอัตราทางการปัจจุบัน\n\n| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Non-Mall Sellers Sale Transaction Fee / ค่าธรรมเนียมการขายสำหรับ Non-Mall Sellers** | Category rate × (starting item price − seller-funded item discount); excludes shipping and other discounts. | Standard/Non-Mall only, successful orders, all payment channels. Category rates linked from 77254; not normalized here. Policy says VAT 7% included. Same 4 Aug schedule effective date. Eligible small-shop sale-fee discount of 0.5–1.5% may apply if shop sales/GMV are ≤฿10,000 in the preceding 30 days; exact tier, eligible shop types and effective date are not established here. No cap/minimum otherwise located. Official policy 77254: https://help.shopee.co.th/portal/4/article/77254. |\nอ้างอิง: Shopee_Thailand_Fee_Spec_2026-10-24.md:26 · เอกสาร ณ 2026-10-24 · วันที่มีผลยังไม่ยืนยัน\nhttps://help.shopee.co.th/portal/4/article/77254\n\n| Exact official fee name (English / Thai) | Amount/rate; base and inclusions | Scope, trigger, VAT, cap/minimum, effective/status |\n| **Mall Sellers Sale Transaction Fee / ค่าธรรมเนียมการขาย (Sale Transaction Fee) สำหรับ Mall Sellers** | Category rate × (starting item price − seller-funded item discount); excludes shipping and other discounts. | Mall only, successful orders, all payment channels. Category-dependent rates are in the linked Thai/English schedules. Policy 77254 says fees (4) incl VAT 7%; a later Seller Education Hub article 2219 dated 20 Aug 2026 has been reported to say Mall sale/promotional-service rates exclude VAT, but that article body was not independently retrieved in this verification. Treat Mall VAT as **conflicting/unverified**, not resolved. Effective category schedule 4 Aug 2026. Eligible small-shop sale-fee discount of 0.5–1.5% may apply if shop sales/GMV are ≤฿10,000 in the preceding 30 days; exact tier, eligible shop types and effective date are not established here. Official policy: https://help.shopee.co.th/portal/4/article/77254; schedule links are embedded there. |\nอ้างอิง: Shopee_Thailand_Fee_Spec_2026-10-24.md:25 · เอกสาร ณ 2026-10-24 · วันที่มีผลยังไม่ยืนยัน\nhttps://help.shopee.co.th/portal/4/article/77254\n\nอัตราอาจต่างตามประเภทร้าน หมวดสินค้า และโปรแกรม ข้อความนี้ใช้อ้างอิงในเดโม ไม่ได้เปลี่ยนกฎคำนวณหรือยอดที่บันทึกในร้าน",
+        "note": "ข้อมูลจำลองจากเอกสารอ้างอิง ณ 2026-10-24; ช่วงวันที่ที่เลือกเป็นช่วงข้อมูลร้าน ไม่ใช่วันที่มีผลของอัตรา; ไม่แทนกฎที่บันทึกในร้าน",
+        "sourceFiles": [
+          "Shopee_Thailand_Fee_Spec_2026-10-24.md",
+          "Shopee_Thailand_Fee_Spec_2026-10-24.md"
+        ]
+      },
+      {
+        "platform": "LAZADA",
+        "message": "Lazada มีค่าธรรมเนียมการชำระเงินเท่าไหร่",
+        "passed": true,
+        "durationMs": 3421,
+        "provider": "fee-reference",
+        "answer": "ข้อมูลจำลอง (MOCK) — ใช้เอกสารอ้างอิงที่เจ้าของเดโมอนุมัติ ไม่ใช่การยืนยันอัตราทางการปัจจุบัน\n\n| # / category | Official name / Thai name (where surfaced) | Rate / calculation | Base, seller scope, VAT, cap/minimum | Effective date & status |\n| 2. Transaction/payment | **Payment fee** / ค่าธรรมเนียมการชำระเงิน | The current official LazMall joining page displays **3.21% VAT-inclusive**, based on **item price**; the general fee FAQ body is inaccessible. Secondary guides instead claim a base including buyer-paid shipping, net of seller discount. | Posted Mall-page headline only; do not extend to general sellers. Treat the fee base, general seller rate, discounts, COD and cap/minimum as unresolved until current official policy/settlement confirms them. VAT-inclusive wording appears on LazMall page. | Current page retrieved 24 Oct 2026; no effective date displayed. Conflicts with secondary fee-base claims. [KhumMai] [UpscaleRank] [official FAQ] [LazMall joining page] |\nอ้างอิง: Lazada_Thailand_Fee_Spec_2026-10-24.md:24 · เอกสาร ณ 2026-10-24 · วันที่มีผลยังไม่ยืนยัน\n\nอัตราอาจต่างตามประเภทร้าน หมวดสินค้า และโปรแกรม ข้อความนี้ใช้อ้างอิงในเดโม ไม่ได้เปลี่ยนกฎคำนวณหรือยอดที่บันทึกในร้าน",
+        "note": "ข้อมูลจำลองจากเอกสารอ้างอิง ณ 2026-10-24; ช่วงวันที่ที่เลือกเป็นช่วงข้อมูลร้าน ไม่ใช่วันที่มีผลของอัตรา; ไม่แทนกฎที่บันทึกในร้าน",
+        "sourceFiles": [
+          "Lazada_Thailand_Fee_Spec_2026-10-24.md"
+        ]
+      },
+      {
+        "platform": "TIKTOK",
+        "message": "TikTok Shop คิดค่าคอมมิชชันเท่าไหร่",
+        "passed": true,
+        "durationMs": 3663,
+        "provider": "fee-reference",
+        "answer": "ข้อมูลจำลอง (MOCK) — ใช้เอกสารอ้างอิงที่เจ้าของเดโมอนุมัติ ไม่ใช่การยืนยันอัตราทางการปัจจุบัน\n\n| # | Fee / official Thai label | Rate and formula base | Scope, VAT, caps, date and evidence status |\n| 1. Commission / referral | **Platform Commission Fee / ค่าคอมมิชชัน**; Mall: **Mall Commission Fee / ค่าคอมมิชชันร้านค้า Mall** | `commission = (item price − seller-funded discount) × category rate`. Shipping and platform-funded discount are excluded under the official guidance. Category/subcategory-specific. | Current rate-card revision effective **5 July 2026, 00:00 Thailand time**. Rates are stated tax-inclusive. Complete numeric rows were linked as official PDFs but not normalized here: **category rates UNVERIFIED in this document**. Mall article includes a Guitar illustration at **13.91%**; that is not a universal/category table. Official sources: [Non-Mall commission schedule](https://seller-th.tiktok.com/university/essay?knowledge_id=6837808312370945&lang=en), [Mall commission schedule](https://seller-th.tiktok.com/university/essay?knowledge_id=7485510424282896&lang=en). No general cap/minimum found. |\nอ้างอิง: TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md:21 · เอกสาร ณ 2026-10-24 · วันที่มีผลยังไม่ยืนยัน\nhttps://seller-th.tiktok.com/university/essay?knowledge_id=6837808312370945&lang=en\nhttps://seller-th.tiktok.com/university/essay?knowledge_id=7485510424282896&lang=en\n\nอัตราอาจต่างตามประเภทร้าน หมวดสินค้า และโปรแกรม ข้อความนี้ใช้อ้างอิงในเดโม ไม่ได้เปลี่ยนกฎคำนวณหรือยอดที่บันทึกในร้าน",
+        "note": "ข้อมูลจำลองจากเอกสารอ้างอิง ณ 2026-10-24; ช่วงวันที่ที่เลือกเป็นช่วงข้อมูลร้าน ไม่ใช่วันที่มีผลของอัตรา; ไม่แทนกฎที่บันทึกในร้าน",
+        "sourceFiles": [
+          "TikTok_Shop_Thailand_Fee_Spec_2026-10-24.md"
+        ]
+      },
+      {
+        "platform": "LINE",
+        "message": "LINE SHOPPING คิดค่าธรรมเนียมเท่าไหร่",
+        "passed": true,
+        "durationMs": 5698,
+        "provider": "fee-reference",
+        "answer": "ข้อมูลจำลอง (MOCK) — ใช้เอกสารอ้างอิงที่เจ้าของเดโมอนุมัติ ไม่ใช่การยืนยันอัตราทางการปัจจุบัน\n\n| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 3. Service/program | **Service Fee / ค่าธรรมเนียมการใช้บริการ**: **3%** for orders attributed to LINE SHOPPING surface/marketing support/LIVE and qualifying activity. Attribution may apply where a customer adds any seller item to cart from LINE SHOPPING channel/media within **7 days**. | Seller’s own chat, own ad or direct link is generally exempt unless the qualifying attribution/cart condition applies. Buyer-selected LINE MAN Messenger shipping and seller-funded coupon amounts are described as excluded from the service-fee base; the official example adds back LINE SHOPPING coupon and LINE POINTS. | VAT **7% additional**; no universal cap/minimum. Confirm other shipping/discount combinations against seller statement. Source: [Thai policy, last amendment 10 Sep 2024](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th). |\nอ้างอิง: LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md:34 · เอกสาร ณ 2026-10-24 · วันที่มีผลยังไม่ยืนยัน\nhttps://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th\n\n| # | Fee / Thai official name | Rate, base, applicability | VAT, cap/date/status |\n| 2. Payment/transaction | **Payment Transaction Fee / ค่าธรรมเนียมธุรกรรมการชำระเงิน**: standard **3%** on eligible MyShop Payment Service System / LINE SHOPPING orders. The policy describes buyer amount payable before LINE POINTS as the basis. | Applies to eligible completed/“Mark as Shipped” orders using covered payment routes (examples include credit/debit card, LINE Pay and mobile banking). New-seller campaign may reduce to 0% for limited eligible orders. | VAT **7% additional**; no general cap/minimum in fee policy. Policy and official campaign independently state 3%. [Policy](https://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th); [campaign](https://lineforbusiness.com/th/service/myshop/campaign/0percent-transaction-fee). |\nอ้างอิง: LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md:33 · เอกสาร ณ 2026-10-24 · วันที่มีผลยังไม่ยืนยัน\nhttps://terms2.line.me/lineshopping_terms_and_conditions_fees_policy?lang=th\nhttps://lineforbusiness.com/th/service/myshop/campaign/0percent-transaction-fee\n\nอัตราอาจต่างตามประเภทร้าน หมวดสินค้า และโปรแกรม ข้อความนี้ใช้อ้างอิงในเดโม ไม่ได้เปลี่ยนกฎคำนวณหรือยอดที่บันทึกในร้าน",
+        "note": "ข้อมูลจำลองจากเอกสารอ้างอิง ณ 2026-10-24; ช่วงวันที่ที่เลือกเป็นช่วงข้อมูลร้าน ไม่ใช่วันที่มีผลของอัตรา; ไม่แทนกฎที่บันทึกในร้าน",
+        "sourceFiles": [
+          "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+          "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md",
+          "LINE_Thailand_Commerce_Fee_Spec_2026-10-24.md"
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "Isolated MOCK API proof; not real merchant, native marketplace or browser verification",
+    "Unknown category rates remain unknown; no financial catalog mutation"
+  ],
+  "scope": "Backend-only update; frontend publication unchanged"
+}

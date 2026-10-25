@@ -156,3 +156,8 @@ User explicitly authorized publishing this release. Fresh STS109991964227 and Qw
 Fresh account/budget/code/config gates before prepare/review/execute/publish. One executed code-only existing-stack update12:18UTC, one76file static publication and7path invalidation. No new IAM/role/resource/paid capacity/model switch/index rebuild/training/Marketplace operation. Reused pinned private134chunk index. API acceptance created2isolatedMOCK stores and made8assistant requests; one further browserMOCK store and2ranking/follow-up requests. No REALmerchant write/live OCR/LINE message. Standard Bedrock/API/Lambda/DynamoDB/S3/CDN/log charges may accrue; no total token or final bill estimate claimed.
 
 Final metadata12:24:40UTC: team350USD/trial25USD unchanged; laggedActualSpend0.034USD, updated18:46:19.853+07. This is not real-time remaining credit or measured final charges. Source/verification commits pushed in separate batches; auth caches/signed URLs/tokens/private evidence remain ignored. Browser denial was transient and access resumed after its stated retry time, through the original browser surface; no bypass used.
+
+
+## MOCK reference answers — 25 October 2026
+
+Reused existing Qwen/Titan model, private pinned134chunk index and stack; two code-only updates, no IAM/resource/index rebuild/training/paid capacity changes. Created two isolated MOCK tenants and made eight live assistant requests (four initial discovery, four final exact-source checks). Qwen/Titan/API/Lambda/DynamoDB/log/storage usage may accrue. Read-only preflight13:02:13UTC: laggedActualSpend0.034USD, budget350USD/trial25USD unchanged, budget timestamp18:46:19.853+07. Not real-time remaining credit or a measured final bill. No REAL merchant write or frontend publication.
