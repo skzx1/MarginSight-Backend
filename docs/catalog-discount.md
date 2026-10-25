@@ -1,0 +1,11 @@
+# Catalog discounts versus recorded monthly profit — 25 October 2026
+
+The user requested separate data sources: discounts use products; monthly profit uses actual orders.
+
+POST /stores/{store}/assistant/catalog-discount accepts only sku, message (up to1500 characters), and locale th/en. Membership and write-role checks run before product lookup. Client-supplied prices/costs/store ownership are rejected. The service loads the current catalog price and currently effective verified unit cost server-side. It does not need an order, selected month, an AI model or research embedding.
+
+One-unit discounted price uses Decimal and satang rounding. The one-unit difference against product cost is calculated by the canonical domain engine under an explicitly defined pre-expense comparison. No platform fee is asserted to be zero: netProfitSatang always remains null; fees/packaging/advertising/seller shipping remain missing. The response says the measure excludes these expenses, overhead and taxes. It is never rendered as net profit or monthly sales. Missing prices/costs stay unknown; known zero stays known. No listed price, quantity, cost, order, settlement or enrollment is written.
+
+Response catalogScenario includes CATALOG basis, tenant/SKU, observed timestamp, price, discount, cost/listing versions, current cost, differenceBeforeExpensesSatang, missing fields, formula version and input hash. The web displays the current-product reference date instead of a misleading monthly range and preserves that basis in chat history/copy. The monthly-profit path continues to read server-calculated order dashboards for the selected range/SKU; an empty order set produces a notice, not simulated or zero profit from stock. Recorded-order break-even/program tools and the separate historical simulations remain unchanged.
+
+Frontend tests cover routing, absence of client money inputs, current-product reference/history, monthly order totals, missing sales and declining-sales wording. Backend tests cover a real personal product with no orders, current price/cost versus historical orders, exact decimal rounding, missing/zero/future cost, invalid/spoofed input and tenant/role checks. Local verification: Frontend61 / Backend78 tests plus builds, bundled handlers and unchanged generated financial contract. Live release evidence is recorded in verification.md.

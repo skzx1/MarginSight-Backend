@@ -17,6 +17,7 @@ import type {Context} from './context.js';
 import {marketplaceOptions} from './marketplace-scenario.js';
 import {productSchema,updateProductListing} from './product-listing.js';
 import {completeStorefrontListings} from './storefront-listings.js';
+import {catalogDiscount} from './catalog-discount.js';
 export interface Request {method:string;path:string;authorization?:string;origin?:string;query:Record<string,string>;body?:any}
 export async function route(ctx:Context,r:Request):Promise<any>{
  const {repo}=ctx,path=r.path.replace(/\/$/,''),post=r.method==='POST';
@@ -31,6 +32,7 @@ async function dispatch(ctx:Context,r:Request,user:string):Promise<any>{
  if(path==='/me/stores'&&r.method==='GET')return {items:await repo.stores(user)};if(path==='/me/store'&&post)return createPersonalStore(repo,user,r.body);
  const match=path.match(/^\/stores\/([^/]+)(\/.*)?$/);demand(match,'NOT_FOUND',404);const store=id(decodeURIComponent(match[1])),rest=match[2]??'';const membership=await repo.member(user,store,post);if(post&&membership.personal&&['/imports','/receipts','/fee-rules','/enrollments'].includes(rest))demand(r.body?.dataOrigin==='REAL','PERSONAL_STORE_REQUIRES_REAL_DATA');const month=r.query.month??new Date().toISOString().slice(0,7);
  const inputCache:InputCache={jobs:new Map()};const snapshot=async(platform:string,orderId:string)=>{const input=await repo.input(store,platform,orderId,inputCache),result=calculate(input),inputHash=hash({formulaVersion:FORMULA_VERSION,input});await repo.db.put('jobs',{PK:pk(store),SK:'CALC#'+inputHash,version:1,value:{store,inputHash,input,result,createdAt:new Date().toISOString()}},0);return {...result,store,inputHash,postedFees:input.fees,ledgerVersion:input.order.ledgerVersion}};
+ if(rest==='/assistant/catalog-discount'&&post)return catalogDiscount(repo,store,r.body);
  const range=async()=>{const orders:any[]=[];let cursor:string|undefined;do{const page=await repo.orders(store,month,100,cursor);orders.push(...page.items);cursor=page.next;demand(orders.length<=1000&&! (orders.length===1000&&cursor),'EXPORT_RANGE_TOO_LARGE',413)}while(cursor);return orders};
  if(rest==='/products'&&post){const input=productSchema.parse(r.body);return repo.writeCatalog(store,'PRODUCT#'+input.sku,{...input,listingVersion:1,dataOrigin:membership.dataOrigin??'REAL',sourceRef:'merchant-entry',createdBy:user,createdAt:new Date().toISOString()},true)}
  const listing=rest.match(/^\/products\/([^/]+)\/listing$/);if(listing&&post)return updateProductListing(repo,store,id(decodeURIComponent(listing[1])),user,r.body);
