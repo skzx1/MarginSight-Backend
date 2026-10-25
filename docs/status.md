@@ -110,3 +110,13 @@ VERIFIED_LOCAL / VERIFIED_AWS for this feature slice: Frontend f7dcc060b6a5d885f
 ## Product name — 23 October 2026
 
 MarginShot is the current user-facing product name. VERIFIED_AWS branding source Frontend330cf09/Backend4405954 includes website, assistant/export copy and Cognito logo. Existing GitHub repository names/AWS identities/API health identifier remain compatible. Local/CloudShell53+50 tests and published name checks pass; see verification.md/cost-log.md. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS and prior external integration limitations remain.
+
+
+## Expanded storefront catalog — 25 October 2026
+
+VERIFIED_LOCAL only: fresh guest sessions seed seven products (five added), keep MOCK provenance, use ordinary shop/product labels and readable identifiers; legacy fixtures remain supported. Backend verification passed 61 tests/build; see verification.md. Existing AWS sessions/data are unchanged. No commit, push or deployment. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
+
+
+## Assistant scenario repair — 25 October 2026
+
+VERIFIED_LOCAL: five added SKUs now have linked single-SKU MOCK orders/posted fees. Local startup upgrades eligible guest sessions without resetting chat; no REAL/personal migration. Backend62 tests plus6 Python tests pass; CAP-005 browser retry returned28.12THB after15% discount. Expanded storefront dashboard is1075THB revenue/268THB profit across6orders; legacy BAG-001 goldens unchanged. User authorized pushing the current changes; no AWS deployment. See verification.md. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains.

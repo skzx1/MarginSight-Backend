@@ -19,10 +19,10 @@ export async function createDemoSession(repo:Repository,request:DemoRequest){
  const expiresAt=Math.floor(Date.now()/1000)+DEMO_TTL_SECONDS;
  // Token is returned once. Only its SHA-256 digest is stored; no static credential.
  const token='demo.'+randomBytes(32).toString('base64url');
- await seed(repo,[{sub:subject,store}]);
+ await seed(repo,[{sub:subject,store}],{storefrontIds:true});
  const member=await repo.db.get('memberships','USER#'+subject,'STORE#'+store);
  demand(member,'DEMO_SEED_FAILED',503);
- member.value.name='ร้านเดโมของรอบนี้';member.value.guest=true;
+ member.value.name='ร้าน MarginShot';member.value.guest=true;
  await repo.db.put('memberships',member);
  await repo.db.put('jobs',{PK:'DEMOSESSION#'+digest(token),SK:'SESSION',version:1,expiresAt,value:{subject,store,expiresAt}},0);
  return {accessToken:token,expiresAt,store,dataOrigin:'MOCK',mode:'ISOLATED_FULL_APP_DEMO'};

@@ -82,3 +82,8 @@ Frontend rollback snapshots: /tmp/marginsight-campaign-kybr58m0/pre-release in t
 ## MarginShot branding release — 23 October 2026
 
 Re-read STS109991964227 and BudgetHackathon-Team10 before preparation: limit350USD/ActualSpend0.026USD, LastUpdated2026-10-23T12:43:59.593Z (lagged, not current remaining credit). Existing Singapore stack only; team total350USD/trial target25USD unchanged. One reviewed code-only stack update, one static publish/7-path invalidation, and presentation-only Cognito logo customization. No new resource/role/reserved capacity/training/inference/OCR/LINE message or new demo seeding. Standard CloudShell/S3/Lambda/CDN/API usage may accrue. Previous release backup and logs in /tmp/marginshot-brand-20261023-pmmu_rmz are ephemeral; prior source Frontend3219d16/Backendeb7e7f9 remains in Git for reviewed rollback. Do not delete store data or change OAuth/resource identities to roll back branding.
+
+
+## Storefront seed change — 25 October 2026
+
+Local API/fixtures/tests/build only; AI_ENABLED=false locally. No AWS resource/API/deployment/model/training action in this slice. No new cloud spend from these operations; existing retained resources may still accrue charges. No fresh credit/spend read performed.
