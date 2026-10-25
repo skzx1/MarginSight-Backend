@@ -120,3 +120,8 @@ VERIFIED_LOCAL only: fresh guest sessions seed seven products (five added), keep
 ## Assistant scenario repair — 25 October 2026
 
 VERIFIED_LOCAL: five added SKUs now have linked single-SKU MOCK orders/posted fees. Local startup upgrades eligible guest sessions without resetting chat; no REAL/personal migration. Backend62 tests plus6 Python tests pass; CAP-005 browser retry returned28.12THB after15% discount. Expanded storefront dashboard is1075THB revenue/268THB profit across6orders; legacy BAG-001 goldens unchanged. User authorized pushing the current changes; no AWS deployment. See verification.md. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains.
+
+
+## Expanded storefront verified live — 25 October 2026
+
+VERIFIED_AWS: Backend031467b deployed through reviewed existing-stack update; freshMOCK sessions have7products/6orders and all five added SKUs support discount scenarios. API and browser Qwen CAP-00515% returned28.12THB/20.81%.62tests+Python6pass; no auth/IAM/data replacement. Frontend2bc06b9 theme/Sign-in follow-up is live without another Backend update. See verification.md. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS unchanged.

@@ -87,3 +87,8 @@ Re-read STS109991964227 and BudgetHackathon-Team10 before preparation: limit350U
 ## Storefront seed change — 25 October 2026
 
 Local API/fixtures/tests/build only; AI_ENABLED=false locally. No AWS resource/API/deployment/model/training action in this slice. No new cloud spend from these operations; existing retained resources may still accrue charges. No fresh credit/spend read performed.
+
+
+## 25 October existing-stack update and verification
+
+Fresh STS confirmed109991964227/Singapore. BudgetHackathon-Team10 read preflight06:23:58UTC, review/execute/publish and finalappearance readback:350USDlimit/laggedActualSpend0.033USD, LastUpdated04:22:10UTC. One reviewed existingstack code update:7Lambdas plus unchanged HttpApi dynamic reference refresh; no added capacity/resources/IAM. Verified backend with two isolatedMOCK API sessions, bounded simulations and one Qwen question; browser one additionalMOCK session and one Qwen question. Later frontend/Cognito appearance publish used one furtherMOCK screen-only session, no extra inference. No REALmerchant write, OCR, LINE, training or Marketplace action. Standard API/inference/storage/CDN/build traffic may accrue; no measured final charge/current remaining-credit claim. Total350/trial25 unchanged. Backups /tmp/marginshot-release-20261025-a0nn9bsd ephemeral.
