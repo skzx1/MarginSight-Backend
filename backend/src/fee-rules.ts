@@ -60,7 +60,7 @@ export function selectFeeEvidence(index:FeeIndex,query:{platform:string;orderAt:
   .map(c=>({chunk:c,score:cosine(vector,c.embedding)})).filter(c=>c.score>=.25).sort((a,b)=>b.score-a.score||a.chunk.id.localeCompare(b.chunk.id)).slice(0,3);
  output.matches=candidates.map(({chunk,score})=>{const {embedding,text,...metadata}=chunk;return {...metadata,
   cautions:[...metadata.cautions,'EFFECTIVE_DATE_NOT_NORMALIZED',...(query.orderAt.slice(0,10)<chunk.asOf?['RESEARCH_AS_OF_AFTER_ORDER']:[])],
-  excerpt:text.slice(0,1800),score:Math.round(score*10000)/10000,applicability:'UNVERIFIED' as const};});
+  excerpt:text,score:Math.round(score*10000)/10000,applicability:'UNVERIFIED' as const};});
  output.status=output.matches.length?'READY':'NO_MATCH';return output;
 }
 export class S3FeeRuleRetriever implements FeeRuleRetriever {

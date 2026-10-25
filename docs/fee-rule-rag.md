@@ -74,3 +74,10 @@ Prepare the current full external-roles template with `python3 scripts/prepare-u
 - [AWS us-east-1 Bedrock price list](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/us-east-1/index.json): observed25Oct2026, on-demand InvokeModel price effective1Oct2026 USD0.00002/1K input tokens; batch pricing is not used.
 
 See `docs/verification.md`, `docs/status.md`, and `docs/cost-log.md` for the actual local/AWS verification state. Source changes alone are not a deployment claim.
+
+
+## 25 October 2026 — owner-approved MOCK reference answers
+
+The owner explicitly approved all four supplied documents for answering questions on the mock website. Server-verified membership.dataOrigin=MOCK enables extractive answers with the MOCK label, filename/line, source URLs and snapshot date. This is mock-use approval, not external verification of official rates or effective dates. Unknown rates remain unknown. Exact model-selected quotes are validated against retrieved excerpts; invalid output/timeouts fall back to source passages. REAL/unspecified memberships retain the verification gate. Request JSON cannot enable the mode. The corpus checksum, Titan embeddings, financial rule catalog and deterministic calculations are unchanged. Retrieval preserves complete bounded chunks so table rows beyond the former 1800-character excerpt are available.
+
+Local verification: 111/111 tests plus standalone type/build/package/infrastructure checks passed. AWS publication and live results are recorded separately when complete.

@@ -62,7 +62,7 @@ export class AI {
    return {kind:'GENERAL',provider:'bedrock-chat',model:this.settings().model,store,answer,contextUsed:'GENERAL_CONVERSATION_ONLY'};
   }catch{return unavailable('MODEL_UNAVAILABLE')}
  }
- async routedChat(store:string,body:unknown){
+ async routedChat(store:string,body:unknown,mockReferences=false){
   const deadline=Date.now()+23000;
   const model=async(system:string,payload:unknown)=>{
    const response=await this.converse(store,{system:[{text:system}],messages:[{role:'user',content:[{text:JSON.stringify(payload)}]}],inferenceConfig:{maxTokens:350}},Math.min(deadline,Date.now()+7000));
@@ -71,7 +71,7 @@ export class AI {
    const text=response.output.message.content.map((b:any)=>b.text).join('');demand(text.trim().length>0&&text.length<=5000,'CHAT_INVALID_MODEL_OUTPUT',503);return text;
   };
   const boundedLookup=this.feeRules?{retrieve:async(...args:Parameters<FeeRuleRetriever['retrieve']>)=>{demand(deadline-Date.now()>=5500,'CHAT_DEADLINE',503);return this.feeRules!.retrieve(...args);}}:undefined;
-  return new WebChat(this.repo,model,boundedLookup,()=>this.repo.db.flush()).answer(store,body);
+  return new WebChat(this.repo,model,boundedLookup,()=>this.repo.db.flush()).answer(store,body,mockReferences);
  }
  async assistant(store:string,body:any){
   const deadline=Date.now()+23000;

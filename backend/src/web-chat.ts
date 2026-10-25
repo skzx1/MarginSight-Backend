@@ -11,6 +11,7 @@ import {demand} from './errors.js';
 import {catalogDiscount,type CatalogDiscountScenario} from './catalog-discount.js';
 import {marketplaceScenarioSchema} from './marketplace-scenario.js';
 import {rankingContext,requestedRank} from './ranking.js';
+import {mockFeeAnswer} from './mock-fee-answer.js';
 
 const date=z.string().regex(/^\d{4}-(0[1-9]|1[0-2])-\d{2}$/).refine(v=>!Number.isNaN(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v);
 export const webChatSchema=z.object({mode:z.literal('chat'),message:z.string().trim().min(1).max(1500),history:z.array(messageSchema).max(5).default([]),context:z.object({start:date,end:date,sku:z.string().min(1).max(100).nullable()}).strict(),locale:z.enum(['th','en']).default('th'),scenario:marketplaceScenarioSchema.optional()}).strict();
@@ -20,7 +21,7 @@ export interface WebChatReply {answer:string;provider:string;decision:RouteDecis
 export type RouteLog={event:'CHAT_ROUTE';route:RouteDecision['route'];confidence:number;latencyMs:number;totalLatencyMs:number;tenantHash:string;status:string};
 export class WebChat {
  constructor(private repo:Repository,private model:TextModel,private lookup:FeeRuleRetriever|undefined,private reserveEmbedding:()=>Promise<void>,private log:(record:RouteLog)=>void=record=>console.info(JSON.stringify(record))){}
- async answer(store:string,body:unknown):Promise<WebChatReply>{
+ async answer(store:string,body:unknown,mockReferences=false):Promise<WebChatReply>{
   const request=webChatSchema.parse(body);demand(request.context.start<=request.context.end,'INVALID_DATE_RANGE');
   const started=Date.now(),decision=await routeMessage(this.model,request.message,request.history),routerMs=Date.now()-started;
   let status='OK';
@@ -52,7 +53,7 @@ export class WebChat {
    const note=(lookupFailed?'ขณะนี้ค้นคลังกฎค่าธรรมเนียมไม่สำเร็จ ไม่ถือว่าไม่มีอัตราในคลัง\n':'')+(sources.length?'เอกสารอ้างอิงสำหรับตรวจสอบ ยังไม่นำอัตราไปแทนข้อมูลร้าน:\n'+[...new Set(sources)].join('\n'):'ไม่พบเอกสารกฎค่าธรรมเนียมที่ยืนยันได้สำหรับบริบทนี้')+'\nผลคำนวณใช้เฉพาะรายการ/ต้นทุน/กฎที่บันทึกในร้าน';
    const extra={feeRuleEvidence:evidence,note};
    const greet=/^(?:hi\b|hello\b|สวัสดี)/i.test(request.message)?'สวัสดีครับ\n':'';
-   const policyReply=()=>reply(greet+(lookupFailed?'ขณะนี้ค้นคลังกฎไม่สำเร็จครับ กรุณาลองใหม่ ยังไม่สามารถสรุปอัตราค่าธรรมเนียมให้ได้':sources.length?'พบเอกสารวิจัยที่เกี่ยวข้อง แต่ยังไม่มีอัตราและวันที่มีผลที่ยืนยันใช้กับร้านนี้ได้ครับ กรุณาระบุประเภทร้าน หมวดสินค้า โปรแกรม และวันที่ของรายการเพื่อยืนยันก่อน':'ยังไม่พบข้อมูลกฎที่ยืนยันสำหรับคำถามนี้ครับ กรุณาระบุแพลตฟอร์ม ประเภทร้าน หมวดสินค้า และวันที่ของรายการ'),lookupFailed?'unavailable':'fee-reference',extra);
+   const policyReply=async()=>mockReferences&&!lookupFailed&&sources.length?reply(greet+await mockFeeAnswer(this.model,request.message,request.history,evidence),'fee-reference',{...extra,note:'ข้อมูลจำลองจากเอกสารอ้างอิง ณ 2026-10-24; ช่วงวันที่ที่เลือกเป็นช่วงข้อมูลร้าน ไม่ใช่วันที่มีผลของอัตรา; ไม่แทนกฎที่บันทึกในร้าน'}):reply(greet+(lookupFailed?'ขณะนี้ค้นคลังกฎไม่สำเร็จครับ กรุณาลองใหม่ ยังไม่สามารถสรุปอัตราค่าธรรมเนียมให้ได้':sources.length?'พบเอกสารวิจัยที่เกี่ยวข้อง แต่ยังไม่มีอัตราและวันที่มีผลที่ยืนยันใช้กับร้านนี้ได้ครับ กรุณาระบุประเภทร้าน หมวดสินค้า โปรแกรม และวันที่ของรายการเพื่อยืนยันก่อน':'ยังไม่พบข้อมูลกฎที่ยืนยันสำหรับคำถามนี้ครับ กรุณาระบุแพลตฟอร์ม ประเภทร้าน หมวดสินค้า และวันที่ของรายการ'),lookupFailed?'unavailable':'fee-reference',extra);
    const policyFollowup=!decision.needs_calculation&&explicitPlatforms.length>0&&/^(?:แล้ว|และ|บน|and|what about|on|\s)*(?:lazada|shopee|tik\s*tok|line|ลาซาด้า|ลาซาดา|ช้อปปี้|ติ๊กต็อก|ไลน์)(?:\s|ล่ะ|ละ|บ้าง|ครับ|ค่ะ|[?.])*$/i.test(request.message)&&request.history.filter(m=>m.role==='user').some(m=>/ค่าคอม|ค่าธรรมเนียม|commission|refund.*fee|fee.*refund/i.test(m.text));
    if(/(?:^|\s)(?:ขาย|ราคาขาย|ต้นทุน|ทุน|price|cost)\s*(?:฿|THB|\$)?\s*\d/i.test(request.message))return reply('ยังไม่ใช้ราคา/ต้นทุนที่พิมพ์แทนรายการเดิมครับ ต้องการคำนวณกับสินค้า SKU ไหน และมีค่าธรรมเนียมที่ยืนยันแล้วหรือยัง?','clarify',extra);
    let plan:z.infer<typeof planSchema>;
