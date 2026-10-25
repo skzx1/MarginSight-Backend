@@ -34,3 +34,5 @@
 25 October 2026: General conversation is user-authorized through the existing Bedrock Qwen model, with no tools or shop data attached. Only general-chat text may be rendered directly from the model. Recorded financial claims and cards still require the deterministic engine. General mode never bypasses membership/origin checks.
 
 25 October 2026: User approves the four fee research documents for MOCK website reference answers. Trusted MOCK membership permits cited extractive answers with a visible MOCK label; this does not verify current official tariffs, invent missing rates/effective dates, modify the corpus provenance, or promote research into recorded financial rules. REAL memberships retain their verification gate.
+
+25 October 2026: User requests readable Thai text instead of raw Markdown in MOCK reference answers. A bounded summary may explain retrieved reference facts (not calculate money), with validated citations/numeric tokens and plain-text-only output. Failure must never expose raw source passages. Financial calculations remain engine-owned.

@@ -158,6 +158,11 @@ Fresh account/budget/code/config gates before prepare/review/execute/publish. On
 Final metadata12:24:40UTC: team350USD/trial25USD unchanged; laggedActualSpend0.034USD, updated18:46:19.853+07. This is not real-time remaining credit or measured final charges. Source/verification commits pushed in separate batches; auth caches/signed URLs/tokens/private evidence remain ignored. Browser denial was transient and access resumed after its stated retry time, through the original browser surface; no bypass used.
 
 
+## MOCK reference answers — 25 October 2026
+
+Reused existing Qwen/Titan model, private pinned134chunk index and stack; two code-only updates, no IAM/resource/index rebuild/training/paid capacity changes. Created two isolated MOCK tenants and made eight live assistant requests (four initial discovery, four final exact-source checks). Qwen/Titan/API/Lambda/DynamoDB/log/storage usage may accrue. Read-only preflight13:02:13UTC: laggedActualSpend0.034USD, budget350USD/trial25USD unchanged, budget timestamp18:46:19.853+07. Not real-time remaining credit or a measured final bill. No REAL merchant write or frontend publication.
+
+
 ## 25 October 2026 frontend redesign publication
 
 Fresh STS109991964227 / ap-southeast-1 and budget gates before publication13:10:31UTC: cap350USD total, existing operator trial25USD; laggedActualSpend0.034USD, LastUpdated11:46:19.853UTC. Not current remaining credit or final measured deployment cost.

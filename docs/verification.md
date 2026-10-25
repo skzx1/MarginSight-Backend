@@ -368,6 +368,13 @@ AWS protected API8/8MOCK acceptance cases passed: normal no RAG, Shopee research
 Browser access resumed after the prior transient tool-usage denial. Opened one fresh isolatedMOCK store without daily-limit failure, observed latest question/campaign controls and intro, then asked rank2→BAG-00254.20THB and follow-up rank3→CASE-00450.20THB. Both cards/coverage/context correct. Screenshot1280x720 at Frontend .local/message-router/deployed-chat.png (local-only); final response includes proof. This is not new mobile/real-merchant/Cognito/native marketplace/LINE acceptance. Four research documents remain unverified/reference-only. Overall PARTIAL_WITH_EXTERNAL_BLOCKERS remains for unrelated original project gates. Sanitized reproducible report: docs/message-router/deployment-2026-10-25.json. Rollback uses the backed-up prior artifact/full reviewed external-roles update without deleting merchant data.
 
 
+## Owner-approved MOCK document answers — 25 October 2026
+
+Runtime source43531e3 (preceded by66d1cec) deployed to existing AWS stack. All four supplied documents are approved for cited MOCK reference answers. Server-trusted membership.dataOrigin=MOCK controls access; REAL retains verification gate. Corpus/Titan/S3 checksum/IAM/environment/financial catalogs/formula remain unchanged. Explicit fee-label matching prevents commission/payment substitution.
+
+Local112/112 tests and standalone build/package/structure checks passed. Final live isolated-MOCK API4/4 passed with expected commission rows Shopee25/26, TikTok21, payment Lazada24, LINE33/34. Initial live answers exposed topic mismatches and were corrected before final acceptance. Evidence: docs/message-router/mock-reference-release-2026-10-25.json. This does not verify official tariffs, missing numeric rates, real merchant data, native integrations or the browser presentation. Overall project remains PARTIAL_WITH_EXTERNAL_BLOCKERS.
+
+
 ## 25 October 2026 latest-main/redesign release verification
 
 Clean Windows archive and separate LinuxCloudShell clone of Frontend8a6a954: npmci and npmrunverify pass196tests/typecheck/policy/static export. CloudShellNode24.19.0 distribution SHA256 checked against official SHASUMS256.txt. Original Windows dev server heldSWC lock; used isolated source archive rather than stopping it, then restored dependencies with npminstall; lockfile unchanged. Dev-generated next-env.d.ts path change left uncommitted. Backend43531e3 verify112tests, bundled handler smoke, unchanged formula margin-v1.1.0 andPython9parameter tests pass.
