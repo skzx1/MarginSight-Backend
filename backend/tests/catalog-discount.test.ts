@@ -58,13 +58,14 @@ test('selected Playground campaigns use catalog prices and exact platform fee ru
  const {call,base,db}=await productFixture(),before=structuredClone(db.data);
  const answer=await call(base+'/assistant/catalog-discount',{sku:'ASAW',message:'ลดราคา 20%',scenario:campaign}),r=answer.catalogScenario;
  // 200 THB after discount: commission20 + payment6 + fixed1.07 + PRIME17.12 =44.19.
- assert.equal(r.platformFeeSatang,4419);assert.equal(r.knownCampaignFeeSatang,1712);assert.equal(r.differenceBeforeExpensesSatang,8000);assert.equal(r.differenceAfterPlatformFeesBeforeOtherExpensesSatang,3581);assert.equal(r.netProfitSatang,null);assert.deepEqual(r.campaigns,['shopee-prime']);
+ assert.equal(r.knownPlatformFeeSatang,4419);assert.equal(r.differenceAfterKnownFeesBeforeOtherExpensesSatang,3581);assert.equal(r.platformFeeSatang,4419);assert.equal(r.knownCampaignFeeSatang,1712);assert.equal(r.differenceBeforeExpensesSatang,8000);assert.equal(r.differenceAfterPlatformFeesBeforeOtherExpensesSatang,3581);assert.equal(r.netProfitSatang,null);assert.deepEqual(r.campaigns,['shopee-prime']);
  assert.ok(answer.answer.includes('35.81'));assert.ok(answer.answer.includes('ไม่สมัครแคมเปญ'));assert.deepEqual(db.data,before);
  const original=(await call(base+'/assistant/catalog-discount',{sku:'ASAW',message:'แคมเปญนี้เหลือเท่าไร',scenario:campaign})).catalogScenario;assert.equal(original.discountPct,0);assert.equal(original.originalPriceSatang,25000);
 });
 test('unknown base fees remain unknown despite a selected campaign; invalid participation cannot enter calculations',async()=>{
  const {call,base}=await productFixture();
- const r=(await call(base+'/assistant/catalog-discount',{sku:'ASAW',message:'ลดราคา 20%',scenario:{...campaign,commissionRateBps:null,commissionVat:'UNKNOWN'}})).catalogScenario;
+ const answer=await call(base+'/assistant/catalog-discount',{sku:'ASAW',message:'ลดราคา 20%',scenario:{...campaign,commissionRateBps:null,commissionVat:'UNKNOWN'}}),r=answer.catalogScenario;
+ assert.equal(r.knownPlatformFeeSatang,2419);assert.equal(r.differenceAfterKnownFeesBeforeOtherExpensesSatang,5581);assert.match(answer.answer,/55.81/);assert.ok(!answer.answer.includes('ค่าบริการพื้นฐานยังไม่มีข้อมูลยืนยัน'));
  assert.equal(r.knownCampaignFeeSatang,1712);assert.equal(r.platformFeeSatang,null);assert.equal(r.differenceAfterPlatformFeesBeforeOtherExpensesSatang,null);assert.equal(r.netProfitSatang,null);assert.ok(r.missingFields.includes('platformFees'));
  await assert.rejects(()=>call(base+'/assistant/catalog-discount',{sku:'ASAW',message:'ลดราคา 20%',scenario:{...campaign,confirmed:false}}));
  await assert.rejects(()=>call(base+'/assistant/catalog-discount',{sku:'ASAW',message:'ลดราคา 20%',scenario:{...campaign,platform:'lazada'}}));
