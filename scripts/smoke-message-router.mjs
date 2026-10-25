@@ -29,7 +29,7 @@ const a=await session();assert.equal(a.dataOrigin,'MOCK');
 await ask(a,'normal','สวัสดีครับ','NORMAL_CHAT');
 const fee=await ask(a,'policy','Shopee คิดค่าคอมกี่เปอร์เซ็นต์','FEE_PIPELINE');
 observations.at(-1).passed&&=fee.provider==='fee-reference'&&fee.feeRuleEvidence?.some(e=>e.status==='READY')===true&&fee.answer.includes('ข้อมูลจำลอง (MOCK)')&&fee.answer.includes('อ้างอิง:');
-const follow=await ask(a,'follow-up','แล้ว Lazada ล่ะ','FEE_PIPELINE',{history:[{role:'user',text:'Shopee คิดค่าคอมกี่เปอร์เซ็นต์'},{role:'assistant',text:fee.answer}]});
+const follow=await ask(a,'follow-up','แล้ว Lazada ล่ะ','FEE_PIPELINE',{history:[{role:'user',text:'Shopee คิดค่าคอมกี่เปอร์เซ็นต์'},{role:'assistant',text:fee.answer.slice(0,4500)}]});
 observations.at(-1).passed&&=follow.provider==='fee-reference'&&follow.feeRuleEvidence?.some(e=>e.matches.some(m=>m.platform==='LAZADA'))===true;
 const b=await session();assert.equal(b.dataOrigin,'MOCK');
 await ask(b,'ambiguous','คุ้มไหม','CLARIFY');

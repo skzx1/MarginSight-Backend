@@ -51,13 +51,26 @@ export class TitanEmbedder {
 const aliases={SHOPEE:'Shopee ช้อปปี้',LAZADA:'Lazada ลาซาด้า',TIKTOK:'TikTok Shop ติ๊กต๊อก',LINE:'LINE MyShop LINE SHOPPING ไลน์'};
 const glossary:Array<[RegExp,string]>=[[/คอมมิช|commission/i,'commission'],[/ชำระ|ธุรกรรม|transaction|payment/i,'transaction payment fee'],[/ภาษี|vat|wht/i,'VAT tax inclusive exclusive withholding'],[/ส่ง|shipping/i,'shipping logistics'],[/ลด|คูปอง|discount|voucher/i,'seller funded discount platform voucher fee base'],[/คืน|ยกเลิก|refund|cancel/i,'refund return cancellation fee reversal'],[/กำไร|คุ้มทุน|profit|break.even/i,'seller fee calculation basis']];
 export const embeddingText=(chunk:FeeChunk)=>`${aliases[chunk.platform]}\n${chunk.title}\n${chunk.text}`;
-export function selectFeeEvidence(index:FeeIndex,query:{platform:string;orderAt:string},vector:number[]):FeeRuleEvidence {
+export function feeTopicPattern(text:string):RegExp|undefined {
+ for(const line of text.split('\n').reverse()){
+  if(/affiliate|แอฟฟิลิ|นายหน้า/i.test(line))return /affiliate|creator|แอฟฟิลิ|นายหน้า/i;
+  if(/commission|ค่าคอม|คอมมิช|\bGP\b|ค่าธรรมเนียมการขาย/i.test(line))return /commission|sale transaction fee|selling fee|ค่าธรรมเนียมการขาย/i;
+  if(/payment|transaction|ธุรกรรม|ชำระเงิน/i.test(line))return /payment\b|transaction|ธุรกรรม|ชำระเงิน/i;
+  if(/shipping|ค่าจัดส่ง|ค่าส่ง/i.test(line))return /shipping|logistics|ค่าจัดส่ง|ค่าส่ง/i;
+ }
+}
+export function feeLabel(text:string){return text.split('\n').filter(l=>l.startsWith('|')).at(-1)?.split('|').slice(1,3).join(' ')??text;}
+export function selectFeeEvidence(index:FeeIndex,query:{platform:string;orderAt:string;text?:string},vector:number[]):FeeRuleEvidence {
  const platform=feePlatform(query.platform);demand(!Number.isNaN(Date.parse(query.orderAt)),'INVALID_FEE_QUERY_DATE');
  const output:FeeRuleEvidence={...emptyFeeEvidence(query.orderAt,'NO_MATCH'),corpusVersion:index.corpusVersion,embeddingModel:index.modelId};
  if(!platform)return output;
  // Illustrative amounts never compete with policy evidence. Unknown validity stays explicit.
- const candidates=index.chunks.filter(c=>c.platform===platform&&c.kind!=='ILLUSTRATION')
-  .map(c=>({chunk:c,score:cosine(vector,c.embedding)})).filter(c=>c.score>=.25).sort((a,b)=>b.score-a.score||a.chunk.id.localeCompare(b.chunk.id)).slice(0,3);
+ const pool=index.chunks.filter(c=>c.platform===platform&&c.kind!=='ILLUSTRATION');
+ const topic=feeTopicPattern(query.text??'');
+ const specific=topic?pool.filter(c=>c.kind==='FEE_RULE'&&topic.test(feeLabel(c.text))&&(!topic.source.startsWith('commission')||!/affiliate|creator/i.test(feeLabel(c.text)))&&(!topic.source.startsWith('payment')||!/sale transaction|installment|spaylater/i.test(feeLabel(c.text)))):[];
+ // Explicit fee type outranks broad semantic similarity: payment is not commission.
+ const candidates=(specific.length?specific:pool)
+  .map(c=>({chunk:c,score:cosine(vector,c.embedding)})).filter(c=>specific.length||c.score>=.25).sort((a,b)=>b.score-a.score||a.chunk.id.localeCompare(b.chunk.id)).slice(0,3);
  output.matches=candidates.map(({chunk,score})=>{const {embedding,text,...metadata}=chunk;return {...metadata,
   cautions:[...metadata.cautions,'EFFECTIVE_DATE_NOT_NORMALIZED',...(query.orderAt.slice(0,10)<chunk.asOf?['RESEARCH_AS_OF_AFTER_ORDER']:[])],
   excerpt:text,score:Math.round(score*10000)/10000,applicability:'UNVERIFIED' as const};});
