@@ -3,6 +3,8 @@
 
 # MarginSight — แผนพัฒนาและขึ้นระบบ AWS จริง
 
+> ขยายขอบเขตโดยผู้ใช้25ตุลาคม2026: เพิ่มFee-rule RAGจากเอกสาร4แพลตฟอร์มพร้อมTitan Embed v2 ตามdocs/fee-rule-rag.md โดยเก็บJSON vectorsบนprivateS3เดิม ไม่มีOpenSearch/paid idle capacity/การเขียนสูตรซ้ำ. ข้อยกเว้นนี้ใช้กับresearch retrievalที่ระบุเท่านั้น ไม่รับรองความถูกต้องของอัตราที่ยังไม่ยืนยันและไม่เปลี่ยนexternal blockersอื่น.
+
 อัปเดต: 14 ตุลาคม 2026 | ฉบับ 4 | ขอบเขตครบระบบ
 
 **สถานะดำเนินการล่าสุด:** deploy stack `marginsight` ในบัญชี 109991964227 / ap-southeast-1 แล้ว; AI direct us-east-1 ตามผู้ใช้อนุญาต. รายงาน PARTIAL_WITH_EXTERNAL_BLOCKERS รายละเอียดและหลักฐานล่าสุดอยู่ใน `docs/status.md`, `docs/verification.md`, `docs/cost-log.md`. ข้อความสถานะเริ่มต้นด้านล่างเป็นประวัติตอนเขียนแผน ไม่ใช่สถานะปัจจุบัน.

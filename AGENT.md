@@ -11,6 +11,7 @@
 - ตรวจ JWT + membership/tenant ทุกเส้นทาง รวม uploads/jobs/OCR/LINE. Guest capability ใช้เฉพาะ MOCK tenant และ guest routes มี origin checks และ strict tenant binding; ตามผู้ใช้ 25 ต.ค. 2026 ไม่มี guest expiry หรือโควตาจำนวนใช้งานที่แอปกำหนดเอง.
 - Bedrock assistantเลือก Qwen3 32B (`qwen.qwen3-32b-v1:0`) แบบ direct Converse us-east-1 ตามผู้ใช้24ต.ค.2026; Qwenเลือก bounded toolแล้วแอปแสดงผลจาก deterministic engineโดยตรง ไม่เรียกโมเดลรอบสองเพื่อสรุปเงินและไม่ส่ง model narrationออกไปในเส้นทางคำนวณการเงิน. ดูผล deploy/API/browserล่าสุดใน docs/status.md และ docs/verification.md แยกจาก configหรือ localstub. Haiku4.5ยัง account access403 เป็นประวัติทางเลือกที่ไม่ได้เปิด. OCRยังNova Liteแยกจากassistant; ไม่มี training/fine-tuningด้วยข้อมูลร้าน. OCRdraftต้องตรวจยืนยัน. Missing LINE/marketplace inputsบล็อกเฉพาะ live integrationนั้น.
 - อัปเดต stack เดิมด้วย template-external-roles.yaml; ห้าม deploy foundation ทับ full stack ห้ามสร้าง roles/stack ใหม่เพียงเพราะแยก repo.
+- Fee-rule RAGตามคำขอ25ต.ค.2026ใช้Titan Embed v2 directus-east-1และJSON indexที่pinSHA-256บนprivateS3เดิม ดูdocs/fee-rule-rag.md. เอกสารผู้ใช้เป็นresearch/untrusteddata ไม่ยกอัตราที่ขัดแย้ง/ตัวอย่างเป็นverifiedruleหรือเขียนทับfee catalog. Indexingต้องตรวจบัญชี/งบ/ราคา/accessก่อน; runtimeรักษาdeadlineและpayloadbounds; ไม่มีappusagequotaตามผู้ใช้25ต.ค.2026. ตรวจสถานะเปิดใช้จริงจากstatus/verification ไม่ถือว่าsourceเท่ากับdeploy.
 
 ## การส่งมอบและความปลอดภัย
 

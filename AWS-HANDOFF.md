@@ -85,6 +85,10 @@ python3 scripts/prepare-update.py
 
 `prepare-update.py` ตรวจ account/สถานะ stack, validate template, อ่าน parameter ปัจจุบันแล้วส่งต่อครบทุกตัว และเตรียม SAM change set แบบ **ไม่ execute** เพื่อรักษา `DemoEnabled`, `AIEnabled`, `AIRegion`, `LineSecretArn` ของระบบเดิม การเตรียมนี้มีการอัปโหลด artifact ไป AWS แล้ว ไม่ใช่ local dry run. ตั้งแต่24ต.ค.2026เพิ่ม `AssistantModelId`; stackเก่าที่ไม่มี parameter นี้จะรักษาNovaโดย default ส่วน stackที่มีแล้วจะรักษาค่าปัจจุบัน ไม่สลับโมเดลเอง. Haikuยัง account availability403ตามบันทึกประวัติ; ผู้ใช้เลือก Qwen3 32B แทน ดูผลล่าสุดใน docs/status.md และ docs/verification.md.
 
+### Fee-rule RAG + Titan Embed v2
+
+ผู้ใช้ขยายขอบเขต25ต.ค.2026ให้เพิ่มการค้นกฎจากเอกสาร4แพลตฟอร์มก่อนคำนวณ. อ่าน `docs/fee-rule-rag.md` สำหรับ corpus, indexing/price-budget gates, exact-model IAM, reviewed change set, smoke และ rollback. ใช้ JSON vectors บน private S3 bucketเดิม ไม่สร้าง OpenSearch/ฐานข้อมูล/roleใหม่. `FeeRulesEnabled` เริ่มfalse; เปิดด้วย index key+SHA256ที่อ่านกลับแล้วอย่างชัดเจน ไม่เปิดเพราะเปลี่ยน source อย่างเดียว. กฎวิจัยยังไม่ใช่กฎที่ยืนยันสำหรับการคำนวณและไม่เขียนทับ fee catalog ของร้าน.
+
 ### Qwen3 32B สำหรับ assistant
 
 ใช้ direct Bedrock Converse `qwen.qwen3-32b-v1:0` เฉพาะ `us-east-1`; ไม่ใช้ inference profile, Marketplace หรือ provisioned capacity. OCRยังเป็น `amazon.nova-lite-v1:0` แยกจาก assistant. Qwenเลือก bounded tool; แอปใช้ผล deterministic engine ตอบโดยตรงและไม่ส่งข้อความตัวเลขที่โมเดลแต่งเองออกไป จึงไม่ต้องเรียกโมเดลรอบสองเพื่อสรุปเงิน. ไม่ได้ fine-tune หรือเทรนด้วยข้อมูลร้าน.
